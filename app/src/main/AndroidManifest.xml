@@ -11,12 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrandUp">
-        <activity android:name=".ui.main.view.MainActivity">
+        <activity android:name=".ui.main.view.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.main.view.LoginActivity"/>
+        <activity android:name=".ui.main.view.OtpVerficationActivity"/>
     </application>
 </manifest>

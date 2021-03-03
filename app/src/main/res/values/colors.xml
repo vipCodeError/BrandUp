@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="splash_background">#939AC3</color>
     <color name="otp_btn_background_color">#3949AB</color>
+    <color name="otp_background_color">#AEB7EC</color>
+    <color name="bar_active_color">#303F9F</color>
 </resources>

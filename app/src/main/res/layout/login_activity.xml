@@ -26,34 +26,25 @@
         android:id="@+id/imageView"
         android:layout_width="91dp"
         android:layout_height="80dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/smartphone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="0dp"
+    <com.asdev.phoneedittext.PhoneEditText
+        android:id="@+id/phoneEditText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/terms_and_service">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            android:textAlignment="textStart" />
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/terms_and_service" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/send_otp_btn"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="32dp"
@@ -64,8 +55,8 @@
         android:text="Verify"
         android:textColor="#E1E1E1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
 
     <TextView
         android:id="@+id/textView3"

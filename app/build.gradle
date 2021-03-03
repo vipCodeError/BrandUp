@@ -54,4 +54,12 @@ dependencies {
     //coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
+
+    //phone edit text
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
+    implementation 'com.github.amannirala13:PhoneEditText-Android:1.1.1'
+
+    //otp edit text
+    // https://github.com/aabhasr1/OtpView
+    implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx'
 }
