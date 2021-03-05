@@ -3,6 +3,8 @@
     package="com.vipcodeerror.brandup">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -21,5 +23,12 @@
 
         <activity android:name=".ui.main.view.LoginActivity"/>
         <activity android:name=".ui.main.view.OtpVerficationActivity"/>
+        <activity android:name=".ui.main.view.PreferredLanguageActivity"/>
+        <activity android:name=".ui.main.view.BusinessCategory"/>
+        <activity android:name=".ui.main.view.BrandLogoEdit"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 </manifest>

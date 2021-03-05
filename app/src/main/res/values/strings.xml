@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">BrandUp</string>
+    <string name="preferred_language">Preferred Language</string>
+    <string name="choose_language">Choose all the language in which you wan to get images</string>
 </resources>

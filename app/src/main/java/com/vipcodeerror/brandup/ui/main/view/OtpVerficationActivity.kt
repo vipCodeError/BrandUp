@@ -2,6 +2,7 @@ package com.vipcodeerror.brandup.ui.main.view
 
 import `in`.aabhasjindal.otptextview.OTPListener
 import `in`.aabhasjindal.otptextview.OtpTextView
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.vipcodeerror.brandup.R
@@ -19,7 +20,8 @@ class OtpVerficationActivity : AppCompatActivity() {
             }
 
             override fun onOTPComplete(otp: String) {
-
+                startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
+                finish()
             }
 
         }

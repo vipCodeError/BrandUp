@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
         val sendOtpBtn = findViewById<AppCompatButton>(R.id.send_otp_btn)
         sendOtpBtn.setOnClickListener {
             startActivity(Intent(this@LoginActivity, OtpVerficationActivity::class.java))
+            finish()
         }
 
     }
