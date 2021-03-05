@@ -13,4 +13,5 @@
     <color name="bar_active_color">#303F9F</color>
     <color name="toolbar_back_color">#734FCC</color>
     <color name="frame_layout_color">#fff</color>
+    <color name="setting_divider">#86000000</color>
 </resources>
