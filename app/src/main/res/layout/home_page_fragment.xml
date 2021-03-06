@@ -10,19 +10,19 @@
         android:id="@+id/relativeLayout3"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_margin="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <!--    left 2 text    -->
         <LinearLayout
-            android:layout_marginStart="8dp"
+            android:background="@drawable/rounded_selection_home"
+            android:layout_margin="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:padding="8dp"
             android:orientation="vertical">
 
             <TextView
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/archia"
                 android:text="your Business"
-                android:textSize="12sp" />
+                android:textSize="8sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -43,12 +43,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/archia"
                     android:text="Furniture Baba"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
+                    android:src="@drawable/ic_drop_down"
+                    android:layout_marginStart="4dp"
+                    android:padding="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -60,11 +63,13 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
             android:layout_gravity="end|center_vertical">
 
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/ic_search"
                 android:padding="4dp" />
@@ -164,6 +169,7 @@
                     android:layout_height="150dp"/>
             </androidx.cardview.widget.CardView>
 
+            <!--     first       -->
             <LinearLayout
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
@@ -174,6 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/first_one_txt"
                         android:text="My Business"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
@@ -193,10 +200,283 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/first_one_recyclerview"
                     android:layout_margin="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+            <!--    first End    -->
+
+            <!--     second       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/second_one_txt"
+                        android:text="Wishes Message"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/second_one_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    second End    -->
+
+            <!--     third       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/third_on_txt"
+                        android:text="Brandsport Message"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/third_one_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    third End    -->
+
+
+            <!--     fourth       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/fourth_one_txt"
+                        android:text="Business News"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fourth_one_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    fourth End    -->
+
+
+            <!--     fifth       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/fifth_one_txt"
+                        android:text="Business Ethics"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fifth_one_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    fifth end    -->
+
+            <!--     sixth       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/sixth_one_txt"
+                        android:text="Today Thoughts"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sixth_one_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    sixth End    -->
+
+
+            <!--     Seventh       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/seventh_one_txt"
+                        android:text="Motivation"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/seventh_one_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    Seventh End    -->
+
+
+            <!--     Eigth       -->
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/eighth_txt"
+                        android:text="Sports"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:text="View All"
+                        android:fontFamily="@font/archia"
+                        android:textStyle="bold"
+                        android:textSize="10sp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/eighth_txt_recyclerview"
+                    android:layout_margin="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--    Eigth End    -->
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

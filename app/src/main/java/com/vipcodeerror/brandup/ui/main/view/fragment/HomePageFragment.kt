@@ -21,6 +21,7 @@ import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.SliderItem
 import com.vipcodeerror.brandup.ui.main.adapter.SliderAdapterExample
 import com.vipcodeerror.brandup.ui.main.adapter.TrendingTitleAdapter
+import com.vipcodeerror.brandup.ui.main.adapter.home_related_adapter.FirstAdapter
 
 
 class HomePageFragment : Fragment() {
@@ -34,6 +35,7 @@ class HomePageFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         var view = inflater.inflate(R.layout.home_page_fragment, container, false)
 
         staticAdsImageView = view.findViewById(R.id.static_ads)
@@ -45,6 +47,7 @@ class HomePageFragment : Fragment() {
         sliderAds(view)
         staticAds()
         trendingTitle()
+        firstRecycler(view)
 
         return view
     }
@@ -102,5 +105,20 @@ class HomePageFragment : Fragment() {
         val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
         trendingRecyclerView.adapter = trendingTitleAdapter
         trendingRecyclerView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun firstRecycler(view : View){
+        // test
+        var firstAdapterList = mutableListOf<String>()
+        firstAdapterList.add("https://files.prokerala.com/images/800w/hanuman-jayanti-wishes-1.jpg")
+        firstAdapterList.add("https://i2.wp.com/www.ahataxis.com/blog/wp-content/uploads/2018/08/janmas-1.jpg?ssl=1")
+        firstAdapterList.add("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2020/12/28/946113-january-calendar-2021-12.jpg")
+        firstAdapterList.add("https://www.fabhotels.com/blog/wp-content/uploads/2019/08/Ganesh-Chaturthi.jpg")
+        firstAdapterList.add("http://www.chefatlarge.in/wp-content/uploads/2017/09/lord-ganesha.jpg")
+
+        val recyclerFirst = view.findViewById<RecyclerView>(R.id.first_one_recyclerview)
+        var firstAdapter = FirstAdapter(requireActivity(), firstAdapterList)
+        recyclerFirst.adapter = firstAdapter
+        recyclerFirst.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
     }
 }
