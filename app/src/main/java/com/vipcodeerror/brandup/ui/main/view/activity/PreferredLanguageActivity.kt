@@ -1,4 +1,4 @@
-package com.vipcodeerror.brandup.ui.main.view
+package com.vipcodeerror.brandup.ui.main.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.vipcodeerror.brandup.R
-import com.vipcodeerror.brandup.ui.main.adapter.PopularCategoryAdapter
 
 class PreferredLanguageActivity : AppCompatActivity() {
 

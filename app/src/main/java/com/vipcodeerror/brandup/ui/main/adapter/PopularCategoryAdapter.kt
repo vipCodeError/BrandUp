@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.vipcodeerror.brandup.R
-import com.vipcodeerror.brandup.ui.main.view.BrandLogoEdit
+import com.vipcodeerror.brandup.ui.main.view.activity.BrandLogoEdit
 
 class PopularCategoryAdapter(var context : Context, var poplularCatList: MutableList<String>) : RecyclerView.Adapter<PopularCategoryAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(

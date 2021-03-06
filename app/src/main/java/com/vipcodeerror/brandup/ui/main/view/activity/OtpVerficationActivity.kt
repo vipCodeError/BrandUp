@@ -1,4 +1,4 @@
-package com.vipcodeerror.brandup.ui.main.view
+package com.vipcodeerror.brandup.ui.main.view.activity
 
 import `in`.aabhasjindal.otptextview.OTPListener
 import `in`.aabhasjindal.otptextview.OtpTextView

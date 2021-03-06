@@ -1,4 +1,4 @@
-package com.vipcodeerror.brandup.ui.main.view
+package com.vipcodeerror.brandup.ui.main.view.activity
 
 import android.Manifest
 import android.animation.AnimatorSet

@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrandUp">
-        <activity android:name=".ui.main.view.SplashScreen">
+        <activity android:name=".ui.main.view.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,11 +21,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.view.LoginActivity"/>
-        <activity android:name=".ui.main.view.OtpVerficationActivity"/>
-        <activity android:name=".ui.main.view.PreferredLanguageActivity"/>
-        <activity android:name=".ui.main.view.BusinessCategory"/>
-        <activity android:name=".ui.main.view.BrandLogoEdit"
+        <activity android:name=".ui.main.view.activity.LoginActivity"/>
+        <activity android:name=".ui.main.view.activity.OtpVerficationActivity"/>
+        <activity android:name=".ui.main.view.activity.PreferredLanguageActivity"/>
+        <activity android:name=".ui.main.view.activity.BusinessCategory"/>
+        <activity android:name=".ui.main.view.activity.BrandLogoEdit"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

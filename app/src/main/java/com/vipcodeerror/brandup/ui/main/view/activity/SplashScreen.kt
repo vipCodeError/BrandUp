@@ -1,4 +1,4 @@
-package com.vipcodeerror.brandup.ui.main.view
+package com.vipcodeerror.brandup.ui.main.view.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.Thread.sleep
 import java.util.concurrent.TimeUnit
 
 class SplashScreen : AppCompatActivity() {
