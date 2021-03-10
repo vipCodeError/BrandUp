@@ -11,7 +11,7 @@ import com.smarteist.autoimageslider.SliderViewAdapter
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.SliderItem
 
-class SliderAdapterExample(var context: Context) : SliderViewAdapter<SliderAdapterExample.SliderAdapterVH>() {
+class TopTrendingSliderAdapter(var context: Context) : SliderViewAdapter<TopTrendingSliderAdapter.SliderAdapterVH>() {
     private lateinit var mSliderItems: MutableList<SliderItem>
     init {
         mSliderItems = mutableListOf()

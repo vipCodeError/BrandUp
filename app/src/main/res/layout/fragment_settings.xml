@@ -9,15 +9,18 @@
 
         <!--   Business Details     -->
         <LinearLayout
+            android:background="@drawable/rounded_selection_home"
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
                 android:text="Furniture Baba"
                 android:fontFamily="@font/archia"
                 android:textStyle="bold"
-                android:textSize="17sp"
+                android:textSize="10sp"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
@@ -25,9 +28,9 @@
 
             <TextView
                 android:text="Furniture"
-                android:fontFamily="@font/ptsans_bold"
+                android:fontFamily="@font/archia"
                 android:textStyle="bold"
-                android:textSize="17sp"
+                android:textSize="13sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
@@ -35,14 +38,22 @@
 
             <TextView
                 android:text="+91 8754254125"
-                android:fontFamily="@font/ptsans_bold"
+                android:fontFamily="@font/archia"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 android:layout_marginTop="4dp"
                 android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/banner_ads_sett"
+            android:layout_marginTop="32dp"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
 
         <!--   Setting   -->
         <LinearLayout
@@ -58,17 +69,21 @@
                 android:layout_height="30dp"/>
 
             <TextView
+                android:id="@+id/my_business_set"
                 android:text="My Business"
-                android:textSize="21sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/ptsans_bold"
+                android:fontFamily="@font/archia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
             android:background="@color/setting_divider"
             android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_height="0.1dp"/>
 
         <LinearLayout
@@ -85,16 +100,19 @@
 
             <TextView
                 android:text="Edit Your Brand Name"
-                android:textSize="21sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/ptsans_bold"
+                android:fontFamily="@font/archia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
             android:background="@color/setting_divider"
             android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_height="0.1dp"/>
 
         <LinearLayout
@@ -111,16 +129,19 @@
 
             <TextView
                 android:text="Preferred Language"
-                android:textSize="21sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/ptsans_bold"
+                android:fontFamily="@font/archia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
             android:background="@color/setting_divider"
             android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_height="0.1dp"/>
 
 
@@ -138,16 +159,44 @@
 
             <TextView
                 android:text="Help and Support"
-                android:textSize="21sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/ptsans_bold"
+                android:fontFamily="@font/archia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
         <View
             android:background="@color/setting_divider"
             android:layout_width="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_height="0.1dp"/>
+
+        <TextView
+            android:text="Logout"
+            android:fontFamily="@font/ptsans_bold"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:padding="8dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:textColor="#C2185B"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <TextView
+            android:text="App V. 0.1"
+            android:fontFamily="@font/archia"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:padding="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:textColor="#484849"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

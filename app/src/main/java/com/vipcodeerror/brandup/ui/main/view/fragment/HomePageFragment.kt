@@ -1,12 +1,10 @@
 package com.vipcodeerror.brandup.ui.main.view.fragment
 
-import android.icu.number.Scale
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.BounceInterpolator
-import android.view.animation.OvershootInterpolator
 import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
@@ -19,7 +17,7 @@ import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.SliderItem
-import com.vipcodeerror.brandup.ui.main.adapter.SliderAdapterExample
+import com.vipcodeerror.brandup.ui.main.adapter.TopTrendingSliderAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TrendingTitleAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.home_related_adapter.FirstAdapter
 
@@ -71,7 +69,7 @@ class HomePageFragment : Fragment() {
     }
 
     private fun sliderAds(view: View){
-        val sliderAdapter = SliderAdapterExample(requireActivity())
+        val sliderAdapter = TopTrendingSliderAdapter(requireActivity())
         val sliderView: SliderView = view.findViewById(R.id.imageSlider)
         sliderView.setSliderAdapter(sliderAdapter)
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
