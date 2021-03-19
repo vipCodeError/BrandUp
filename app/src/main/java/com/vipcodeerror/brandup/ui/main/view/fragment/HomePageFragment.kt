@@ -40,7 +40,7 @@ class HomePageFragment : Fragment() {
         staticAdsLayout = view.findViewById(R.id.static_ads_layout)
         trendingRecyclerView = view.findViewById(R.id.trending_title_recycler)
 
-        staticAdsLayout.startAnimation(bubbleAnimation());
+        staticAdsLayout.startAnimation(bubbleAnimation())
 
         sliderAds(view)
         staticAds()

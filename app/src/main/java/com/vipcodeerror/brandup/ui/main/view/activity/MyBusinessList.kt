@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.ui.main.adapter.MyBusinessListAdapter
 
-class MyBusinessList : AppCompatActivity(){
+public class MyBusinessList : AppCompatActivity(){
     private lateinit var toolbar: Toolbar
     private lateinit var myBusinessAdapter: MyBusinessListAdapter
     private lateinit var myBusinessRecyclerView : RecyclerView

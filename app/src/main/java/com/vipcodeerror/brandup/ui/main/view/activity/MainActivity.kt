@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun homePageFragment(){
+    private fun homePageFragment(){
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout, homePageFragment)

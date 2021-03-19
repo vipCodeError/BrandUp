@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -42,6 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.android.material:material:1.4.0-alpha01'
 
     // mvvm
     implementation "androidx.recyclerview:recyclerview:1.1.0"
@@ -56,7 +58,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2"
 
     //phone edit text
-    implementation 'com.google.android.material:material:1.4.0-alpha01'
     implementation 'com.github.amannirala13:PhoneEditText-Android:1.1.1'
 
     //otp edit text
@@ -71,12 +72,17 @@ dependencies {
     // https://github.com/hdodenhof/CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
-    //image cropper
+    // image cropper
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 
     // dexter permission application
     implementation 'com.karumi:dexter:6.2.2'
 
-    //slider
+    // slider
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
+
+    // firebase
+    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth'
 }

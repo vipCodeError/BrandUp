@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "396147716466",
+    "firebase_url": "https://brandup-1efd9-default-rtdb.firebaseio.com",
+    "project_id": "brandup-1efd9",
+    "storage_bucket": "brandup-1efd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396147716466:android:55782a02f64926bf32adeb",
+        "android_client_info": {
+          "package_name": "com.vipcodeerror.brandup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "396147716466-e6tvdcafh4808kl7e437607oqajs92bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjVr8iylurqMwRvvy76RZK3eMYpu8IaSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "396147716466-e6tvdcafh4808kl7e437607oqajs92bg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
