@@ -22,7 +22,6 @@
         </activity>
 
         <activity android:name=".ui.main.view.activity.MainActivity"/>
-        <activity android:name=".ui.main.view.activity.LoginActivity"/>
         <activity android:name=".ui.main.view.activity.OtpVerficationActivity"/>
         <activity android:name=".ui.main.view.activity.PreferredLanguageActivity"/>
         <activity android:name=".ui.main.view.activity.BusinessCategory"/>

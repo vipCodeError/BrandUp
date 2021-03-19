@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 interface ApiService {
 
-    fun userLogin(phone : String, device_name: String) : Single<ApiResponse>
+    fun userLogin(phone : String, device_name: String) : Single<LogginApiResponse>
 
     fun registerPhoneNumber(phone: String) : Single<LogginApiResponse>
     // fun getCategories() : Single<List<>>

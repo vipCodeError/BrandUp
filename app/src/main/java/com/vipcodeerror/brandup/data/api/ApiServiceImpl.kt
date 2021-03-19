@@ -7,14 +7,14 @@ import io.reactivex.Single
 
 class ApiServiceImpl : ApiService{
 
-    override fun userLogin(phone: String, device_name: String): Single<ApiResponse> {
+    override fun userLogin(phone: String, device_name: String): Single<LogginApiResponse> {
         var bodyParam = HashMap<String, String>()
         bodyParam["phone"] = phone
         bodyParam["device_name"] = device_name
         return Rx2AndroidNetworking.post("http://127.0.0.1:8000/api/login").
         addBodyParameter(bodyParam).
         build().
-        getObjectSingle(ApiResponse::class.java)
+        getObjectSingle(LogginApiResponse::class.java)
     }
 
     override fun registerPhoneNumber(phone: String): Single<LogginApiResponse> {
