@@ -23,7 +23,7 @@ import java.util.*
 *
 * */
 class LoginActivity : AppCompatActivity() {
-    private lateinit var mainViewModel: MainViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,29 +36,8 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        setupViewModel()
+
     }
 
-    private fun loginObserver(phone : String) {
-        mainViewModel.postLoginUser(phone).observe(this, Observer {
-            when (it.status) {
-                Status.SUCCESS -> {
-                  it.data?.let {}
-                }
-                Status.LOADING -> {
 
-                }
-                Status.ERROR -> {
-
-                }
-            }
-        })
-    }
-
-    private fun setupViewModel() {
-        mainViewModel = ViewModelProviders.of(
-                this,
-                ViewModelFactory(ApiHelper(ApiServiceImpl()))
-        ).get(MainViewModel::class.java)
-    }
 }

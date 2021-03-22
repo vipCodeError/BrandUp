@@ -5,13 +5,17 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.data.model.CatModel
 import com.vipcodeerror.brandup.ui.main.view.activity.BrandLogoEdit
+import de.hdodenhof.circleimageview.CircleImageView
 
-class PopularCategoryAdapter(var context : Context, var poplularCatList: MutableList<String>) : RecyclerView.Adapter<PopularCategoryAdapter.MyViewHolder>() {
+class PopularCategoryAdapter(var context : Context, var poplularCatList: List<CatModel>) : RecyclerView.Adapter<PopularCategoryAdapter.MyViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -24,7 +28,9 @@ class PopularCategoryAdapter(var context : Context, var poplularCatList: Mutable
             context.startActivity(Intent(context, BrandLogoEdit::class.java))
         })
 
-        holder.popularCatTitle.text = poplularCatList[position]
+        Glide.with(context).load("https://practicebuckett123.s3.ap-south-1.amazonaws.com/images/"+poplularCatList[position].imgUrl).into(holder.circleImageView)
+
+        holder.popularCatTitle.text = poplularCatList[position].catName
     }
 
     override fun getItemCount(): Int {
@@ -34,5 +40,6 @@ class PopularCategoryAdapter(var context : Context, var poplularCatList: Mutable
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val popularCatLayout = itemView.findViewById<LinearLayout>(R.id.popular_cat_layout)
         val popularCatTitle = itemView.findViewById<TextView>(R.id.popular_cat_title)
+        val circleImageView = itemView.findViewById<CircleImageView>(R.id.profile_image)
     }
 }

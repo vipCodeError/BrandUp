@@ -5,4 +5,6 @@ class ApiHelper(private val apiService: ApiService)  {
 
     fun registerPhoneNumber(phone: String) = apiService.registerPhoneNumber(phone)
 
+    fun catData(token : String) = apiService.getCatData(token)
+
 }

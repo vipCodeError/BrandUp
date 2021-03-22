@@ -3,15 +3,24 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 import `in`.aabhasjindal.otptextview.OTPListener
 import `in`.aabhasjindal.otptextview.OtpTextView
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.data.api.ApiHelper
+import com.vipcodeerror.brandup.data.api.ApiServiceImpl
+import com.vipcodeerror.brandup.ui.base.ViewModelFactory
+import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
+import com.vipcodeerror.brandup.util.SharedPreferenceUtil
+import com.vipcodeerror.brandup.util.Status
 import java.util.concurrent.TimeUnit
 
 class OtpVerficationActivity : AppCompatActivity() {
@@ -19,6 +28,9 @@ class OtpVerficationActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var phoneNumText : TextView
     private var storedVerificationId : String? = null
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var phoneNumber : String
+    private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
     companion object {
         private val TAG = LoginActivity::class.java.canonicalName
@@ -28,13 +40,16 @@ class OtpVerficationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.otp_layout)
 
+        setupViewModel()
+
         phoneNumText = findViewById(R.id.phone_num_txt);
+        sharedPreferenceUtil = SharedPreferenceUtil(this)
 
         auth = FirebaseAuth.getInstance()
         callBackPhoneOtp()
 
-        val phoneNumber = intent?.getStringExtra("phone_num")
-        phoneNumber?.let { phoneNumberAuthentication(it.replace(" ", "")) }
+        phoneNumber = intent.getStringExtra("phone_num").toString()
+        phoneNumberAuthentication(phoneNumber.replace(" ", ""))
 
         val otpView = findViewById<OtpTextView>(R.id.otp_view);
         otpView.otpListener = object: OTPListener {
@@ -92,7 +107,6 @@ class OtpVerficationActivity : AppCompatActivity() {
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
                 Log.d(TAG, "onCodeSent:$verificationId")
-
                 // Save verification ID and resending token so we can use them later
                 storedVerificationId = verificationId
                 // resendToken = token
@@ -106,9 +120,8 @@ class OtpVerficationActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
-                    finish()
+                    loginObserver(phoneNumber.replace("+91 ", ""))
+
                 } else {
                     // Sign in failed, display a message and update the UI
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -118,5 +131,33 @@ class OtpVerficationActivity : AppCompatActivity() {
                     // Update UI
                 }
             }
+    }
+
+    private fun loginObserver(phone : String) {
+        mainViewModel.postLoginUser(phone, Build.MANUFACTURER).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        sharedPreferenceUtil.save("token", it.token)
+                        Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
+                        finish()
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun setupViewModel() {
+        mainViewModel = ViewModelProviders.of(
+                this,
+                ViewModelFactory(ApiHelper(ApiServiceImpl()))
+        ).get(MainViewModel::class.java)
     }
 }
