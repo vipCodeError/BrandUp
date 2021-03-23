@@ -3,35 +3,72 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.data.api.ApiHelper
+import com.vipcodeerror.brandup.data.api.ApiServiceImpl
+import com.vipcodeerror.brandup.ui.base.ViewModelFactory
+import com.vipcodeerror.brandup.ui.main.adapter.PopularCategoryAdapter
+import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
+import com.vipcodeerror.brandup.util.SharedPreferenceUtil
+import com.vipcodeerror.brandup.util.Status
 import com.vipcodeerror.brandup.util.ValueAnimatorUtil
+import java.io.File
+import java.net.URI
 
 
 class BrandLogoEdit : AppCompatActivity(){
 
     private lateinit var toolbar: Toolbar
     private lateinit var logoEmbedImg : ImageView
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var saveBtn : AppCompatButton
+    private lateinit var emailTxt : TextInputEditText
+    private lateinit var phoneTxt : TextInputEditText
+    private lateinit var locationTxt : TextInputEditText
+    private lateinit var addrTxt : TextInputEditText
+    private lateinit var businessNameTxt : TextInputEditText
+    private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
+
+    private lateinit var actualUri: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.brand_logo_layout)
+
+        sharedPreferenceUtil = SharedPreferenceUtil(this)
+
+        saveBtn = findViewById(R.id.save_btn)
+
+        emailTxt = findViewById(R.id.business_email)
+        phoneTxt = findViewById(R.id.business_phone)
+        locationTxt = findViewById(R.id.bussiness_location)
+        addrTxt = findViewById(R.id.business_addr)
+        businessNameTxt = findViewById(R.id.bussiness_name)
+
+        setupViewModel()
 
         val dialogMultiplePermissionsListener: MultiplePermissionsListener =
             DialogOnAnyDeniedMultiplePermissionsListener.Builder
@@ -101,10 +138,13 @@ class BrandLogoEdit : AppCompatActivity(){
                     doOnEnd {
                         businessDetailLayout.visibility = View.GONE
                         logoLayout.visibility = View.VISIBLE
+                        nextBtn.visibility = VISIBLE
+                        saveBtn.visibility = GONE
                     }
                 }
 
                 ValueAnimatorUtil.valueAnimatorScaleUtil(0.8f, 1f, frameImgLayout)
+
 
 
             } else {
@@ -138,7 +178,16 @@ class BrandLogoEdit : AppCompatActivity(){
                     play(firstObject).before(secObject)
                     start()
                 }
+
+                nextBtn.visibility = GONE
+                saveBtn.visibility = VISIBLE
             }
+        })
+
+        saveBtn.setOnClickListener(View.OnClickListener {
+            val file = File(actualUri)
+            val token = sharedPreferenceUtil.getValueString("token").toString()
+            uploadLogoUrl(file, token)
         })
     }
 
@@ -148,10 +197,68 @@ class BrandLogoEdit : AppCompatActivity(){
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 val resultUri: Uri = result.uri
+                actualUri = resultUri.path!!
                 logoEmbedImg.setImageURI(resultUri)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
         }
+    }
+
+    private fun postBusinessDetails(bussName : String, phone: String, address : String,
+                                    logoUrl: String, location: String,
+                                    belongToWhichUser : String, catIdBelongTo: String, token: String){
+
+        mainViewModel.postBussDetailsData(bussName, phone, address, logoUrl, location,
+                belongToWhichUser, catIdBelongTo, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        var catdata = it.status
+                        startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        finish();
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    // Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun uploadLogoUrl(logosUrl : File, token : String){
+        mainViewModel.uploadImageData(logosUrl, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        var bName = businessNameTxt.text.toString()
+                        var bEmail = emailTxt.text.toString()
+                        var bPhone = phoneTxt.text.toString()
+                        var bLoc = locationTxt.text.toString()
+                        var bAddr = addrTxt.text.toString()
+
+                        val userId = sharedPreferenceUtil.getValueString("user_id").toString()
+                        val catId = sharedPreferenceUtil.getValueString("cat_id").toString()
+                        postBusinessDetails(bName, bPhone, bAddr,  it.imageUrl , bLoc, userId , catId, token)
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    // Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun setupViewModel() {
+        mainViewModel = ViewModelProviders.of(
+                this,
+                ViewModelFactory(ApiHelper(ApiServiceImpl()))
+        ).get(MainViewModel::class.java)
     }
 }

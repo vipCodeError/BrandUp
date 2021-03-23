@@ -13,18 +13,23 @@ import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.CatModel
 import com.vipcodeerror.brandup.ui.main.view.activity.BrandLogoEdit
+import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import de.hdodenhof.circleimageview.CircleImageView
 
 class PopularCategoryAdapter(var context : Context, var poplularCatList: List<CatModel>) : RecyclerView.Adapter<PopularCategoryAdapter.MyViewHolder>() {
+    private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): PopularCategoryAdapter.MyViewHolder {
+        sharedPreferenceUtil = SharedPreferenceUtil(context)
         return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.popular_cat_adapter_layout, parent, false))
     }
 
     override fun onBindViewHolder(holder: PopularCategoryAdapter.MyViewHolder, position: Int) {
         holder.popularCatLayout.setOnClickListener(View.OnClickListener {
+            sharedPreferenceUtil.save("cat_id", poplularCatList[position].id.toString())
             context.startActivity(Intent(context, BrandLogoEdit::class.java))
         })
 

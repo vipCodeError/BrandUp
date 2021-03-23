@@ -5,6 +5,7 @@ import `in`.aabhasjindal.otptextview.OtpTextView
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
@@ -30,6 +31,7 @@ class OtpVerficationActivity : AppCompatActivity() {
     private var storedVerificationId : String? = null
     private lateinit var mainViewModel: MainViewModel
     private lateinit var phoneNumber : String
+    private lateinit var countDownTxt : TextView
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
     companion object {
@@ -39,12 +41,12 @@ class OtpVerficationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.otp_layout)
+        sharedPreferenceUtil = SharedPreferenceUtil(this)
 
         setupViewModel()
 
         phoneNumText = findViewById(R.id.phone_num_txt);
-        sharedPreferenceUtil = SharedPreferenceUtil(this)
-
+        countDownTxt = findViewById(R.id.otp_countdown)
         auth = FirebaseAuth.getInstance()
         callBackPhoneOtp()
 
@@ -70,6 +72,17 @@ class OtpVerficationActivity : AppCompatActivity() {
         }
 
         phoneNumText.text = phoneNumber.toString()
+
+        val timer = object: CountDownTimer(60000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                countDownTxt.text = (millisUntilFinished / 1000).toString()
+            }
+
+            override fun onFinish() {
+                countDownTxt.text = "Resend OTP again"
+            }
+        }
+        timer.start()
     }
 
     private fun phoneNumberAuthentication(phoneNumber: String){
@@ -139,6 +152,9 @@ class OtpVerficationActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
                     it.data?.let {
                         sharedPreferenceUtil.save("token", it.token)
+                        sharedPreferenceUtil.save("user_id", it.id.toString())
+                        sharedPreferenceUtil.save("is_logged", true)
+                        Log.d("Token ::", it.token)
                         Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
                         finish()

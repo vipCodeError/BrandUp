@@ -1,15 +1,20 @@
 package com.vipcodeerror.brandup.data.api
 
+import android.util.Log
+import com.androidnetworking.common.Priority
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
+import com.google.android.gms.common.api.Api
 import com.rx2androidnetworking.Rx2AndroidNetworking
 import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
 import com.vipcodeerror.brandup.data.model.ApiResponse
+import com.vipcodeerror.brandup.data.model.ImageApiResponse
 import com.vipcodeerror.brandup.data.model.LogginApiResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
+import java.io.File
 import java.util.concurrent.TimeUnit
 
-class ApiServiceImpl : ApiService{
+class ApiServiceImpl : ApiService {
 
     override fun userLogin(phone: String, device_name: String): Single<LogginApiResponse> {
         val interceptor = HttpLoggingInterceptor()
@@ -22,28 +27,77 @@ class ApiServiceImpl : ApiService{
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
-
         var bodyParam = HashMap<String, String>()
         bodyParam["phone"] = phone
         bodyParam["device_name"] = device_name
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/login").
-        addBodyParameter(bodyParam)
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/login").addBodyParameter(bodyParam)
                 .setOkHttpClient(okHttpClient)
                 .build()
                 .getObjectSingle(LogginApiResponse::class.java)
     }
 
-    override fun registerPhoneNumber(phone: String): Single<LogginApiResponse> {
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/signup").
-        addBodyParameter("phone", phone).build().
-        getObjectSingle(LogginApiResponse::class.java)
-    }
-
-    override fun getCatData(token : String): Single<ApiCatDataResponse> {
+    override fun getCatData(token: String): Single<ApiCatDataResponse> {
         return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_cat")
-                .addHeaders("Authorization", "Bearer "+token)
-                .build().
-                getObjectSingle(ApiCatDataResponse::class.java)
+                .addHeaders("Authorization", "Bearer " + token)
+                .build().getObjectSingle(ApiCatDataResponse::class.java)
     }
 
+    override fun postCatPref(catId: String, token: String): Single<ApiResponse> {
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/buss_pref")
+                .addHeaders("Authorization", "Bearer " + token)
+                .build().getObjectSingle(ApiResponse::class.java)
+    }
+
+    override fun postBussDetails(bussName: String, phone: String, address: String, logoUrl: String,
+                                 location: String, belongToWhichUser: String, catIdBelongTo: String, token: String): Single<ApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+        var params = mutableMapOf<String, String>()
+        params["b_details"] = bussName
+        params["b_phone"] = phone
+        params["b_addr"] = address
+        params["b_image_url"] = logoUrl
+        params["b_location"] = location
+        params["b_user_id"] = belongToWhichUser
+        params["b_cat_id"] = catIdBelongTo
+
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/buss_det")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter(params)
+                .setOkHttpClient(okHttpClient)
+                .build().getObjectSingle(ApiResponse::class.java)
+    }
+
+    override fun uploadImage(logoUrl: File, tokens: String): Single<ImageApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.HEADERS // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+        return Rx2AndroidNetworking.upload("http://brandup.shopyculture.com/api/upload_img")
+                .addMultipartFile("image", logoUrl)
+                .addHeaders("Authorization", "Bearer " + tokens)
+                .setContentType("multipart/form-data")
+                .addHeaders("content-type", "multipart/form-data")
+                .setOkHttpClient(okHttpClient)
+                .setPriority(Priority.HIGH)
+                .build()
+                .setUploadProgressListener { bytesUploaded, totalBytes ->
+                    Log.d("upload progress", ((bytesUploaded * 100) / totalBytes).toString())
+                }
+                .getObjectSingle(ImageApiResponse::class.java)
+    }
 }
