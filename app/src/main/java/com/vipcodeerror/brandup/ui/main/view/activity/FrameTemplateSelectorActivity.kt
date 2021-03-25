@@ -3,6 +3,10 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat.getExtras
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +15,17 @@ import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnima
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.data.api.ApiHelper
+import com.vipcodeerror.brandup.data.api.ApiServiceImpl
 import com.vipcodeerror.brandup.data.model.SliderItem
+import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
+import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
+import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.adapter.*
+import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
+import com.vipcodeerror.brandup.util.Resource
+import com.vipcodeerror.brandup.util.SharedPreferenceUtil
+import com.vipcodeerror.brandup.util.Status
 
 class FrameTemplateSelectorActivity : AppCompatActivity(){
 
@@ -22,20 +35,38 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
     private lateinit var backFrame : ImageView
 
     private lateinit var frameSelectorAdapter: FrameSelectorAdapter
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
+
+    private lateinit var isSubShown : String
+    private lateinit var subId : String
+    private lateinit var catId : String
+
    // private lateinit var topFrameAdapter : TopFrameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.frame_selector_activity)
-        
+        mainViewModel = setupViewModel()
+        sharedPreferenceUtil = SharedPreferenceUtil(this)
+
+        isSubShown = intent.getStringExtra("is_sub_shown").toString()
+        catId = intent.getStringExtra("cat_id").toString()
+        subId = intent.getStringExtra("sub_id").toString()
+
        // topFrameRecycler = findViewById(R.id.top_frame_recycler)
         backFrame = findViewById(R.id.back_frame)
         subCatTitleRecycler = findViewById(R.id.sub_cat_recycler)
         frameSelectorRecycler = findViewById(R.id.frame_selector_recycler)
 
-        frameRecycler()
         trendingTitle()
         topFrame()
+
+        if (isSubShown == "0"){
+            getHomeSelectedUniversal(mainViewModel, catId, sharedPreferenceUtil.getValueString("token").toString())
+        }else {
+            getHomeSubSelectedUniversal(mainViewModel, subId, sharedPreferenceUtil.getValueString("token").toString())
+        }
     }
 
     private fun topFrame(){
@@ -60,32 +91,15 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 //        subCatTitleRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun frameRecycler(){
-        var firstAdapterList = mutableListOf<String>()
-        firstAdapterList.add("https://files.prokerala.com/images/800w/hanuman-jayanti-wishes-1.jpg")
-        firstAdapterList.add("https://i2.wp.com/www.ahataxis.com/blog/wp-content/uploads/2018/08/janmas-1.jpg?ssl=1")
-        firstAdapterList.add("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2020/12/28/946113-january-calendar-2021-12.jpg")
-        firstAdapterList.add("https://www.fabhotels.com/blog/wp-content/uploads/2019/08/Ganesh-Chaturthi.jpg")
-        firstAdapterList.add("http://www.chefatlarge.in/wp-content/uploads/2017/09/lord-ganesha.jpg")
-        firstAdapterList.add("https://i2.wp.com/www.ahataxis.com/blog/wp-content/uploads/2018/08/janmas-1.jpg?ssl=1")
-        firstAdapterList.add("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2020/12/28/946113-january-calendar-2021-12.jpg")
-        firstAdapterList.add("https://www.fabhotels.com/blog/wp-content/uploads/2019/08/Ganesh-Chaturthi.jpg")
-        firstAdapterList.add("https://i2.wp.com/www.ahataxis.com/blog/wp-content/uploads/2018/08/janmas-1.jpg?ssl=1")
-        firstAdapterList.add("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2020/12/28/946113-january-calendar-2021-12.jpg")
-        firstAdapterList.add("https://www.fabhotels.com/blog/wp-content/uploads/2019/08/Ganesh-Chaturthi.jpg")
-        firstAdapterList.add("https://files.prokerala.com/images/800w/hanuman-jayanti-wishes-1.jpg")
-        firstAdapterList.add("https://i2.wp.com/www.ahataxis.com/blog/wp-content/uploads/2018/08/janmas-1.jpg?ssl=1")
-        firstAdapterList.add("https://cdn.dnaindia.com/sites/default/files/styles/full/public/2020/12/28/946113-january-calendar-2021-12.jpg")
-        firstAdapterList.add("https://www.fabhotels.com/blog/wp-content/uploads/2019/08/Ganesh-Chaturthi.jpg")
-        firstAdapterList.add("http://www.chefatlarge.in/wp-content/uploads/2017/09/lord-ganesha.jpg")
+    private fun frameRecycler(hData : MutableList<HomeModel>){
 
-        frameSelectorAdapter = FrameSelectorAdapter(this, firstAdapterList)
+        frameSelectorAdapter = FrameSelectorAdapter(this, hData)
 
         frameSelectorRecycler.adapter = frameSelectorAdapter
         frameSelectorRecycler.layoutManager = GridLayoutManager(this,3, LinearLayoutManager.VERTICAL, false)
         frameSelectorAdapter.clickOnFrameUrl = object : ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
-                Glide.with(this@FrameTemplateSelectorActivity).load(url).into(backFrame)
+                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/$url").into(backFrame)
             }
         }
     }
@@ -96,6 +110,55 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
         subCatTitleRecycler.adapter = trendingTitleAdapter
         subCatTitleRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+    }
+
+    private fun setupViewModel() :MainViewModel {
+        return  ViewModelProviders.of(
+            this,
+            ViewModelFactory(ApiHelper(ApiServiceImpl()))
+        ).get(MainViewModel::class.java)
+    }
+
+    private fun getHomeSelectedUniversal(mVModel : MainViewModel, catId: String, token: String) {
+        val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
+        mVModel.getHomeDataUniversal(homeData, catId, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        val catdata = it.data
+                            frameRecycler(catdata.toMutableList())
+                            Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/${catdata[0].urlImage}").into(backFrame)
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+
+    private fun getHomeSubSelectedUniversal(mVModel : MainViewModel, subId: String, token: String) {
+        val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
+        mVModel.getHomeSubDataUniversal(homeData, subId, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        val catdata = it.data
+                        frameRecycler(catdata.toMutableList())
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
     }
 
 }

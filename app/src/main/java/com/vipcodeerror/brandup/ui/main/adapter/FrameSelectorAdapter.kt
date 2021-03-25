@@ -8,12 +8,13 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 
 interface ClickOnFrameUrl {
     fun setUrlImage(url : String)
 }
 
-class FrameSelectorAdapter(var context: Context, var imgUrlList: MutableList<String>) : RecyclerView.Adapter<FrameSelectorAdapter.MyViewHolder>() {
+class FrameSelectorAdapter(var context: Context, var imgUrlList: MutableList<HomeModel>) : RecyclerView.Adapter<FrameSelectorAdapter.MyViewHolder>() {
     public lateinit var clickOnFrameUrl: ClickOnFrameUrl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FrameSelectorAdapter.MyViewHolder {
@@ -22,9 +23,9 @@ class FrameSelectorAdapter(var context: Context, var imgUrlList: MutableList<Str
     }
 
     override fun onBindViewHolder(holder: FrameSelectorAdapter.MyViewHolder, position: Int) {
-        Glide.with(context).load(imgUrlList[position]).into(holder.frameImg)
+        Glide.with(context).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+imgUrlList[position].urlImage).into(holder.frameImg)
         holder.frameImg.setOnClickListener {
-            clickOnFrameUrl.setUrlImage(imgUrlList[position])
+            clickOnFrameUrl.setUrlImage(imgUrlList[position].urlImage)
         }
     }
 
