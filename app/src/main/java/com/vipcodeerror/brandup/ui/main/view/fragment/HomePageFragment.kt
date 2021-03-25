@@ -169,7 +169,7 @@ class HomePageFragment : Fragment() {
         trendingRecyclerView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun firstRecycler(view : View, resId : Int, lLayout: View, dataHome : MutableList<HomeModel>){
+    private fun universalDaynamicRecycler(view : View, resId : Int, lLayout: View, dataHome : MutableList<HomeModel>){
         // test
         var firstAdapterList = mutableListOf<HomeModel>()
         firstAdapterList.addAll(dataHome)
@@ -226,42 +226,42 @@ class HomePageFragment : Fragment() {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             firstOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.first_one_recyclerview, firstOnLayout ,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.first_one_recyclerview, firstOnLayout ,catdata.toMutableList())
                         } else  if(rootCount == 1) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             secondOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.second_one_recyclerview, secondOnLayout,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.second_one_recyclerview, secondOnLayout,catdata.toMutableList())
                         } else if(rootCount == 2) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.third_one_recyclerview, thirdOnLayout,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.third_one_recyclerview, thirdOnLayout,catdata.toMutableList())
                         } else if(rootCount == 3) {
                             var catdata = it.data
                             val cName = catdata[0].catName
-                            thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.fourth_one_recyclerview, fourthOnLayout,catdata.toMutableList())
+                            fourthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.fourth_one_recyclerview, fourthOnLayout,catdata.toMutableList())
                         } else if(rootCount == 4) {
                             var catdata = it.data
                             val cName = catdata[0].catName
-                            thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.fifth_one_recyclerview, fifthOnLayout,catdata.toMutableList())
+                            fifthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.fifth_one_recyclerview, fifthOnLayout,catdata.toMutableList())
                         } else if(rootCount == 5) {
                             var catdata = it.data
                             val cName = catdata[0].catName
-                            thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.sixth_one_recyclerview, sixthOnLayout,catdata.toMutableList())
+                            sixthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.sixth_one_recyclerview, sixthOnLayout,catdata.toMutableList())
                         } else if(rootCount == 6) {
                             var catdata = it.data
                             val cName = catdata[0].catName
-                            thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.seventh_one_recyclerview, seventhOnLayout,catdata.toMutableList())
+                            seventhOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.seventh_one_recyclerview, seventhOnLayout,catdata.toMutableList())
                         } else if(rootCount == 7) {
                             var catdata = it.data
                             val cName = catdata[0].catName
-                            thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.eighth_one_recyclerview, eighthOnLayout,catdata.toMutableList())
+                            eighthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.eighth_one_recyclerview, eighthOnLayout,catdata.toMutableList())
                         }
                         rootCount++
                     }
@@ -288,42 +288,42 @@ class HomePageFragment : Fragment() {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             firstOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.first_one_recyclerview, firstOnLayout ,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.first_one_recyclerview, firstOnLayout ,catdata.toMutableList())
                         } else  if(subCount == 1) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             secondOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.second_one_recyclerview, secondOnLayout,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.second_one_recyclerview, secondOnLayout,catdata.toMutableList())
                         } else if(subCount == 2) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             thirdOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.third_one_recyclerview, thirdOnLayout,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.third_one_recyclerview, thirdOnLayout,catdata.toMutableList())
                         } else if(subCount == 3) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             fourthOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.fourth_one_recyclerview, fourthOnLayout,catdata.toMutableList())
+                            universalDaynamicRecycler(shadowViewObject, R.id.fourth_one_recyclerview, fourthOnLayout,catdata.toMutableList())
                         } else if(subCount == 4) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
-                            fourthOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.fifth_one_recyclerview, fifthOnLayout,catdata.toMutableList())
+                            fifthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.fifth_one_recyclerview, fifthOnLayout,catdata.toMutableList())
                         } else if(subCount == 5) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
-                            fourthOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.sixth_one_recyclerview, sixthOnLayout,catdata.toMutableList())
+                            sixthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.sixth_one_recyclerview, sixthOnLayout,catdata.toMutableList())
                         } else if(subCount == 6) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
-                            fourthOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.seventh_one_recyclerview, seventhOnLayout,catdata.toMutableList())
+                            seventhOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.seventh_one_recyclerview, seventhOnLayout,catdata.toMutableList())
                         } else if(subCount == 7) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
-                            fourthOneTitle.text = cName
-                            firstRecycler(shadowViewObject, R.id.eighth_one_recyclerview, eighthOnLayout,catdata.toMutableList())
+                            eighthOneTitle.text = cName
+                            universalDaynamicRecycler(shadowViewObject, R.id.eighth_one_recyclerview, eighthOnLayout,catdata.toMutableList())
                         }
 
                         subCount++
