@@ -171,6 +171,8 @@
 
             <!--     first       -->
             <LinearLayout
+                android:id="@+id/first_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -209,6 +211,8 @@
 
             <!--     second       -->
             <LinearLayout
+                android:id="@+id/second_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -247,6 +251,8 @@
 
             <!--     third       -->
             <LinearLayout
+                android:id="@+id/third_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -286,6 +292,8 @@
 
             <!--     fourth       -->
             <LinearLayout
+                android:id="@+id/fourth_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -325,6 +333,8 @@
 
             <!--     fifth       -->
             <LinearLayout
+                android:id="@+id/fifth_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -363,6 +373,8 @@
 
             <!--     sixth       -->
             <LinearLayout
+                android:id="@+id/sixth_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -402,6 +414,8 @@
 
             <!--     Seventh       -->
             <LinearLayout
+                android:id="@+id/seventh_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -441,6 +455,8 @@
 
             <!--     Eigth       -->
             <LinearLayout
+                android:id="@+id/eighth_one_layout"
+                android:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -470,7 +486,7 @@
                 </RelativeLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/eighth_txt_recyclerview"
+                    android:id="@+id/eighth_one_recyclerview"
                     android:layout_margin="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

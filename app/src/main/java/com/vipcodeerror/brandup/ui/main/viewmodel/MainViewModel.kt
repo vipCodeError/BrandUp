@@ -7,6 +7,8 @@ import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
 import com.vipcodeerror.brandup.data.model.ApiResponse
 import com.vipcodeerror.brandup.data.model.ImageApiResponse
 import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
+import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import com.vipcodeerror.brandup.data.repository.MainRepository
 import com.vipcodeerror.brandup.util.Resource
 import io.reactivex.Single
@@ -18,13 +20,16 @@ import java.io.File
 class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
 
     private val loginUser = MutableLiveData<Resource<LogginApiResponse>>()
-    private val signUpUser = MutableLiveData<Resource<LogginApiResponse>>()
     private val getCatData = MutableLiveData<Resource<ApiCatDataResponse>>()
     private val postCatPref = MutableLiveData<Resource<ApiResponse>>()
     private val postBussDetails = MutableLiveData<Resource<ApiResponse>>()
     private val uploadLogoImage = MutableLiveData<Resource<ImageApiResponse>>()
-
+    private val homeSelectedData = MutableLiveData<Resource<HomeSelectedApiResponse>>()
     private val compositeDisposable = CompositeDisposable()
+    private val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
+    private val homeSecondData = MutableLiveData<Resource<ApiHomeDataResponse>>()
+    private val homeThirdData = MutableLiveData<Resource<ApiHomeDataResponse>>()
+    private val homeFourthData = MutableLiveData<Resource<ApiHomeDataResponse>>()
 
 
     fun postLoginUser(phone: String, device_name: String) : LiveData<Resource<LogginApiResponse>>{
@@ -105,6 +110,53 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
                         })
         )
         return uploadLogoImage
+    }
+
+    fun getSelectedHomeData(token: String) : LiveData<Resource<HomeSelectedApiResponse>>{
+        homeSelectedData.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getHomeSelectedData(token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            homeSelectedData.postValue(Resource.success(data))
+                        }, {
+                            homeSelectedData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+        return homeSelectedData
+    }
+
+    fun getHomeDataUniversal(homeDataU : MutableLiveData<Resource<ApiHomeDataResponse>>, catId: String, token: String) : LiveData<Resource<ApiHomeDataResponse>>{
+
+        homeDataU.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getHomeData(catId, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            homeDataU.postValue(Resource.success(data))
+                        }, {
+                            homeDataU.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+        return homeDataU
+    }
+
+    fun getHomeSubDataUniversal(homeDataU : MutableLiveData<Resource<ApiHomeDataResponse>>, catId: String, token: String) : LiveData<Resource<ApiHomeDataResponse>>{
+
+        homeDataU.postValue(Resource.loading(null))
+        compositeDisposable.add(
+            mainRepository.getHomSubData(catId, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({data ->
+                    homeDataU.postValue(Resource.success(data))
+                }, {
+                    homeDataU.postValue(Resource.error("Something went wrong", null))
+                })
+        )
+        return homeDataU
     }
 
 }

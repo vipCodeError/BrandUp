@@ -4,6 +4,8 @@ import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
 import com.vipcodeerror.brandup.data.model.ApiResponse
 import com.vipcodeerror.brandup.data.model.ImageApiResponse
 import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
+import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import io.reactivex.Single
 import java.io.File
 
@@ -20,4 +22,10 @@ interface ApiService {
                         belongToWhichUser : String, catIdBelongTo: String, token: String)  : Single<ApiResponse>
 
     fun uploadImage(logoUrl: File, tokens: String) : Single<ImageApiResponse>
+
+    fun homeSelectedData(token: String) : Single<HomeSelectedApiResponse>
+
+    fun homeData(catId: String, token: String) : Single<ApiHomeDataResponse>
+
+    fun homeSubData(catId: String, token: String) : Single<ApiHomeDataResponse>
 }

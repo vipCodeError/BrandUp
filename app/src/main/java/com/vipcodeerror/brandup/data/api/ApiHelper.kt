@@ -16,4 +16,10 @@ class ApiHelper(private val apiService: ApiService)  {
             belongToWhichUser, catIdBelongTo, token)
 
     fun uploadLogoImage(logoUrl : File, token: String) = apiService.uploadImage(logoUrl, token)
+
+    fun getHomeSelectedData(token: String) = apiService.homeSelectedData(token)
+
+    fun getHomeData(catId: String, token: String) = apiService.homeData(catId, token)
+
+    fun getHomeSubData(catId: String, token: String) = apiService.homeSubData(catId, token)
 }

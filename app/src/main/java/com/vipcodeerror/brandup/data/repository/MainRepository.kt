@@ -5,6 +5,8 @@ import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
 import com.vipcodeerror.brandup.data.model.ApiResponse
 import com.vipcodeerror.brandup.data.model.ImageApiResponse
 import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
+import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import io.reactivex.Single
 import java.io.File
 
@@ -33,4 +35,15 @@ class MainRepository (private val apiHelper: ApiHelper) {
         return apiHelper.uploadLogoImage(logoUrl, token)
     }
 
+    fun getHomeSelectedData(token : String) : Single<HomeSelectedApiResponse>{
+        return apiHelper.getHomeSelectedData(token)
+    }
+
+    fun getHomeData(catId : String, token : String) : Single<ApiHomeDataResponse>{
+        return apiHelper.getHomeData(catId, token)
+    }
+
+    fun getHomSubData(catId : String, token : String) : Single<ApiHomeDataResponse>{
+        return apiHelper.getHomeSubData(catId, token)
+    }
 }

@@ -9,6 +9,8 @@ import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
 import com.vipcodeerror.brandup.data.model.ApiResponse
 import com.vipcodeerror.brandup.data.model.ImageApiResponse
 import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
+import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import java.io.File
@@ -99,5 +101,58 @@ class ApiServiceImpl : ApiService {
                     Log.d("upload progress", ((bytesUploaded * 100) / totalBytes).toString())
                 }
                 .getObjectSingle(ImageApiResponse::class.java)
+    }
+
+    override fun homeSelectedData(token: String): Single<HomeSelectedApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_selected_hdata")
+                .addHeaders("Authorization", "Bearer " + token)
+                .setOkHttpClient(okHttpClient)
+                .build().getObjectSingle(HomeSelectedApiResponse::class.java)
+    }
+
+    override fun homeData(catId: String, token: String): Single<ApiHomeDataResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_home_data")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("cat_id", catId)
+                .setOkHttpClient(okHttpClient)
+                .build().getObjectSingle(ApiHomeDataResponse::class.java)
+    }
+
+    override fun homeSubData(catId: String, token: String): Single<ApiHomeDataResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_home_subdata")
+            .addHeaders("Authorization", "Bearer " + token)
+            .addBodyParameter("cat_id", catId)
+            .setOkHttpClient(okHttpClient)
+            .build().getObjectSingle(ApiHomeDataResponse::class.java)
     }
 }
