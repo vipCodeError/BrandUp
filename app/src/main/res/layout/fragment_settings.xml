@@ -17,6 +17,7 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/buss_name"
                 android:text="Furniture Baba"
                 android:fontFamily="@font/archia"
                 android:textStyle="bold"
@@ -27,16 +28,18 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:text="Furniture"
-                android:fontFamily="@font/archia"
-                android:textStyle="bold"
-                android:textSize="13sp"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="8dp"
+                android:id="@+id/buss_cat"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/archia"
+                android:text="Furniture"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/phone_no"
                 android:text="+91 8754254125"
                 android:fontFamily="@font/archia"
                 android:textStyle="bold"
