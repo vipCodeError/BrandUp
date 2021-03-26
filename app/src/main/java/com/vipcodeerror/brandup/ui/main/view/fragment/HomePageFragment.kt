@@ -9,6 +9,7 @@ import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -28,6 +29,7 @@ import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
+import com.vipcodeerror.brandup.ui.main.adapter.BussDialogAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TopTrendingSliderAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TrendingTitleAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.HomeCardAdapter
@@ -64,6 +66,10 @@ class HomePageFragment : Fragment() {
     private lateinit var seventhOnLayout : LinearLayout
     private lateinit var eighthOnLayout : LinearLayout
 
+    private lateinit var businessTitleTxt : TextView
+
+    private lateinit var selectedBussinesLayout : LinearLayout
+
     var subCount = 0
     var rootCount = 0
 
@@ -95,6 +101,9 @@ class HomePageFragment : Fragment() {
         seventhOnLayout = view.findViewById(R.id.seventh_one_layout)
         eighthOnLayout = view.findViewById(R.id.eighth_one_layout)
 
+        businessTitleTxt = view.findViewById(R.id.bussiness_name)
+        selectedBussinesLayout = view.findViewById(R.id.selected_buss_layout)
+
         sharedPreferenceUtil = SharedPreferenceUtil(container!!.context)
 
         shadowViewObject = view
@@ -110,6 +119,15 @@ class HomePageFragment : Fragment() {
         sliderAds(view)
         staticAds()
         trendingTitle()
+
+        getBusinnessForHomeData(mainViewModel,
+                sharedPreferenceUtil.getValueString("user_id").toString(),
+                sharedPreferenceUtil.getValueString("pref_buss").toString(),
+                sharedPreferenceUtil.getValueString("token").toString(),)
+
+        selectedBussinesLayout.setOnClickListener {
+            getBusinnessData(mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(), sharedPreferenceUtil.getValueString("token").toString(),)
+        }
 
         return view
     }
@@ -327,6 +345,49 @@ class HomePageFragment : Fragment() {
                         }
 
                         subCount++
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+    private fun getBusinnessData(mVModel : MainViewModel, catId: String, token: String) {
+        mVModel.getBussinessDetails(catId, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        val bussListDialog = AlertDialog.Builder(requireActivity())
+                        val layoutBDialog = LayoutInflater.from(requireActivity()).inflate(R.layout.buss_dialog_list, null, false)
+                        val bussDialogAdapter  = BussDialogAdapter(it.data.toMutableList())
+                        val bussRecyclerView = layoutBDialog.findViewById<RecyclerView>(R.id.buss_list_recycler)
+                        bussRecyclerView.adapter = bussDialogAdapter
+                        bussRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
+                        bussListDialog.setView(layoutBDialog)
+                        bussListDialog.show()
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+    private fun getBusinnessForHomeData(mVModel : MainViewModel, catId: String, id: String, token: String) {
+        mVModel.getBussinessDetailsForHome(catId, id, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        businessTitleTxt.text = it.data[0].bName
                     }
                 }
                 Status.LOADING -> {

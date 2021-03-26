@@ -22,4 +22,10 @@ class ApiHelper(private val apiService: ApiService)  {
     fun getHomeData(catId: String, token: String) = apiService.homeData(catId, token)
 
     fun getHomeSubData(catId: String, token: String) = apiService.homeSubData(catId, token)
+
+    fun getBussDetails(userId : String, token: String) = apiService.getBussinessDet(userId, token)
+
+    fun getBussinessDetailsForHome(userId : String, id :String, token: String) = apiService.getBussinessDetForHome(userId, id, token)
+
+    fun setBussPref(prefId : String , userId : String, token: String) = apiService.setBusinessPref(prefId, userId, token)
 }

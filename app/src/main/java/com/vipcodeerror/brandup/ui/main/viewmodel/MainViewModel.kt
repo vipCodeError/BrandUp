@@ -3,10 +3,7 @@ package com.vipcodeerror.brandup.ui.main.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
-import com.vipcodeerror.brandup.data.model.ApiResponse
-import com.vipcodeerror.brandup.data.model.ImageApiResponse
-import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.*
 import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import com.vipcodeerror.brandup.data.repository.MainRepository
@@ -25,11 +22,9 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val postBussDetails = MutableLiveData<Resource<ApiResponse>>()
     private val uploadLogoImage = MutableLiveData<Resource<ImageApiResponse>>()
     private val homeSelectedData = MutableLiveData<Resource<HomeSelectedApiResponse>>()
+    private val getBData = MutableLiveData<Resource<BussinessDataResponse>>()
+    private val getBDataForHome = MutableLiveData<Resource<BussinessDataResponse>>()
     private val compositeDisposable = CompositeDisposable()
-    private val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
-    private val homeSecondData = MutableLiveData<Resource<ApiHomeDataResponse>>()
-    private val homeThirdData = MutableLiveData<Resource<ApiHomeDataResponse>>()
-    private val homeFourthData = MutableLiveData<Resource<ApiHomeDataResponse>>()
 
 
     fun postLoginUser(phone: String, device_name: String) : LiveData<Resource<LogginApiResponse>>{
@@ -157,6 +152,36 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
                 })
         )
         return homeDataU
+    }
+
+    fun getBussinessDetails(catId : String, token: String) : LiveData<Resource<BussinessDataResponse>> {
+        getBData.postValue(Resource.loading(null))
+        compositeDisposable.add(
+            mainRepository.getBusinessDetails(catId, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({data ->
+                    getBData.postValue(Resource.success(data))
+                }, {
+                    getBData.postValue(Resource.error("Something went wrong", null))
+                })
+        )
+        return getBData
+    }
+
+    fun getBussinessDetailsForHome(catId : String, id: String, token: String) : LiveData<Resource<BussinessDataResponse>> {
+        getBDataForHome.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getBusinessDetailsForHome(catId, id, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getBDataForHome.postValue(Resource.success(data))
+                        }, {
+                            getBDataForHome.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+        return getBDataForHome
     }
 
 }

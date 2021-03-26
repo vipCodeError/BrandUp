@@ -1,10 +1,7 @@
 package com.vipcodeerror.brandup.data.repository
 
 import com.vipcodeerror.brandup.data.api.ApiHelper
-import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
-import com.vipcodeerror.brandup.data.model.ApiResponse
-import com.vipcodeerror.brandup.data.model.ImageApiResponse
-import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.*
 import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import io.reactivex.Single
@@ -45,5 +42,13 @@ class MainRepository (private val apiHelper: ApiHelper) {
 
     fun getHomSubData(catId : String, token : String) : Single<ApiHomeDataResponse>{
         return apiHelper.getHomeSubData(catId, token)
+    }
+
+    fun getBusinessDetails(catId: String, token: String) : Single<BussinessDataResponse>{
+        return apiHelper.getBussDetails(catId, token)
+    }
+
+    fun getBusinessDetailsForHome(catId: String, id:String,  token: String) : Single<BussinessDataResponse>{
+        return apiHelper.getBussinessDetailsForHome(catId, id, token)
     }
 }

@@ -5,10 +5,7 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.interceptors.HttpLoggingInterceptor
 import com.google.android.gms.common.api.Api
 import com.rx2androidnetworking.Rx2AndroidNetworking
-import com.vipcodeerror.brandup.data.model.ApiCatDataResponse
-import com.vipcodeerror.brandup.data.model.ApiResponse
-import com.vipcodeerror.brandup.data.model.ImageApiResponse
-import com.vipcodeerror.brandup.data.model.LogginApiResponse
+import com.vipcodeerror.brandup.data.model.*
 import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import io.reactivex.Single
@@ -154,5 +151,61 @@ class ApiServiceImpl : ApiService {
             .addBodyParameter("cat_id", catId)
             .setOkHttpClient(okHttpClient)
             .build().getObjectSingle(ApiHomeDataResponse::class.java)
+    }
+
+    override fun getBussinessDet(userId: String, token: String): Single<BussinessDataResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_buss_data")
+            .addHeaders("Authorization", "Bearer " + token)
+            .addBodyParameter("user_id", userId)
+            .setOkHttpClient(okHttpClient)
+            .build().getObjectSingle(BussinessDataResponse::class.java)
+    }
+
+    override fun setBusinessPref(prefId: String, userId: String, token: String): Single<ApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/set_buss_data")
+            .addHeaders("Authorization", "Bearer " + token)
+            .addBodyParameter("user_id", userId)
+            .addBodyParameter("pref_id",prefId)
+            .setOkHttpClient(okHttpClient)
+            .build().getObjectSingle(ApiResponse::class.java)
+    }
+
+    override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_buss_data_for_home")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("user_id", userId)
+                .addBodyParameter("id", userId)
+                .setOkHttpClient(okHttpClient)
+                .build().getObjectSingle(BussinessDataResponse::class.java)
     }
 }

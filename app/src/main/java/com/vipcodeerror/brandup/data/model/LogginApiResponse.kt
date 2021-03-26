@@ -8,5 +8,9 @@ data class LogginApiResponse(
         @SerializedName("status")
         val status: Boolean,
         @SerializedName("token")
-        val token : String
+        val token : String,
+        @SerializedName("pref_business")
+        val prefBusiness : String,
+        @SerializedName("is_already_exits")
+        val isAlreadyExist : String
 )

@@ -1,9 +1,11 @@
 package com.vipcodeerror.brandup.ui.main.view.activity
 
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat.getExtras
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,9 +25,11 @@ import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.adapter.*
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
+import com.vipcodeerror.brandup.util.AppUtils
 import com.vipcodeerror.brandup.util.Resource
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
+
 
 class FrameTemplateSelectorActivity : AppCompatActivity(){
 
@@ -42,6 +46,8 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
     private lateinit var subId : String
     private lateinit var catId : String
 
+    private lateinit var frameLayout : RelativeLayout
+
    // private lateinit var topFrameAdapter : TopFrameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +55,22 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         setContentView(R.layout.frame_selector_activity)
         mainViewModel = setupViewModel()
         sharedPreferenceUtil = SharedPreferenceUtil(this)
+
+        val toolbar: Toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayShowCustomEnabled(true)
+        supportActionBar!!.setCustomView(R.layout.custom_toolbar)
+
+        val downloadImgView = supportActionBar!!.customView.findViewById<ImageView>(R.id.download)
+        val shareImgView = supportActionBar!!.customView.findViewById<ImageView>(R.id.share)
+        frameLayout = findViewById(R.id.frame_layout)
+
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
 
         isSubShown = intent.getStringExtra("is_sub_shown").toString()
         catId = intent.getStringExtra("cat_id").toString()
@@ -63,18 +85,32 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         topFrame()
 
         if (isSubShown == "0"){
-            getHomeSelectedUniversal(mainViewModel, catId, sharedPreferenceUtil.getValueString("token").toString())
+            getHomeSelectedUniversal(
+                mainViewModel,
+                catId,
+                sharedPreferenceUtil.getValueString("token").toString()
+            )
         }else {
-            getHomeSubSelectedUniversal(mainViewModel, subId, sharedPreferenceUtil.getValueString("token").toString())
+            getHomeSubSelectedUniversal(
+                mainViewModel,
+                subId,
+                sharedPreferenceUtil.getValueString("token").toString()
+            )
+        }
+
+        shareImgView.setOnClickListener {
+            AppUtils.launchShareIntent(this, frameLayout)
         }
     }
 
     private fun topFrame(){
-        var topStrList = mutableListOf<SliderItem>(SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/fifth_frame.png"),
-                SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/first_frame.png"),
-                SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/secondframe.png"),
-                SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/shopyy_culture.png"),
-                SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/third_frame.png"))
+        var topStrList = mutableListOf<SliderItem>(
+            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/fifth_frame.png"),
+            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/first_frame.png"),
+            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/secondframe.png"),
+            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/shopyy_culture.png"),
+            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/third_frame.png")
+        )
 
         val sliderAdapter = FrameSliderAdapter(this)
         val sliderView: SliderView = findViewById(R.id.top_frame_recycler)
@@ -91,25 +127,38 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 //        subCatTitleRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun frameRecycler(hData : MutableList<HomeModel>){
+    private fun frameRecycler(hData: MutableList<HomeModel>){
 
         frameSelectorAdapter = FrameSelectorAdapter(this, hData)
 
         frameSelectorRecycler.adapter = frameSelectorAdapter
-        frameSelectorRecycler.layoutManager = GridLayoutManager(this,3, LinearLayoutManager.VERTICAL, false)
+        frameSelectorRecycler.layoutManager = GridLayoutManager(
+            this,
+            3,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         frameSelectorAdapter.clickOnFrameUrl = object : ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
-                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/$url").into(backFrame)
+                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/$url").into(
+                    backFrame
+                )
             }
         }
     }
 
     private fun trendingTitle(){
-        var catListStr = mutableListOf<String>("All", "Marketing and Advertising Agency",
-                "Clothes", "Agriculture", "Education", "Jewelery", "Art and Design", "Mobile Store");
+        var catListStr = mutableListOf<String>(
+            "All", "Marketing and Advertising Agency",
+            "Clothes", "Agriculture", "Education", "Jewelery", "Art and Design", "Mobile Store"
+        );
         val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
         subCatTitleRecycler.adapter = trendingTitleAdapter
-        subCatTitleRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        subCatTitleRecycler.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
     }
 
     private fun setupViewModel() :MainViewModel {
@@ -119,15 +168,19 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         ).get(MainViewModel::class.java)
     }
 
-    private fun getHomeSelectedUniversal(mVModel : MainViewModel, catId: String, token: String) {
+    private fun getHomeSelectedUniversal(mVModel: MainViewModel, catId: String, token: String) {
         val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
         mVModel.getHomeDataUniversal(homeData, catId, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
                         val catdata = it.data
-                            frameRecycler(catdata.toMutableList())
-                            Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/${catdata[0].urlImage}").into(backFrame)
+                        frameRecycler(catdata.toMutableList())
+                        Glide.with(this@FrameTemplateSelectorActivity)
+                            .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/${catdata[0].urlImage}")
+                            .into(
+                                backFrame
+                            )
                     }
                 }
                 Status.LOADING -> {
@@ -140,8 +193,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         })
     }
 
-
-    private fun getHomeSubSelectedUniversal(mVModel : MainViewModel, subId: String, token: String) {
+    private fun getHomeSubSelectedUniversal(mVModel: MainViewModel, subId: String, token: String) {
         val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
         mVModel.getHomeSubDataUniversal(homeData, subId, token).observe(this, Observer {
             when (it.status) {

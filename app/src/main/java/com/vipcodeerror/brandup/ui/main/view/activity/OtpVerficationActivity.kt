@@ -125,7 +125,6 @@ class OtpVerficationActivity : AppCompatActivity() {
                 // resendToken = token
             }
         }
-
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
@@ -153,11 +152,19 @@ class OtpVerficationActivity : AppCompatActivity() {
                     it.data?.let {
                         sharedPreferenceUtil.save("token", it.token)
                         sharedPreferenceUtil.save("user_id", it.id.toString())
+                        sharedPreferenceUtil.save("pref_buss", it.prefBusiness)
                         sharedPreferenceUtil.save("is_logged", true)
                         Log.d("Token ::", it.token)
-                        Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
-                        finish()
+                        if(it.isAlreadyExist == "0"){
+                            Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
+                            finish()
+                        }else {
+                            Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this@OtpVerficationActivity, MainActivity::class.java))
+                            finish()
+                        }
+
                     }
                 }
                 Status.LOADING -> {
