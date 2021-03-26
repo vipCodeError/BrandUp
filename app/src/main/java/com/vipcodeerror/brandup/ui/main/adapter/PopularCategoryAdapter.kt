@@ -29,8 +29,10 @@ class PopularCategoryAdapter(var context : Context, var poplularCatList: List<Ca
 
     override fun onBindViewHolder(holder: PopularCategoryAdapter.MyViewHolder, position: Int) {
         holder.popularCatLayout.setOnClickListener(View.OnClickListener {
-            sharedPreferenceUtil.save("cat_id", poplularCatList[position].id.toString())
-            context.startActivity(Intent(context, BrandLogoEdit::class.java))
+            // sharedPreferenceUtil.save("cat_id", poplularCatList[position].id.toString())
+            val intent = Intent(context, BrandLogoEdit::class.java)
+            intent.putExtra("cat_id", poplularCatList[position].id.toString())
+            context.startActivity(intent)
         })
 
         Glide.with(context).load("https://practicebuckett123.s3.ap-south-1.amazonaws.com/images/"+poplularCatList[position].imgUrl).into(holder.circleImageView)

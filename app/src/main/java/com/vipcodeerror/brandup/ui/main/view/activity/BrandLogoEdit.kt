@@ -240,8 +240,9 @@ class BrandLogoEdit : AppCompatActivity(){
                         var bLoc = locationTxt.text.toString()
                         var bAddr = addrTxt.text.toString()
 
+
                         val userId = sharedPreferenceUtil.getValueString("user_id").toString()
-                        val catId = sharedPreferenceUtil.getValueString("cat_id").toString()
+                        val catId = intent.getStringExtra("cat_id").toString()
                         postBusinessDetails(bName, bPhone, bAddr,  it.imageUrl , bLoc, userId , catId, token)
                     }
                 }

@@ -99,6 +99,7 @@
                 android:layout_height="30dp"/>
 
             <TextView
+                android:id="@+id/edit_your_business"
                 android:text="Edit Your Brand Name"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -128,6 +129,7 @@
                 android:layout_height="30dp"/>
 
             <TextView
+                android:id="@+id/preferred_language_txt"
                 android:text="Preferred Language"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -158,6 +160,7 @@
                 android:layout_height="30dp"/>
 
             <TextView
+                android:id="@+id/help_and_support"
                 android:text="Help and Support"
                 android:textSize="14sp"
                 android:textStyle="bold"

@@ -51,17 +51,6 @@ class BusinessCategory : AppCompatActivity() {
 
         catDataObserver(sharedPreferenceUtil.getValueString("token").toString())
 
-        var catListStr = mutableListOf<String>("Marketing and Advertising Agency",
-            "Clothes", "Agriculture", "Education", "Jewelery", "Art and Design", "Mobile Store",
-            "Advocate", "Auto Mobile", "FMCG", "Real Estate", "Ceramic", "Electrical",
-            "Building Traders", "Furniture", "Textile Industry", "Insurance", "Finance",
-            "Photographer", "Tour and Travels", "Information Technology", "Graphic Designing",
-            "Dairy & Sweets", "Consultant", "Computer Hardware", "Restaurant, Catering", "Solar and Power Panel",
-            "Social Activist", "Steel and Aluminium", "Events", "Clinic and Hospital", "Aryuvedic",
-            "Agarbatti", "Pharmaceutical", "Hotel", "Security Surveillance", "Home Appliances",
-            "Interior", "Beauty parlor and salon");
-
-
     }
 
     private fun catDataObserver(token: String) {
