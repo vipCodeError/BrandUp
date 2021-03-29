@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,15 +28,16 @@ import java.util.Observer
 
 class SettingFragment : Fragment() {
 
-    private lateinit var myBusinessEditTxt : TextView
+
     private lateinit var bannerImage : ImageView
 
     private lateinit var logoutTxt: TextView
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
-    private lateinit var myBusinessTxt : TextView
-    private lateinit var preferredTxt : TextView
-    private lateinit var helpAndSupportTxt : TextView
+    private lateinit var myBusinessTxt : LinearLayout
+    private lateinit var preferredTxt : LinearLayout
+    private lateinit var helpAndSupportTxt : LinearLayout
+    private lateinit var myBusinessEditTxt : LinearLayout
 
     private lateinit var bName : TextView
     private lateinit var bCatName : TextView
@@ -54,10 +56,10 @@ class SettingFragment : Fragment() {
 
         bannerImage = view.findViewById(R.id.banner_ads_sett)
 
-        myBusinessTxt = view.findViewById(R.id.my_business_set)
-        preferredTxt = view.findViewById(R.id.preferred_language_txt)
-        helpAndSupportTxt = view.findViewById(R.id.help_and_support)
-        myBusinessEditTxt = view.findViewById(R.id.edit_your_business)
+        myBusinessTxt = view.findViewById(R.id.my_b_layout)
+        preferredTxt = view.findViewById(R.id.pref_lan_layout)
+        helpAndSupportTxt = view.findViewById(R.id.help_and_support_layout)
+        myBusinessEditTxt = view.findViewById(R.id.edit_b_layout)
         logoutTxt = view.findViewById(R.id.logout_txt)
 
         myBusinessEditTxt.setOnClickListener {
