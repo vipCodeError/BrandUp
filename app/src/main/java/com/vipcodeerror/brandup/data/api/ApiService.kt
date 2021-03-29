@@ -12,7 +12,7 @@ interface ApiService {
 
     fun getCatData(token : String) : Single<ApiCatDataResponse>
 
-    fun postCatPref(catId: String, token: String) : Single<ApiResponse>
+    fun postCatPref(userId: String, pref: String, token: String) : Single<ApiResponse>
 
     fun postBussDetails(bussName : String, phone: String, address : String,
                         logoUrl: String, location: String,

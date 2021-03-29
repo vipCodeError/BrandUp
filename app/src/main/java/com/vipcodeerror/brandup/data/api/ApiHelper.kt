@@ -7,7 +7,7 @@ class ApiHelper(private val apiService: ApiService)  {
 
     fun catData(token : String) = apiService.getCatData(token)
 
-    fun businessCatPref(catId: String, token: String) = apiService.postCatPref(catId, token)
+    fun businessCatPref(userId: String, pref: String,token: String) = apiService.postCatPref(userId, pref, token)
 
     fun postBusinessDetails(bussName : String, phone: String, address : String,
                             logoUrl: String, location: String,

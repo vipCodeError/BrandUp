@@ -41,9 +41,11 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(ApiCatDataResponse::class.java)
     }
 
-    override fun postCatPref(catId: String, token: String): Single<ApiResponse> {
+    override fun postCatPref(userId: String, pref: String, token: String): Single<ApiResponse> {
         return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/buss_pref")
                 .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("user_id", userId)
+                .addBodyParameter("buss_pref", pref)
                 .build().getObjectSingle(ApiResponse::class.java)
     }
 
@@ -204,7 +206,7 @@ class ApiServiceImpl : ApiService {
         return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_buss_data_for_home")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("user_id", userId)
-                .addBodyParameter("id", userId)
+                .addBodyParameter("id", id)
                 .setOkHttpClient(okHttpClient)
                 .build().getObjectSingle(BussinessDataResponse::class.java)
     }

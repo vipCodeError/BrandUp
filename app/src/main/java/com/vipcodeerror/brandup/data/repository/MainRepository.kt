@@ -17,8 +17,8 @@ class MainRepository (private val apiHelper: ApiHelper) {
         return apiHelper.catData(token)
     }
 
-    fun postCatPref(catId : String, token: String) : Single<ApiResponse>{
-        return apiHelper.businessCatPref(catId, token)
+    fun postCatPref(userId: String, pref: String, token: String) : Single<ApiResponse>{
+        return apiHelper.businessCatPref(userId, pref, token)
     }
 
     fun postBussDetails(bussName : String, phone: String, address : String,
@@ -50,5 +50,9 @@ class MainRepository (private val apiHelper: ApiHelper) {
 
     fun getBusinessDetailsForHome(catId: String, id:String,  token: String) : Single<BussinessDataResponse>{
         return apiHelper.getBussinessDetailsForHome(catId, id, token)
+    }
+
+    fun setUserBussPref(userId: String, pref_id: String, token: String) : Single<ApiResponse>{
+        return apiHelper.setBussPref(pref_id, userId, token)
     }
 }

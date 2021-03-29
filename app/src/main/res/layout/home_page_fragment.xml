@@ -71,6 +71,7 @@
             android:layout_gravity="end|center_vertical">
 
             <ImageView
+                android:id="@+id/search_icons"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="8dp"
@@ -85,6 +86,7 @@
                 android:layout_marginStart="16dp">
 
                 <ImageView
+                    android:id="@+id/notification_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_centerInParent="true"

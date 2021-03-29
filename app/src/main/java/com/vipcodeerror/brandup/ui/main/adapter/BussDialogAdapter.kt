@@ -19,7 +19,7 @@ class BussDialogAdapter(val bData : MutableList<BusinessDetailsModel>) : Recycle
 
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
-    private lateinit var onClickListener : OnClickListItem
+    public lateinit var onClickListener : OnClickListItem
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

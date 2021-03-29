@@ -215,8 +215,9 @@ class BrandLogoEdit : AppCompatActivity(){
                 Status.SUCCESS -> {
                     it.data?.let {
                         var catdata = it.status
-                        startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
-                        finish();
+                        setUserBussPref(phone,
+                            it.id.toString(), sharedPreferenceUtil.getValueString("token").toString())
+
                     }
                 }
                 Status.LOADING -> {
@@ -250,6 +251,26 @@ class BrandLogoEdit : AppCompatActivity(){
                 }
                 Status.ERROR -> {
                     // Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun setUserBussPref(userId:String, pref_id: String, token: String){
+        mainViewModel.postUserBussPref(userId, pref_id, token).observe(this, Observer{
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        finish();
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                    finish();
                 }
             }
         })

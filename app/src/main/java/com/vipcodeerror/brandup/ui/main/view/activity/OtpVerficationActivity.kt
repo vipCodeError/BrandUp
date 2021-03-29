@@ -99,7 +99,8 @@ class OtpVerficationActivity : AppCompatActivity() {
     private fun callBackPhoneOtp(){
         callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential){
+                signInWithPhoneAuthCredential(credential)
                 Log.d(TAG, "onVerificationCompleted:$credential")
             }
 

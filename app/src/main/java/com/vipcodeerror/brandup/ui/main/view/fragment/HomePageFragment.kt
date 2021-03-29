@@ -1,5 +1,7 @@
 package com.vipcodeerror.brandup.ui.main.view.fragment
 
+import android.app.Notification
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +36,9 @@ import com.vipcodeerror.brandup.ui.main.adapter.BussDialogAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TopTrendingSliderAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TrendingTitleAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.HomeCardAdapter
+import com.vipcodeerror.brandup.ui.main.view.activity.MainActivity
+import com.vipcodeerror.brandup.ui.main.view.activity.NotificationActivity
+import com.vipcodeerror.brandup.ui.main.view.activity.SearchActivity
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.Resource
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
@@ -75,6 +80,9 @@ class HomePageFragment : Fragment() {
     private lateinit var shimmerLayout : ShimmerLayout
     private lateinit var nestedLayout : NestedScrollView
 
+    private lateinit var searchIcon : ImageView
+    private lateinit var notificationIcon : ImageView
+
     var subCount = 0
     var rootCount = 0
 
@@ -112,6 +120,9 @@ class HomePageFragment : Fragment() {
         shimmerLayout = view.findViewById(R.id.shimmer_layout)
         nestedLayout = view.findViewById(R.id.root_nested_scroll_view)
 
+        searchIcon = view.findViewById(R.id.search_icons)
+        notificationIcon = view.findViewById(R.id.notification_icon)
+
         sharedPreferenceUtil = SharedPreferenceUtil(container!!.context)
 
         shadowViewObject = view
@@ -135,6 +146,14 @@ class HomePageFragment : Fragment() {
 
         selectedBussinesLayout.setOnClickListener {
             getBusinnessData(mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(), sharedPreferenceUtil.getValueString("token").toString(),)
+        }
+
+        searchIcon.setOnClickListener {
+            requireActivity().startActivity(Intent(requireActivity(), SearchActivity::class.java))
+        }
+
+        notificationIcon.setOnClickListener {
+            requireActivity().startActivity(Intent(requireActivity(), NotificationActivity::class.java))
         }
 
         return view
@@ -382,6 +401,12 @@ class HomePageFragment : Fragment() {
                         bussRecyclerView.adapter = bussDialogAdapter
                         bussRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
                         bussListDialog.setView(layoutBDialog)
+                        bussDialogAdapter.onClickListener = object: BussDialogAdapter.OnClickListItem{
+                            override fun setBId(bId: String) {
+                                setUserBussPref(sharedPreferenceUtil.getValueString("user_id").toString(), bId, sharedPreferenceUtil.getValueString("token").toString())
+                            }
+
+                        }
                         bussListDialog.show()
                     }
                 }
@@ -400,7 +425,10 @@ class HomePageFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
-                        businessTitleTxt.text = it.data[0].bName
+                        if (it.data.isNotEmpty()){
+                            businessTitleTxt.text = it.data[0].bName
+                        }
+
                     }
                 }
                 Status.LOADING -> {
@@ -408,6 +436,24 @@ class HomePageFragment : Fragment() {
                 }
                 Status.ERROR -> {
 
+                }
+            }
+        })
+    }
+
+    private fun setUserBussPref(phone:String, pref_id: String, token: String){
+        mainViewModel.postUserBussPref(phone, pref_id, token).observe(this, Observer{
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    // Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })

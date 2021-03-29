@@ -106,9 +106,11 @@ class SettingFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
-                        bName.text = it.data[0].bName
-                        bPhoneNo.text = it.data[0].bPhone
-                        bCatName.text = it.data[0].catName
+                        if (it.data.isNotEmpty()){
+                            bName.text = it.data[0].bName
+                            bPhoneNo.text = it.data[0].bPhone
+                            bCatName.text = it.data[0].catName
+                        }
                     }
                 }
                 Status.LOADING -> {

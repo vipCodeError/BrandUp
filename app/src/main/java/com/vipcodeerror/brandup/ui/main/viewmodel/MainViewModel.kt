@@ -57,10 +57,10 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         return getCatData
     }
 
-    fun postCatPref(catId : String, token: String) : LiveData<Resource<ApiResponse>>{
+    fun postUserBussPref(userId: String, pref: String, token: String) : LiveData<Resource<ApiResponse>>{
         postCatPref.postValue(Resource.loading(null))
         compositeDisposable.add(
-                mainRepository.postCatPref(catId, token)
+                mainRepository.postCatPref(userId, pref, token)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({ loginData ->
