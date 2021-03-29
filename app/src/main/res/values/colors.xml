@@ -15,4 +15,5 @@
     <color name="frame_layout_color">#fff</color>
     <color name="setting_divider">#86000000</color>
     <color name="navigator_item_background_color">#EFEFEF</color>
+    <color name="shimmerBackground">#D6D6D6</color>
 </resources>

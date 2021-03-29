@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -37,6 +38,7 @@ import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.Resource
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
+import xyz.peridy.shimmerlayout.ShimmerLayout
 
 
 class HomePageFragment : Fragment() {
@@ -69,6 +71,9 @@ class HomePageFragment : Fragment() {
     private lateinit var businessTitleTxt : TextView
 
     private lateinit var selectedBussinesLayout : LinearLayout
+
+    private lateinit var shimmerLayout : ShimmerLayout
+    private lateinit var nestedLayout : NestedScrollView
 
     var subCount = 0
     var rootCount = 0
@@ -103,6 +108,9 @@ class HomePageFragment : Fragment() {
 
         businessTitleTxt = view.findViewById(R.id.bussiness_name)
         selectedBussinesLayout = view.findViewById(R.id.selected_buss_layout)
+
+        shimmerLayout = view.findViewById(R.id.shimmer_layout)
+        nestedLayout = view.findViewById(R.id.root_nested_scroll_view)
 
         sharedPreferenceUtil = SharedPreferenceUtil(container!!.context)
 
@@ -237,7 +245,10 @@ class HomePageFragment : Fragment() {
         val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
         mVModel.getHomeDataUniversal(homeData, catId, token).observe(this, Observer {
             when (it.status) {
+
                 Status.SUCCESS -> {
+                    shimmerLayout.visibility = View.GONE
+                    nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
                         if(rootCount == 0){
@@ -300,6 +311,8 @@ class HomePageFragment : Fragment() {
         mVModel.getHomeSubDataUniversal(homeData, subId, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
+                    shimmerLayout.visibility = View.GONE
+                    nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
                         if(subCount == 0){

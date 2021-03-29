@@ -81,6 +81,9 @@ dependencies {
     // slider
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
+    //simmer effect
+    implementation 'xyz.peridy.shimmer:shimmerlayout:1.1'
+
     // firebase
     implementation platform('com.google.firebase:firebase-bom:26.7.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
