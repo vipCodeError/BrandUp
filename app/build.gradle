@@ -5,6 +5,8 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 
+def lottieVersion = "3.4.0"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -84,6 +86,9 @@ dependencies {
 
     //simmer effect
     implementation 'xyz.peridy.shimmer:shimmerlayout:1.1'
+
+    //lottie animation
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
     // firebase
     implementation platform('com.google.firebase:firebase-bom:26.7.0')

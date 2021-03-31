@@ -3,6 +3,7 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
@@ -43,6 +45,9 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
     private lateinit var frameSelectorRecycler : RecyclerView
     private lateinit var backFrame : ImageView
     private lateinit var bottomFrame: ImageView
+    private lateinit var logoFrame : ImageView
+    private lateinit var lLayoutRoot : LinearLayout
+    private lateinit var lurkingCatAnim : LottieAnimationView
 
     private lateinit var frameSelectorAdapter: BottomBannerAdapter
 
@@ -68,9 +73,10 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
 
         backFrame = findViewById(R.id.back_frame)
         bottomFrame = findViewById(R.id.bottom_frame)
+        logoFrame = findViewById(R.id.logo_img)
         frameSelectorRecycler = findViewById(R.id.frame_selector_recycler)
-
-        topFrame()
+        lLayoutRoot = findViewById(R.id.r_l_12345)
+        lurkingCatAnim = findViewById(R.id.lurking_cat_anim)
 
         requestForImageGeneration(mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(),
                 sharedPreferenceUtil.getValueString("pref_buss").toString(), sharedPreferenceUtil.getValueString("token").toString())
@@ -83,20 +89,6 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
         ).get(MainViewModel::class.java)
     }
 
-    private fun topFrame(){
-//        val sliderAdapter = FrameSliderAdapter(this)
-//        val sliderView: SliderView = findViewById(R.id.top_frame_recycler)
-//        sliderView.setSliderAdapter(sliderAdapter)
-//        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
-//        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-//        sliderView.startAutoCycle();
-//
-//        sliderAdapter.addItem(topStrList)
-
-//        topFrameAdapter = TopFrameAdapter(this, topStrList)
-//        subCatTitleRecycler.adapter = topFrameAdapter
-//        subCatTitleRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-    }
 
     private fun requestForImageGeneration(mVModel: MainViewModel, user_id: String, pref_id: String, token: String) {
         mVModel.requestForImageGeneration(user_id, pref_id, token).observe(this, Observer {
@@ -133,10 +125,22 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
                         val catdata = it.data
                         frameRecycler(catdata.toMutableList())
                         Glide.with(this@BottomFrameSelectorActivity)
-                                .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/brandup.png")
+                                .load("https://d4f9k68hk754p.cloudfront.net/fit-in/800x800/images/48074.jpg")
                                 .into(
                                         backFrame
                                 )
+                        Glide.with(this@BottomFrameSelectorActivity)
+                                .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
+                                .into(logoFrame)
+
+                        Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x400/${catdata[0].urlBottomBanner}").apply( RequestOptions()
+                            .fitCenter()
+                            .format(DecodeFormat.PREFER_ARGB_8888)
+                            .override(SIZE_ORIGINAL))
+                            .into(bottomFrame);
+
+                        lurkingCatAnim.visibility = View.GONE
+                        lLayoutRoot.visibility = View.VISIBLE
                     }
                 }
                 Status.LOADING -> {

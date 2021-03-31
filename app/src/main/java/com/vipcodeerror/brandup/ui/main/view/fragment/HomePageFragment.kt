@@ -644,6 +644,7 @@ class HomePageFragment : Fragment() {
                 Status.SUCCESS -> {
                     it.data?.let {
                         if (it.data.isNotEmpty()) {
+                            sharedPreferenceUtil.save("logoUrl", it.data[0].logoUrl)
                             businessTitleTxt.text = it.data[0].bName
                         }
 

@@ -84,7 +84,7 @@
 
         <LinearLayout
             android:id="@+id/logo_layout"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical"
             android:animateLayoutChanges="true"
             android:layout_width="match_parent"
@@ -138,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/business_detail_lay"
                 android:orientation="vertical"
                 android:animateLayoutChanges="true"
