@@ -29,6 +29,7 @@
         <activity android:name=".ui.main.view.activity.LoginActivity"/>
         <activity android:name=".ui.main.view.activity.SearchActivity"/>
         <activity android:name=".ui.main.view.activity.NotificationActivity"/>
+        <activity android:name=".ui.main.view.activity.BottomFrameSelectorActivity"/>
         <activity android:name=".ui.main.view.activity.BrandLogoEdit"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 

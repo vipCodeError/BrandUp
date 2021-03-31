@@ -122,9 +122,6 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         sliderAdapter.addItem(topStrList)
 
 
-//        topFrameAdapter = TopFrameAdapter(this, topStrList)
-//        subCatTitleRecycler.adapter = topFrameAdapter
-//        subCatTitleRecycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun frameRecycler(hData: MutableList<HomeModel>){

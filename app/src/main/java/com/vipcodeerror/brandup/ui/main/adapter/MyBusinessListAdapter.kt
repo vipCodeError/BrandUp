@@ -7,11 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.BusinessDetailsModel
 import com.vipcodeerror.brandup.data.model.MyBusiness
+import com.vipcodeerror.brandup.ui.main.view.activity.BottomFrameSelectorActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.BusinessCategory
 
 class MyBusinessListAdapter(var context: Context, var businessList : MutableList<BusinessDetailsModel>) : RecyclerView.Adapter<MyBusinessListAdapter.MyViewHolder>() {
@@ -28,6 +30,10 @@ class MyBusinessListAdapter(var context: Context, var businessList : MutableList
         holder.editBrand.setOnClickListener {
             context.startActivity(Intent(context, BusinessCategory::class.java))
         }
+
+        holder.bLayoutBuss.setOnClickListener {
+            context.startActivity(Intent(context, BottomFrameSelectorActivity::class.java))
+        }
     }
 
     override fun getItemCount(): Int {
@@ -40,5 +46,6 @@ class MyBusinessListAdapter(var context: Context, var businessList : MutableList
         var whichCatBelongTo = itemView.findViewById<TextView>(R.id.which_cat_belong_to)
         var businessLocation = itemView.findViewById<TextView>(R.id.addr_of_business)
         var editBrand = itemView.findViewById<TextView>(R.id.edit_your_business)
+        var bLayoutBuss = itemView.findViewById<ConstraintLayout>(R.id.b_list_layout)
     }
 }

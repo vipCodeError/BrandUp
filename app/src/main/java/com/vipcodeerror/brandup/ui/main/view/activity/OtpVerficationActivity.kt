@@ -155,7 +155,7 @@ class OtpVerficationActivity : AppCompatActivity() {
                         sharedPreferenceUtil.save("user_id", it.id.toString())
                         sharedPreferenceUtil.save("pref_buss", it.prefBusiness)
                         sharedPreferenceUtil.save("is_logged", true)
-                        Log.d("Token ::", it.token)
+
                         if(it.isAlreadyExist == "0"){
                             Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))

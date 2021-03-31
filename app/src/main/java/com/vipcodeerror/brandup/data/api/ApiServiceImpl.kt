@@ -202,7 +202,7 @@ class ApiServiceImpl : ApiService {
     }
 
     override fun requestImageGenerator(user_id: String, pref_id: String, token: String): Single<ApiResponse> {
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_bottom_banner")
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/execute_img_generator")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("user_id",user_id)
                 .addBodyParameter("pref_id",pref_id)

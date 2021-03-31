@@ -1,6 +1,8 @@
 package com.vipcodeerror.brandup.ui.main.view.activity
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -20,7 +22,8 @@ import com.vipcodeerror.brandup.util.Status
 
 
 public class MyBusinessList : AppCompatActivity(){
-    private lateinit var toolbar: Toolbar
+    private lateinit var toolbar: Toolbar// custom request bundle data
+
     private lateinit var myBusinessAdapter: MyBusinessListAdapter
     private lateinit var myBusinessRecyclerView : RecyclerView
     private lateinit var mainViewModel: MainViewModel
@@ -35,15 +38,23 @@ public class MyBusinessList : AppCompatActivity(){
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.my_business_toolbar)
         supportActionBar?.setHomeAsUpIndicator(
             ContextCompat.getDrawable(
                 this,
                 R.drawable.arrow_back
             )
         )
-        supportActionBar?.title = "My Businesses"
+        //supportActionBar?.title = "My Businesses"
+
+        var addBussbtn = supportActionBar?.customView?.findViewById<ImageButton>(R.id.add_business)
+
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
+        addBussbtn?.setOnClickListener {
+            startActivity(Intent(this@MyBusinessList, BusinessCategory::class.java))
+        }
 
         mainViewModel = setupViewModel()
         sharedPreferenceUtil = SharedPreferenceUtil(this)
