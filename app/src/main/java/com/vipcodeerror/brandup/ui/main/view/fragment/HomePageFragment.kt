@@ -1,7 +1,7 @@
 package com.vipcodeerror.brandup.ui.main.view.fragment
 
-import android.app.Notification
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,10 +33,9 @@ import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.adapter.BussDialogAdapter
+import com.vipcodeerror.brandup.ui.main.adapter.HomeCardAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TopTrendingSliderAdapter
 import com.vipcodeerror.brandup.ui.main.adapter.TrendingTitleAdapter
-import com.vipcodeerror.brandup.ui.main.adapter.HomeCardAdapter
-import com.vipcodeerror.brandup.ui.main.view.activity.MainActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.NotificationActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.SearchActivity
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
@@ -139,13 +138,20 @@ class HomePageFragment : Fragment() {
         staticAds()
         trendingTitle()
 
-        getBusinnessForHomeData(mainViewModel,
-                sharedPreferenceUtil.getValueString("user_id").toString(),
-                sharedPreferenceUtil.getValueString("pref_buss").toString(),
-                sharedPreferenceUtil.getValueString("token").toString(),)
+        getBusinnessForHomeData(
+            mainViewModel,
+            sharedPreferenceUtil.getValueString("user_id").toString(),
+            sharedPreferenceUtil.getValueString("pref_buss").toString(),
+            sharedPreferenceUtil.getValueString("token").toString(),
+        )
 
         selectedBussinesLayout.setOnClickListener {
-            getBusinnessData(mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(), sharedPreferenceUtil.getValueString("token").toString(),)
+            getBusinnessData(
+                mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(),
+                sharedPreferenceUtil.getValueString(
+                    "token"
+                ).toString(),
+            )
         }
 
         searchIcon.setOnClickListener {
@@ -153,7 +159,12 @@ class HomePageFragment : Fragment() {
         }
 
         notificationIcon.setOnClickListener {
-            requireActivity().startActivity(Intent(requireActivity(), NotificationActivity::class.java))
+            requireActivity().startActivity(
+                Intent(
+                    requireActivity(),
+                    NotificationActivity::class.java
+                )
+            )
         }
 
         return view
@@ -200,36 +211,90 @@ class HomePageFragment : Fragment() {
     }
 
     private fun trendingTitle(){
-        var catListStr = mutableListOf<String>("Marketing and Advertising Agency",
-            "Clothes", "Agriculture", "Education", "Jewelery", "Art and Design", "Mobile Store",
-            "Advocate", "Auto Mobile", "FMCG", "Real Estate", "Ceramic", "Electrical",
-            "Building Traders", "Furniture", "Textile Industry", "Insurance", "Finance",
-            "Photographer", "Tour and Travels", "Information Technology", "Graphic Designing",
-            "Dairy & Sweets", "Consultant", "Computer Hardware", "Restaurant, Catering", "Solar and Power Panel",
-            "Social Activist", "Steel and Aluminium", "Events", "Clinic and Hospital", "Aryuvedic",
-            "Agarbatti", "Pharmaceutical", "Hotel", "Security Surveillance", "Home Appliances",
-            "Interior", "Beauty parlor and salon");
+        var catListStr = mutableListOf<String>(
+            "Marketing and Advertising Agency",
+            "Clothes",
+            "Agriculture",
+            "Education",
+            "Jewelery",
+            "Art and Design",
+            "Mobile Store",
+            "Advocate",
+            "Auto Mobile",
+            "FMCG",
+            "Real Estate",
+            "Ceramic",
+            "Electrical",
+            "Building Traders",
+            "Furniture",
+            "Textile Industry",
+            "Insurance",
+            "Finance",
+            "Photographer",
+            "Tour and Travels",
+            "Information Technology",
+            "Graphic Designing",
+            "Dairy & Sweets",
+            "Consultant",
+            "Computer Hardware",
+            "Restaurant, Catering",
+            "Solar and Power Panel",
+            "Social Activist",
+            "Steel and Aluminium",
+            "Events",
+            "Clinic and Hospital",
+            "Aryuvedic",
+            "Agarbatti",
+            "Pharmaceutical",
+            "Hotel",
+            "Security Surveillance",
+            "Home Appliances",
+            "Interior",
+            "Beauty parlor and salon"
+        );
         val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
         trendingRecyclerView.adapter = trendingTitleAdapter
-        trendingRecyclerView.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        trendingRecyclerView.layoutManager = LinearLayoutManager(
+            requireActivity(),
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
     }
 
-    private fun universalDaynamicRecycler(view : View, resId : Int, lLayout: View, isSubShown : String, catId: String, subId : String, dataHome : MutableList<HomeModel>){
+    private fun universalDaynamicRecycler(
+        view: View,
+        resId: Int,
+        lLayout: View,
+        isSubShown: String,
+        catId: String,
+        subId: String,
+        dataHome: MutableList<HomeModel>
+    ){
         // test
         var firstAdapterList = mutableListOf<HomeModel>()
         firstAdapterList.addAll(dataHome)
 
         lLayout.visibility = View.VISIBLE
         val recyclerFirst = view.findViewById<RecyclerView>(resId)
-        var firstAdapter = HomeCardAdapter(requireActivity(), isSubShown, catId, subId, firstAdapterList)
+        var firstAdapter = HomeCardAdapter(
+            requireActivity(),
+            isSubShown,
+            catId,
+            subId,
+            firstAdapterList
+        )
         recyclerFirst.adapter = firstAdapter
-        recyclerFirst.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
+        recyclerFirst.layoutManager = LinearLayoutManager(
+            requireActivity(),
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
     }
 
     private fun setupViewModel() :MainViewModel {
         return  ViewModelProviders.of(
-                this,
-                ViewModelFactory(ApiHelper(ApiServiceImpl()))
+            this,
+            ViewModelFactory(ApiHelper(ApiServiceImpl()))
         ).get(MainViewModel::class.java)
     }
 
@@ -240,12 +305,20 @@ class HomePageFragment : Fragment() {
                 Status.SUCCESS -> {
                     it.data?.let {
                         var catdata = it.data
-                        for(cdata : HomeSelectedModel in catdata){
+                        for (cdata: HomeSelectedModel in catdata) {
                             val mVModel = setupViewModel()
-                            if (cdata.isSubShown == "0"){
-                                getHomeSelectedUniversal(mVModel, cdata.catId, sharedPreferenceUtil.getValueString("token").toString())
-                            }else if(cdata.isSubShown == "1") {
-                                getHomeSubSelectedUniversal(mVModel, cdata.subId, sharedPreferenceUtil.getValueString("token").toString())
+                            if (cdata.isSubShown == "0") {
+                                getHomeSelectedUniversal(
+                                    mVModel, cdata.catId, sharedPreferenceUtil.getValueString(
+                                        "token"
+                                    ).toString()
+                                )
+                            } else if (cdata.isSubShown == "1") {
+                                getHomeSubSelectedUniversal(
+                                    mVModel, cdata.subId, sharedPreferenceUtil.getValueString(
+                                        "token"
+                                    ).toString()
+                                )
                             }
                         }
                     }
@@ -260,7 +333,7 @@ class HomePageFragment : Fragment() {
         })
     }
 
-    private fun getHomeSelectedUniversal(mVModel : MainViewModel, catId: String, token: String) {
+    private fun getHomeSelectedUniversal(mVModel: MainViewModel, catId: String, token: String) {
         val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
         mVModel.getHomeDataUniversal(homeData, catId, token).observe(this, Observer {
             when (it.status) {
@@ -270,46 +343,110 @@ class HomePageFragment : Fragment() {
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
-                        if(rootCount == 0){
+                        if (rootCount == 0) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             firstOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.first_one_recyclerview, firstOnLayout ,"0", catId, catdata[0].subId,catdata.toMutableList())
-                        } else  if(rootCount == 1) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.first_one_recyclerview,
+                                firstOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 1) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             secondOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.second_one_recyclerview, secondOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
-                        } else if(rootCount == 2) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.second_one_recyclerview,
+                                secondOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 2) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             thirdOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.third_one_recyclerview, thirdOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
-                        } else if(rootCount == 3) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.third_one_recyclerview,
+                                thirdOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 3) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             fourthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.fourth_one_recyclerview, fourthOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
-                        } else if(rootCount == 4) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.fourth_one_recyclerview,
+                                fourthOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 4) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             fifthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.fifth_one_recyclerview, fifthOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
-                        } else if(rootCount == 5) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.fifth_one_recyclerview,
+                                fifthOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 5) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             sixthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.sixth_one_recyclerview, sixthOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
-                        } else if(rootCount == 6) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.sixth_one_recyclerview,
+                                sixthOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 6) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             seventhOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.seventh_one_recyclerview, seventhOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
-                        } else if(rootCount == 7) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.seventh_one_recyclerview,
+                                seventhOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (rootCount == 7) {
                             var catdata = it.data
                             val cName = catdata[0].catName
                             eighthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.eighth_one_recyclerview, eighthOnLayout,"0",catId, catdata[0].subId, catdata.toMutableList())
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.eighth_one_recyclerview,
+                                eighthOnLayout,
+                                "0",
+                                catId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
                         }
                         rootCount++
                     }
@@ -325,7 +462,7 @@ class HomePageFragment : Fragment() {
     }
 
 
-    private fun getHomeSubSelectedUniversal(mVModel : MainViewModel, subId: String, token: String) {
+    private fun getHomeSubSelectedUniversal(mVModel: MainViewModel, subId: String, token: String) {
         val homeData = MutableLiveData<Resource<ApiHomeDataResponse>>()
         mVModel.getHomeSubDataUniversal(homeData, subId, token).observe(this, Observer {
             when (it.status) {
@@ -334,46 +471,110 @@ class HomePageFragment : Fragment() {
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
-                        if(subCount == 0){
+                        if (subCount == 0) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             firstOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.first_one_recyclerview, firstOnLayout ,"1",subId, catdata[0].subId, catdata.toMutableList())
-                        } else  if(subCount == 1) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.first_one_recyclerview,
+                                firstOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 1) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             secondOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.second_one_recyclerview, secondOnLayout,"1",subId, catdata[0].subId,catdata.toMutableList())
-                        } else if(subCount == 2) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.second_one_recyclerview,
+                                secondOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 2) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             thirdOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.third_one_recyclerview, thirdOnLayout,"1",subId, catdata[0].subId,catdata.toMutableList())
-                        } else if(subCount == 3) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.third_one_recyclerview,
+                                thirdOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 3) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             fourthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.fourth_one_recyclerview, fourthOnLayout,"1",subId, catdata[0].subId,catdata.toMutableList())
-                        } else if(subCount == 4) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.fourth_one_recyclerview,
+                                fourthOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 4) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             fifthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.fifth_one_recyclerview, fifthOnLayout,"1",subId, catdata[0].subId,catdata.toMutableList())
-                        } else if(subCount == 5) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.fifth_one_recyclerview,
+                                fifthOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 5) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             sixthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.sixth_one_recyclerview, sixthOnLayout,"1",subId, catdata[0].subId, catdata.toMutableList())
-                        } else if(subCount == 6) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.sixth_one_recyclerview,
+                                sixthOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 6) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             seventhOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.seventh_one_recyclerview, seventhOnLayout,"1",subId, catdata[0].subId, catdata.toMutableList())
-                        } else if(subCount == 7) {
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.seventh_one_recyclerview,
+                                seventhOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
+                        } else if (subCount == 7) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
                             eighthOneTitle.text = cName
-                            universalDaynamicRecycler(shadowViewObject, R.id.eighth_one_recyclerview, eighthOnLayout,"1",subId, catdata[0].subId, catdata.toMutableList())
+                            universalDaynamicRecycler(
+                                shadowViewObject,
+                                R.id.eighth_one_recyclerview,
+                                eighthOnLayout,
+                                "1",
+                                subId,
+                                catdata[0].subId,
+                                catdata.toMutableList()
+                            )
                         }
 
                         subCount++
@@ -389,24 +590,36 @@ class HomePageFragment : Fragment() {
         })
     }
 
-    private fun getBusinnessData(mVModel : MainViewModel, catId: String, token: String) {
+    private fun getBusinnessData(mVModel: MainViewModel, catId: String, token: String) {
         mVModel.getBussinessDetails(catId, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
                         val bussListDialog = AlertDialog.Builder(requireActivity())
-                        val layoutBDialog = LayoutInflater.from(requireActivity()).inflate(R.layout.buss_dialog_list, null, false)
-                        val bussDialogAdapter  = BussDialogAdapter(it.data.toMutableList())
-                        val bussRecyclerView = layoutBDialog.findViewById<RecyclerView>(R.id.buss_list_recycler)
+                        val layoutBDialog = LayoutInflater.from(requireActivity()).inflate(
+                            R.layout.buss_dialog_list,
+                            null,
+                            false
+                        )
+                        val bussDialogAdapter = BussDialogAdapter(it.data.toMutableList())
+                        val bussRecyclerView =
+                            layoutBDialog.findViewById<RecyclerView>(R.id.buss_list_recycler)
                         bussRecyclerView.adapter = bussDialogAdapter
                         bussRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
                         bussListDialog.setView(layoutBDialog)
-                        bussDialogAdapter.onClickListener = object: BussDialogAdapter.OnClickListItem{
-                            override fun setBId(bId: String) {
-                                setUserBussPref(sharedPreferenceUtil.getValueString("user_id").toString(), bId, sharedPreferenceUtil.getValueString("token").toString())
-                            }
+                        bussDialogAdapter.onClickListener =
+                            object : BussDialogAdapter.OnClickListItem {
+                                override fun setBId(bId: String) {
+                                    setUserBussPref(
+                                        sharedPreferenceUtil.getValueString("user_id").toString(),
+                                        bId,
+                                        sharedPreferenceUtil.getValueString(
+                                            "token"
+                                        ).toString()
+                                    )
+                                }
 
-                        }
+                            }
                         bussListDialog.show()
                     }
                 }
@@ -420,12 +633,17 @@ class HomePageFragment : Fragment() {
         })
     }
 
-    private fun getBusinnessForHomeData(mVModel : MainViewModel, catId: String, id: String, token: String) {
+    private fun getBusinnessForHomeData(
+        mVModel: MainViewModel,
+        catId: String,
+        id: String,
+        token: String
+    ) {
         mVModel.getBussinessDetailsForHome(catId, id, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
-                        if (it.data.isNotEmpty()){
+                        if (it.data.isNotEmpty()) {
                             businessTitleTxt.text = it.data[0].bName
                         }
 
@@ -441,12 +659,15 @@ class HomePageFragment : Fragment() {
         })
     }
 
-    private fun setUserBussPref(phone:String, pref_id: String, token: String){
-        mainViewModel.postUserBussPref(phone, pref_id, token).observe(this, Observer{
+    private fun setUserBussPref(phone: String, pref_id: String, token: String){
+        mainViewModel.postUserBussPref(phone, pref_id, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
-
+                        sharedPreferenceUtil.save("pref_buss", pref_id)
+                        val intent = requireActivity().intent
+                        requireActivity().finish()
+                        startActivity(intent)
                     }
                 }
                 Status.LOADING -> {

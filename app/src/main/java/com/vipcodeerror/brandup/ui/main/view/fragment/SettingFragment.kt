@@ -66,7 +66,6 @@ class SettingFragment : Fragment() {
             startActivity(Intent(requireActivity(), BrandLogoEdit::class.java))
         }
 
-
         Glide.with(requireActivity()).load("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png").into(bannerImage)
 
         myBusinessTxt.setOnClickListener {
@@ -84,7 +83,7 @@ class SettingFragment : Fragment() {
 
         getBusinnessForHomeData(mainViewModel,
                 sharedPreferenceUtil.getValueString("user_id").toString(),
-                sharedPreferenceUtil.getValueBoolean("").toString(),
+                sharedPreferenceUtil.getValueString("pref_buss").toString(),
                 sharedPreferenceUtil.getValueString("token").toString())
 
         logoutTxt.setOnClickListener {

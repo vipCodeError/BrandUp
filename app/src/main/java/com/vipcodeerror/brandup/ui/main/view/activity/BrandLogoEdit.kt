@@ -50,6 +50,8 @@ class BrandLogoEdit : AppCompatActivity(){
     private lateinit var locationTxt : TextInputEditText
     private lateinit var addrTxt : TextInputEditText
     private lateinit var businessNameTxt : TextInputEditText
+    private lateinit var websiteNameTxt : TextInputEditText
+
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
     private lateinit var actualUri: String
@@ -67,6 +69,7 @@ class BrandLogoEdit : AppCompatActivity(){
         locationTxt = findViewById(R.id.bussiness_location)
         addrTxt = findViewById(R.id.business_addr)
         businessNameTxt = findViewById(R.id.bussiness_name)
+        websiteNameTxt = findViewById(R.id.business_website)
 
         setupViewModel()
 
@@ -205,11 +208,11 @@ class BrandLogoEdit : AppCompatActivity(){
         }
     }
 
-    private fun postBusinessDetails(bussName : String, phone: String, address : String,
+    private fun postBusinessDetails(bussName : String, phone: String, address : String, email: String, webN : String,
                                     logoUrl: String, location: String,
                                     belongToWhichUser : String, catIdBelongTo: String, token: String){
 
-        mainViewModel.postBussDetailsData(bussName, phone, address, logoUrl, location,
+        mainViewModel.postBussDetailsData(bussName, phone, address,email, webN ,logoUrl, location,
                 belongToWhichUser, catIdBelongTo, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -240,10 +243,11 @@ class BrandLogoEdit : AppCompatActivity(){
                         var bPhone = phoneTxt.text.toString()
                         var bLoc = locationTxt.text.toString()
                         var bAddr = addrTxt.text.toString()
+                        var bWeb = websiteNameTxt.text.toString()
 
                         val userId = sharedPreferenceUtil.getValueString("user_id").toString()
                         val catId = intent.getStringExtra("cat_id").toString()
-                        postBusinessDetails(bName, bPhone, bAddr,  it.imageUrl , bLoc, userId , catId, token)
+                        postBusinessDetails(bName, bPhone, bAddr, bEmail, bWeb,  it.imageUrl , bLoc, userId , catId, token)
                     }
                 }
                 Status.LOADING -> {

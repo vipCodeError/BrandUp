@@ -21,10 +21,10 @@ class MainRepository (private val apiHelper: ApiHelper) {
         return apiHelper.businessCatPref(userId, pref, token)
     }
 
-    fun postBussDetails(bussName : String, phone: String, address : String,
+    fun postBussDetails(bussName : String, phone: String, address : String, email: String, webN: String,
                        logoUrl: String, location: String,
                        belongToWhichUser : String, catIdBelongTo: String, token: String) : Single<ApiResponse>{
-        return apiHelper.postBusinessDetails(bussName, phone, address, logoUrl, location,
+        return apiHelper.postBusinessDetails(bussName, phone, address, email, webN, logoUrl, location,
                 belongToWhichUser, catIdBelongTo, token)
     }
 
@@ -52,7 +52,11 @@ class MainRepository (private val apiHelper: ApiHelper) {
         return apiHelper.getBussinessDetailsForHome(catId, id, token)
     }
 
-    fun setUserBussPref(userId: String, pref_id: String, token: String) : Single<ApiResponse>{
-        return apiHelper.setBussPref(pref_id, userId, token)
+    fun getBottomBanner(prefId : String, token : String) : Single<BottomBannerResponse>{
+        return apiHelper.getBottomBannerResponse(prefId, token)
+    }
+
+    fun executeImageGeneratorRequest(user_id : String, pref_id: String, token: String) : Single<ApiResponse>{
+        return apiHelper.requestForImageGeneration(user_id, pref_id, token)
     }
 }

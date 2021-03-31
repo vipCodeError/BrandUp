@@ -32,8 +32,8 @@ class DownloadFragment : Fragment() {
         override fun createFragment(position: Int): Fragment {
             when (position) {
                 0 -> return DailyDownloadedFragment()
-                1 -> return FestivalDownloadedFragment()
-                2 -> return CustomDownloadedFragment()
+//                1 -> return FestivalDownloadedFragment()
+//                2 -> return CustomDownloadedFragment()
             }
 
             return DailyDownloadedFragment()

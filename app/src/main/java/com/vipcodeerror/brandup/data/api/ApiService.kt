@@ -14,7 +14,7 @@ interface ApiService {
 
     fun postCatPref(userId: String, pref: String, token: String) : Single<ApiResponse>
 
-    fun postBussDetails(bussName : String, phone: String, address : String,
+    fun postBussDetails(bussName : String, phone: String, address : String, email: String, webN : String,
                         logoUrl: String, location: String,
                         belongToWhichUser : String, catIdBelongTo: String, token: String)  : Single<ApiResponse>
 
@@ -31,4 +31,8 @@ interface ApiService {
     fun getBussinessDetForHome(userId : String, id:String, token: String) : Single<BussinessDataResponse>
 
     fun setBusinessPref(prefId : String , userId : String, token: String) : Single<ApiResponse>
+
+    fun getBottomBanner(prefId: String, token : String) : Single<BottomBannerResponse>
+
+    fun requestImageGenerator(user_id : String, pref_id: String, token: String) : Single<ApiResponse>
 }

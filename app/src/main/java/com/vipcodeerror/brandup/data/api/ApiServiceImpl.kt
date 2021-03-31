@@ -49,7 +49,7 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(ApiResponse::class.java)
     }
 
-    override fun postBussDetails(bussName: String, phone: String, address: String, logoUrl: String,
+    override fun postBussDetails(bussName: String, phone: String, address: String, email: String, webN: String, logoUrl: String,
                                  location: String, belongToWhichUser: String, catIdBelongTo: String, token: String): Single<ApiResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
@@ -65,10 +65,12 @@ class ApiServiceImpl : ApiService {
         params["b_details"] = bussName
         params["b_phone"] = phone
         params["b_addr"] = address
+        params["b_email"] = email
         params["b_image_url"] = logoUrl
         params["b_location"] = location
         params["b_user_id"] = belongToWhichUser
         params["b_cat_id"] = catIdBelongTo
+        params["b_web"] = webN
 
         return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/buss_det")
                 .addHeaders("Authorization", "Bearer " + token)
@@ -190,6 +192,21 @@ class ApiServiceImpl : ApiService {
             .addBodyParameter("pref_id",prefId)
             .setOkHttpClient(okHttpClient)
             .build().getObjectSingle(ApiResponse::class.java)
+    }
+
+    override fun getBottomBanner(prefId: String, token: String): Single<BottomBannerResponse> {
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_bottom_banner")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("pref_id",prefId)
+                .build().getObjectSingle(BottomBannerResponse::class.java)
+    }
+
+    override fun requestImageGenerator(user_id: String, pref_id: String, token: String): Single<ApiResponse> {
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_bottom_banner")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("user_id",user_id)
+                .addBodyParameter("pref_id",pref_id)
+                .build().getObjectSingle(ApiResponse::class.java)
     }
 
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {

@@ -24,8 +24,9 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val homeSelectedData = MutableLiveData<Resource<HomeSelectedApiResponse>>()
     private val getBData = MutableLiveData<Resource<BussinessDataResponse>>()
     private val getBDataForHome = MutableLiveData<Resource<BussinessDataResponse>>()
+    private val getBottomBannerData = MutableLiveData<Resource<BottomBannerResponse>>()
+    private val requestForImgGen = MutableLiveData<Resource<ApiResponse>>()
     private val compositeDisposable = CompositeDisposable()
-
 
     fun postLoginUser(phone: String, device_name: String) : LiveData<Resource<LogginApiResponse>>{
         loginUser.postValue(Resource.loading(null))
@@ -73,12 +74,12 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         return postCatPref
     }
 
-    fun postBussDetailsData(bussName : String, phone: String, address : String,
+    fun postBussDetailsData(bussName : String, phone: String, address : String, email: String, webN: String,
                             logoUrl: String, location: String,
                             belongToWhichUser : String, catIdBelongTo: String, token: String): LiveData<Resource<ApiResponse>>{
         postBussDetails.postValue(Resource.loading(null))
         compositeDisposable.add(
-                mainRepository.postBussDetails(bussName, phone, address, logoUrl, location,
+                mainRepository.postBussDetails(bussName, phone, address, email,webN, logoUrl, location,
                         belongToWhichUser, catIdBelongTo, token)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -184,4 +185,35 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         return getBDataForHome
     }
 
+    fun getBottomBannerDatas(prefId : String, token : String) : LiveData<Resource<BottomBannerResponse>>{
+        getBottomBannerData.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getBottomBanner(prefId, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getBottomBannerData.postValue(Resource.success(data))
+                        }, {
+                            getBottomBannerData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return getBottomBannerData
+    }
+
+    fun requestForImageGeneration(user_id: String, pref_id: String, token : String) : LiveData<Resource<ApiResponse>>{
+        requestForImgGen.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.executeImageGeneratorRequest(user_id, pref_id, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            requestForImgGen.postValue(Resource.success(data))
+                        }, {
+                            requestForImgGen.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return requestForImgGen
+    }
 }

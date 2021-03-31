@@ -9,10 +9,10 @@ class ApiHelper(private val apiService: ApiService)  {
 
     fun businessCatPref(userId: String, pref: String,token: String) = apiService.postCatPref(userId, pref, token)
 
-    fun postBusinessDetails(bussName : String, phone: String, address : String,
+    fun postBusinessDetails(bussName : String, phone: String, address : String, email: String, webN : String,
                             logoUrl: String, location: String,
                             belongToWhichUser : String, catIdBelongTo: String, token: String) = apiService
-            .postBussDetails(bussName, phone, address, logoUrl, location,
+            .postBussDetails(bussName, phone, address, email, webN, logoUrl, location,
             belongToWhichUser, catIdBelongTo, token)
 
     fun uploadLogoImage(logoUrl : File, token: String) = apiService.uploadImage(logoUrl, token)
@@ -28,4 +28,9 @@ class ApiHelper(private val apiService: ApiService)  {
     fun getBussinessDetailsForHome(userId : String, id :String, token: String) = apiService.getBussinessDetForHome(userId, id, token)
 
     fun setBussPref(prefId : String , userId : String, token: String) = apiService.setBusinessPref(prefId, userId, token)
+
+    fun getBottomBannerResponse(prefId : String, token: String) = apiService.getBottomBanner(prefId, token)
+
+    fun requestForImageGeneration(user_id : String, pref_id: String, token: String) = apiService.requestImageGenerator(user_id, pref_id, token)
+
 }
