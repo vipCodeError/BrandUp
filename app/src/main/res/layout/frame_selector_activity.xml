@@ -31,9 +31,18 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop" />
 
+        <ImageView
+            android:id="@+id/logo_img"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_width="120dp"
+            android:layout_height="70dp"/>
+
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/top_frame_recycler"
             android:layout_width="match_parent"
+            app:sliderStartAutoCycle="false"
+            app:sliderIndicatorEnabled="false"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true" />
 

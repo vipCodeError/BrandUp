@@ -1,7 +1,9 @@
 package com.vipcodeerror.brandup.ui.main.view.fragment
 
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.getIntent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -42,6 +44,8 @@ import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.Resource
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
+import it.sephiroth.android.library.xtooltip.ClosePolicy
+import it.sephiroth.android.library.xtooltip.Tooltip
 import xyz.peridy.shimmerlayout.ShimmerLayout
 
 
@@ -166,6 +170,8 @@ class HomePageFragment : Fragment() {
                 )
             )
         }
+
+        showToolTip(selectedBussinesLayout)
 
         return view
     }
@@ -681,4 +687,23 @@ class HomePageFragment : Fragment() {
         })
     }
 
+    private fun showToolTip(view : View, ){
+//        val tooltip = Tooltip.Builder(requireActivity())
+//            .anchor(view, view.width / 2, view.height, true)
+//            .text("Select Business here")
+//            .maxWidth(100)
+//            .arrow(true)
+//            .styleId(R.attr.TooltipOverlay)
+//            .floatingAnimation(Tooltip.Animation.DEFAULT)
+//            .closePolicy(ClosePolicy.TOUCH_OUTSIDE_CONSUME)
+//            .showDuration(6000)
+//            .fadeDuration(2000)
+//            .overlay(true)
+//            .create()
+//
+//        tooltip
+//            .doOnHidden { }
+//            .doOnFailure { }
+//            .doOnShown { }.show(view, Tooltip.Gravity.BOTTOM, false)
+    }
 }

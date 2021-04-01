@@ -7,16 +7,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.smarteist.autoimageslider.SliderViewAdapter
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.data.model.BottomBannerModel
 import com.vipcodeerror.brandup.data.model.SliderItem
 
 class FrameSliderAdapter(var context: Context) : SliderViewAdapter<FrameSliderAdapter.SliderAdapterVH>() {
-    private lateinit var mSliderItems: MutableList<SliderItem>
+    private lateinit var mSliderItems: MutableList<BottomBannerModel>
+
     init {
         mSliderItems = mutableListOf()
     }
-    fun renewItems(sliderItems: MutableList<SliderItem>) {
+
+    fun renewItems(sliderItems: MutableList<BottomBannerModel>) {
         mSliderItems = sliderItems
         notifyDataSetChanged()
     }
@@ -26,7 +32,7 @@ class FrameSliderAdapter(var context: Context) : SliderViewAdapter<FrameSliderAd
         notifyDataSetChanged()
     }
 
-    fun addItem(sliderItem: MutableList<SliderItem>) {
+    fun addItem(sliderItem: MutableList<BottomBannerModel>) {
         mSliderItems.addAll(sliderItem)
         notifyDataSetChanged()
     }
@@ -38,14 +44,15 @@ class FrameSliderAdapter(var context: Context) : SliderViewAdapter<FrameSliderAd
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
-        val sliderItem: SliderItem = mSliderItems[position]
-        Glide.with(viewHolder.itemView)
-                .load(sliderItem.imageUrl)
-                .fitCenter()
-                .into(viewHolder.imageViewBackground)
+        Glide.with(context).load("https://d4f9k68hk754p.cloudfront.net/fit-in/1200x400/${mSliderItems[position].urlBottomBanner}").apply( RequestOptions()
+        .fitCenter()
+        .format(DecodeFormat.PREFER_ARGB_8888)
+        .override(SIZE_ORIGINAL))
+        .into(viewHolder.imageViewBackground);
+
         viewHolder.itemView.setOnClickListener {
-            Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT)
-                    .show()
+//            Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT)
+//                    .show()
         }
     }
 

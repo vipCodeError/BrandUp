@@ -13,12 +13,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.api.ApiHelper
 import com.vipcodeerror.brandup.data.api.ApiServiceImpl
+import com.vipcodeerror.brandup.data.model.BottomBannerModel
 import com.vipcodeerror.brandup.data.model.SliderItem
 import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
@@ -37,6 +41,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
     private lateinit var subCatTitleRecycler : RecyclerView
     private lateinit var frameSelectorRecycler : RecyclerView
     private lateinit var backFrame : ImageView
+    private lateinit var logoImg : ImageView
 
     private lateinit var frameSelectorAdapter: FrameSelectorAdapter
     private lateinit var mainViewModel: MainViewModel
@@ -80,9 +85,9 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         backFrame = findViewById(R.id.back_frame)
         subCatTitleRecycler = findViewById(R.id.sub_cat_recycler)
         frameSelectorRecycler = findViewById(R.id.frame_selector_recycler)
+        logoImg = findViewById(R.id.logo_img)
 
         trendingTitle()
-        topFrame()
 
         if (isSubShown == "0"){
             getHomeSelectedUniversal(
@@ -101,26 +106,20 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         shareImgView.setOnClickListener {
             AppUtils.launchShareIntent(this, frameLayout)
         }
+
+        getBottomBannerData(mainViewModel, sharedPreferenceUtil.getValueString("pref_buss").toString(),
+            sharedPreferenceUtil.getValueString("token").toString())
     }
 
-    private fun topFrame(){
-        var topStrList = mutableListOf<SliderItem>(
-            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/fifth_frame.png"),
-            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/first_frame.png"),
-            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/secondframe.png"),
-            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/shopyy_culture.png"),
-            SliderItem("https://practicebuckett123.s3.ap-south-1.amazonaws.com/third_frame.png")
-        )
-
+    private fun topFrame(urlList: List<BottomBannerModel>){
         val sliderAdapter = FrameSliderAdapter(this)
         val sliderView: SliderView = findViewById(R.id.top_frame_recycler)
         sliderView.setSliderAdapter(sliderAdapter)
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+//        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.startAutoCycle();
 
-        sliderAdapter.addItem(topStrList)
-
+        sliderAdapter.addItem(urlList.toMutableList())
 
     }
 
@@ -203,6 +202,35 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
                             .into(
                                 backFrame
                             )
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+    private fun getBottomBannerData(mVModel: MainViewModel, pref_id: String, token: String) {
+        mVModel.getBottomBannerDatas(pref_id, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        val catdata = it.data
+                        topFrame(catdata)
+                        Glide.with(this@FrameTemplateSelectorActivity)
+                            .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
+                            .into(logoImg)
+
+//                        Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x400/${catdata[0].urlBottomBanner}").apply( RequestOptions()
+//                            .fitCenter()
+//                            .format(DecodeFormat.PREFER_ARGB_8888)
+//                            .override(Target.SIZE_ORIGINAL))
+//                            .into(bottomFrame);
+
                     }
                 }
                 Status.LOADING -> {

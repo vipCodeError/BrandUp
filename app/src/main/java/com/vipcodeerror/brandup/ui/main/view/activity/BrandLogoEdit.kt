@@ -20,6 +20,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
@@ -51,6 +52,7 @@ class BrandLogoEdit : AppCompatActivity(){
     private lateinit var addrTxt : TextInputEditText
     private lateinit var businessNameTxt : TextInputEditText
     private lateinit var websiteNameTxt : TextInputEditText
+    private lateinit var loadingHand : LottieAnimationView
 
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
@@ -70,7 +72,7 @@ class BrandLogoEdit : AppCompatActivity(){
         addrTxt = findViewById(R.id.business_addr)
         businessNameTxt = findViewById(R.id.bussiness_name)
         websiteNameTxt = findViewById(R.id.business_website)
-
+        loadingHand = findViewById(R.id.loading_hand_anim)
         setupViewModel()
 
         val dialogMultiplePermissionsListener: MultiplePermissionsListener =
@@ -191,6 +193,8 @@ class BrandLogoEdit : AppCompatActivity(){
             val file = File(actualUri)
             val token = sharedPreferenceUtil.getValueString("token").toString()
             uploadLogoUrl(file, token)
+            loadingHand.visibility = View.VISIBLE
+
         })
     }
 
@@ -265,6 +269,7 @@ class BrandLogoEdit : AppCompatActivity(){
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
+                        loadingHand.visibility = View.GONE
                         startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                         finish();
                     }

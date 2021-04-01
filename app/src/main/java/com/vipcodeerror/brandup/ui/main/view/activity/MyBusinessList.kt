@@ -2,7 +2,9 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -19,6 +21,7 @@ import com.vipcodeerror.brandup.ui.main.adapter.MyBusinessListAdapter
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
+import xyz.peridy.shimmerlayout.ShimmerLayout
 
 
 public class MyBusinessList : AppCompatActivity(){
@@ -28,6 +31,7 @@ public class MyBusinessList : AppCompatActivity(){
     private lateinit var myBusinessRecyclerView : RecyclerView
     private lateinit var mainViewModel: MainViewModel
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
+    private lateinit var shimmerLayout : ShimmerLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,8 @@ public class MyBusinessList : AppCompatActivity(){
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        shimmerLayout = findViewById(R.id.shimmer_layout)
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -46,7 +52,8 @@ public class MyBusinessList : AppCompatActivity(){
                 R.drawable.arrow_back
             )
         )
-        //supportActionBar?.title = "My Businesses"
+
+        supportActionBar?.customView?.findViewById<TextView>(R.id.title)?.text = "My Businesses"
 
         var addBussbtn = supportActionBar?.customView?.findViewById<ImageButton>(R.id.add_business)
 
@@ -84,15 +91,19 @@ public class MyBusinessList : AppCompatActivity(){
                             this@MyBusinessList,
                             it.data.toMutableList()
                         )
+
                         myBusinessRecyclerView = findViewById(R.id.my_business_recyclerview)
                         val dividerItemDecoration = DividerItemDecoration(
                             this@MyBusinessList,
                             DividerItemDecoration.VERTICAL
                         )
+
                         myBusinessRecyclerView.adapter = myBusinessAdapter
                         myBusinessRecyclerView.layoutManager =
                             LinearLayoutManager(this@MyBusinessList)
                         myBusinessRecyclerView.addItemDecoration(dividerItemDecoration)
+                        shimmerLayout.visibility = View.GONE
+                        myBusinessRecyclerView.visibility = View.VISIBLE
                     }
                 }
                 Status.LOADING -> {
