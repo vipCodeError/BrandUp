@@ -21,6 +21,8 @@ import com.vipcodeerror.brandup.ui.main.adapter.MyBusinessListAdapter
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
+import it.sephiroth.android.library.xtooltip.ClosePolicy
+import it.sephiroth.android.library.xtooltip.Tooltip
 import xyz.peridy.shimmerlayout.ShimmerLayout
 
 
@@ -62,6 +64,9 @@ public class MyBusinessList : AppCompatActivity(){
         addBussbtn?.setOnClickListener {
             startActivity(Intent(this@MyBusinessList, BusinessCategory::class.java))
         }
+
+        addBussbtn?.post {showToolTip(addBussbtn)}
+
 
         mainViewModel = setupViewModel()
         sharedPreferenceUtil = SharedPreferenceUtil(this)
@@ -114,6 +119,24 @@ public class MyBusinessList : AppCompatActivity(){
                 }
             }
         })
+    }
+
+    private fun showToolTip(view : View, ){
+        val tooltip = Tooltip.Builder(this)
+            .anchor(view, 0, 0, false)
+            .text("add your Business here")
+            .arrow(true)
+            .floatingAnimation(Tooltip.Animation.DEFAULT)
+            .closePolicy(ClosePolicy.TOUCH_OUTSIDE_CONSUME)
+            .showDuration(6000)
+            .fadeDuration(2000)
+            .overlay(true)
+            .create()
+
+        tooltip
+            .doOnHidden { }
+            .doOnFailure { }
+            .doOnShown { }.show(view, Tooltip.Gravity.BOTTOM, true)
     }
 
 

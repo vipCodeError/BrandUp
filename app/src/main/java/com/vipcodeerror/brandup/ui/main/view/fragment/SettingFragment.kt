@@ -17,10 +17,7 @@ import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.api.ApiHelper
 import com.vipcodeerror.brandup.data.api.ApiServiceImpl
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
-import com.vipcodeerror.brandup.ui.main.view.activity.BrandLogoEdit
-import com.vipcodeerror.brandup.ui.main.view.activity.LoginActivity
-import com.vipcodeerror.brandup.ui.main.view.activity.MyBusinessList
-import com.vipcodeerror.brandup.ui.main.view.activity.PreferredLanguageActivity
+import com.vipcodeerror.brandup.ui.main.view.activity.*
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
@@ -37,7 +34,7 @@ class SettingFragment : Fragment() {
     private lateinit var myBusinessTxt : LinearLayout
     private lateinit var preferredTxt : LinearLayout
     private lateinit var helpAndSupportTxt : LinearLayout
-    private lateinit var myBusinessEditTxt : LinearLayout
+    private lateinit var upgradePlan : LinearLayout
 
     private lateinit var bName : TextView
     private lateinit var bCatName : TextView
@@ -59,11 +56,11 @@ class SettingFragment : Fragment() {
         myBusinessTxt = view.findViewById(R.id.my_b_layout)
         preferredTxt = view.findViewById(R.id.pref_lan_layout)
         helpAndSupportTxt = view.findViewById(R.id.help_and_support_layout)
-        myBusinessEditTxt = view.findViewById(R.id.edit_b_layout)
+        upgradePlan = view.findViewById(R.id.edit_b_layout)
         logoutTxt = view.findViewById(R.id.logout_txt)
 
-        myBusinessEditTxt.setOnClickListener {
-            startActivity(Intent(requireActivity(), BrandLogoEdit::class.java))
+        upgradePlan.setOnClickListener {
+            startActivity(Intent(requireActivity(), PlanSelectorActivity::class.java))
         }
 
         Glide.with(requireActivity()).load("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png").into(bannerImage)

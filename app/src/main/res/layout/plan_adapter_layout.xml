@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rounded_plan_lay"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Plan"
+        android:layout_marginTop="8dp"
+        android:textSize="24sp"
+        android:fontFamily="@font/ptsans_regular"
+        android:textColor="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+
+        <LinearLayout
+            android:id="@+id/root_z1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/ptsans_bold"
+                android:text="Download"
+                android:textColor="#fff"
+                android:textSize="21sp" />
+
+            <TextView
+                android:id="@+id/ttl_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:fontFamily="@font/ptsans_bold"
+                android:textStyle="bold"
+                android:textColor="#DFDEDB"
+                android:text="10" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/ll_1"
+            android:layout_below="@id/root_z1"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#fff"
+            />
+
+        <LinearLayout
+            android:id="@+id/root_z2"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_1"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/ptsans_bold"
+                android:textSize="21sp"
+                android:text="Share" />
+
+            <TextView
+                android:id="@+id/ttl_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                android:textColor="#DFDEDB"
+                android:text="12" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/ll_2"
+            android:layout_below="@id/root_z2"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#fff"
+            />
+
+        <LinearLayout
+            android:id="@+id/root_z3"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/root_z2"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/ptsans_bold"
+                android:textSize="21sp"
+                android:text="Days" />
+
+            <TextView
+                android:id="@+id/ttl_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                android:textColor="#DFDEDB"
+                android:text="31" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/ll_3"
+            android:layout_below="@id/root_z3"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#fff"
+            />
+        <LinearLayout
+            android:id="@+id/root_z4"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/root_z3"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/ptsans_bold"
+                android:textSize="21sp"
+                android:text="Business Card" />
+
+            <TextView
+                android:id="@+id/ttl_bcard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                android:textColor="#DFDEDB"
+                android:text="8" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/ll_4"
+            android:layout_below="@id/root_z4"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#fff"
+            />
+        <LinearLayout
+            android:id="@+id/root_z5"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/root_z4"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textColor="#fff"
+                android:fontFamily="@font/ptsans_bold"
+                android:textSize="21sp"
+                android:text="Price" />
+
+            <TextView
+                android:id="@+id/ttl_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:textStyle="bold"
+                android:textColor="#DFDEDB"
+                android:text="Rs . 120" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buy_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/rounded_button"
+        android:text="Buy Now"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/relativeLayout2"
+        app:layout_constraintStart_toStartOf="@+id/relativeLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

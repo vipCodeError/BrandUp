@@ -74,7 +74,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/edit_your_business"
+        android:id="@+id/upgrade_plan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

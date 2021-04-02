@@ -171,8 +171,6 @@ class HomePageFragment : Fragment() {
             )
         }
 
-        showToolTip(selectedBussinesLayout)
-
         return view
     }
 
@@ -473,6 +471,7 @@ class HomePageFragment : Fragment() {
         mVModel.getHomeSubDataUniversal(homeData, subId, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
+                    //selectedBussinesLayout.post { showToolTip(selectedBussinesLayout) }
                     shimmerLayout.visibility = View.GONE
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
@@ -601,6 +600,7 @@ class HomePageFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
+
                         val bussListDialog = AlertDialog.Builder(requireActivity())
                         val layoutBDialog = LayoutInflater.from(requireActivity()).inflate(
                             R.layout.buss_dialog_list,
@@ -649,6 +649,7 @@ class HomePageFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
+                        selectedBussinesLayout.post { showToolTip(selectedBussinesLayout) }
                         if (it.data.isNotEmpty()) {
                             sharedPreferenceUtil.save("logoUrl", it.data[0].logoUrl)
                             businessTitleTxt.text = it.data[0].bName
@@ -688,22 +689,20 @@ class HomePageFragment : Fragment() {
     }
 
     private fun showToolTip(view : View, ){
-//        val tooltip = Tooltip.Builder(requireActivity())
-//            .anchor(view, view.width / 2, view.height, true)
-//            .text("Select Business here")
-//            .maxWidth(100)
-//            .arrow(true)
-//            .styleId(R.attr.TooltipOverlay)
-//            .floatingAnimation(Tooltip.Animation.DEFAULT)
-//            .closePolicy(ClosePolicy.TOUCH_OUTSIDE_CONSUME)
-//            .showDuration(6000)
-//            .fadeDuration(2000)
-//            .overlay(true)
-//            .create()
-//
-//        tooltip
-//            .doOnHidden { }
-//            .doOnFailure { }
-//            .doOnShown { }.show(view, Tooltip.Gravity.BOTTOM, false)
+        val tooltip = Tooltip.Builder(requireActivity())
+            .anchor(view, 0, 0, false)
+            .text("Select Business here")
+            .arrow(true)
+            .floatingAnimation(Tooltip.Animation.DEFAULT)
+            .closePolicy(ClosePolicy.TOUCH_OUTSIDE_CONSUME)
+            .showDuration(6000)
+            .fadeDuration(2000)
+            .overlay(true)
+            .create()
+
+        tooltip
+            .doOnHidden { }
+            .doOnFailure { }
+            .doOnShown { }.show(view, Tooltip.Gravity.BOTTOM, true)
     }
 }

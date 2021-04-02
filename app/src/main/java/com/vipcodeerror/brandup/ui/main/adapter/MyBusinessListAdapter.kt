@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.BusinessDetailsModel
-import com.vipcodeerror.brandup.data.model.MyBusiness
 import com.vipcodeerror.brandup.ui.main.view.activity.BottomFrameSelectorActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.BusinessCategory
 
@@ -45,7 +44,7 @@ class MyBusinessListAdapter(var context: Context, var businessList : MutableList
         var businessName = itemView.findViewById<TextView>(R.id.business_name)
         var whichCatBelongTo = itemView.findViewById<TextView>(R.id.which_cat_belong_to)
         var businessLocation = itemView.findViewById<TextView>(R.id.addr_of_business)
-        var editBrand = itemView.findViewById<TextView>(R.id.edit_your_business)
+        var editBrand = itemView.findViewById<TextView>(R.id.upgrade_plan)
         var bLayoutBuss = itemView.findViewById<ConstraintLayout>(R.id.b_list_layout)
     }
 }
