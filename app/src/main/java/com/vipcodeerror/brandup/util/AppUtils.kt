@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import androidx.core.content.FileProvider
 import com.vipcodeerror.brandup.BuildConfig
@@ -20,8 +21,8 @@ class AppUtils {
     companion object{
         fun screenShot(context: Context?, view: View): Uri? {
             val bitmap = Bitmap.createBitmap(
-                view.getWidth(),
-                view.getHeight(), Bitmap.Config.ARGB_8888
+                    view.getWidth(),
+                    view.getHeight(), Bitmap.Config.ARGB_8888
             )
             val canvas = Canvas(bitmap)
             view.draw(canvas)
@@ -34,17 +35,17 @@ class AppUtils {
             var bmpUri: Uri? = null
             try {
                 val file = File(
-                    context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
-                    "share_image_" + System.currentTimeMillis() + ".png"
+                        context.getExternalFilesDir(Environment.DIRECTORY_PICTURES),
+                        "share_image_" + System.currentTimeMillis() + ".png"
                 )
                 val out = FileOutputStream(file)
                 bmp.compress(Bitmap.CompressFormat.PNG, 90, out)
                 out.close()
                 bmpUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     FileProvider.getUriForFile(
-                        context,
-                        BuildConfig.APPLICATION_ID + ".provider",
-                        file
+                            context,
+                            BuildConfig.APPLICATION_ID + ".provider",
+                            file
                     )
                 } else {
                     Uri.fromFile(file)
@@ -68,6 +69,19 @@ class AppUtils {
             context.startActivity(Intent.createChooser(sendIntent, "Share Brand Frame"))
         }
 
+        fun getFilesList(context : Context) : MutableList<String>{
+            val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.toURI())
+
+            var listImg = mutableListOf<String>()
+
+            for (i in file.list()) {
+                listImg.add(i)
+                // Log.d("listFiles :: ", file.absolutePath + "/" +i)
+            }
+
+            return listImg
+        }
     }
 
 }
+

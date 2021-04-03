@@ -54,15 +54,18 @@ class MainActivity : AppCompatActivity() {
                     fragmentTransaction.commit()
 
                 }
+
                 R.id.custom -> {
                     Toast.makeText(this@MainActivity, "Work in Progress...", Toast.LENGTH_SHORT).show()
                 }
+
                 R.id.downloaded -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()
                     fragmentTransaction.replace(R.id.frameLayout, downloadedFragment)
                     fragmentTransaction.commit()
                 }
+
                 R.id.account -> {
                     val fragmentManager = supportFragmentManager
                     val fragmentTransaction = fragmentManager.beginTransaction()

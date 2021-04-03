@@ -107,6 +107,10 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
             AppUtils.launchShareIntent(this, frameLayout)
         }
 
+        downloadImgView.setOnClickListener {
+
+        }
+
         getBottomBannerData(mainViewModel, sharedPreferenceUtil.getValueString("pref_buss").toString(),
             sharedPreferenceUtil.getValueString("token").toString())
     }

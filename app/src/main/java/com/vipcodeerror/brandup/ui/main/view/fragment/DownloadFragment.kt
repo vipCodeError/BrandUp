@@ -9,9 +9,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.vipcodeerror.brandup.R
+import com.vipcodeerror.brandup.util.AppUtils
 
 class DownloadFragment : Fragment() {
-    private val NUM_PAGES = 3
+    private val NUM_PAGES = 1
     private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -23,7 +24,7 @@ class DownloadFragment : Fragment() {
         val pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         viewPager.adapter = pagerAdapter
 
-        return view;
+        return view
     }
 
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
