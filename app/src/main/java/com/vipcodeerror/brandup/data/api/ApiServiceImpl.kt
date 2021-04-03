@@ -209,6 +209,12 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(ApiResponse::class.java)
     }
 
+    override fun getAllPlanData(token: String): Single<PlanDataResponse> {
+        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_all_plan")
+                .addHeaders("Authorization", "Bearer " + token)
+                .build().getObjectSingle(PlanDataResponse::class.java)
+    }
+
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'

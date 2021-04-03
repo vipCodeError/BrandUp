@@ -16,4 +16,7 @@
     <color name="setting_divider">#86000000</color>
     <color name="navigator_item_background_color">#EFEFEF</color>
     <color name="shimmerBackground">#D6D6D6</color>
+    <color name="basic_color">#09438f</color>
+    <color name="silver_color">#01295d</color>
+    <color name="gold_color">#000812</color>
 </resources>

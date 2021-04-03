@@ -33,4 +33,5 @@ class ApiHelper(private val apiService: ApiService)  {
 
     fun requestForImageGeneration(user_id : String, pref_id: String, token: String) = apiService.requestImageGenerator(user_id, pref_id, token)
 
+    fun getAllPlanData(token : String) = apiService.getAllPlanData(token)
 }

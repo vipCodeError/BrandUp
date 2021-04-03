@@ -35,4 +35,6 @@ interface ApiService {
     fun getBottomBanner(prefId: String, token : String) : Single<BottomBannerResponse>
 
     fun requestImageGenerator(user_id : String, pref_id: String, token: String) : Single<ApiResponse>
+
+    fun getAllPlanData(token: String) : Single<PlanDataResponse>
 }

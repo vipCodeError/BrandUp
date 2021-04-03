@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.RadioButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
@@ -15,7 +17,6 @@ class BottomBannerAdapter (var context: Context, var imgUrlList: MutableList<Bot
     interface ClickOnFrameUrl {
         fun setUrlImage(url : String)
     }
-
 
     public lateinit var clickOnFrameUrl: ClickOnFrameUrl
 
@@ -39,5 +40,6 @@ class BottomBannerAdapter (var context: Context, var imgUrlList: MutableList<Bot
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var frameImg = itemView.findViewById<ImageView>(R.id.frame_img)
         var bottomFrame = itemView.findViewById<ImageView>(R.id.bottom_frame)
+        var radioSelect = itemView.findViewById<CheckBox>(R.id.select_radio_frame)
     }
 }

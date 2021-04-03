@@ -26,6 +26,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val getBDataForHome = MutableLiveData<Resource<BussinessDataResponse>>()
     private val getBottomBannerData = MutableLiveData<Resource<BottomBannerResponse>>()
     private val requestForImgGen = MutableLiveData<Resource<ApiResponse>>()
+    private val getAllplanData = MutableLiveData<Resource<PlanDataResponse>>()
+
     private val compositeDisposable = CompositeDisposable()
 
     fun postLoginUser(phone: String, device_name: String) : LiveData<Resource<LogginApiResponse>>{
@@ -215,5 +217,22 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return requestForImgGen
+    }
+
+    fun getAllPlan(token: String) : LiveData<Resource<PlanDataResponse>>{
+        getAllplanData.postValue(Resource.loading(null))
+
+        compositeDisposable.add(
+                mainRepository.getAllPlan(token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getAllplanData.postValue(Resource.success(data))
+                        }, {
+                            getAllplanData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return getAllplanData
     }
 }

@@ -59,4 +59,8 @@ class MainRepository (private val apiHelper: ApiHelper) {
     fun executeImageGeneratorRequest(user_id : String, pref_id: String, token: String) : Single<ApiResponse>{
         return apiHelper.requestForImageGeneration(user_id, pref_id, token)
     }
+
+    fun getAllPlan(token : String) : Single<PlanDataResponse>{
+        return apiHelper.getAllPlanData(token)
+    }
 }
