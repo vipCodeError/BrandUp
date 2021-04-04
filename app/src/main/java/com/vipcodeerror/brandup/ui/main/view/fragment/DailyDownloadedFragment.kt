@@ -17,6 +17,9 @@ class DailyDownloadedFragment : Fragment() {
     private lateinit var recyclerViewDownload : RecyclerView
     private lateinit var downloadAdapter : DownloadFileListAdapter
 
+    override fun onResume() {
+        super.onResume()
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view =  inflater.inflate(R.layout.fragment_downloaded, container, false)
 

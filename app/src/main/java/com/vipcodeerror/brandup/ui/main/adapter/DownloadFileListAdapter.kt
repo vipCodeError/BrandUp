@@ -1,6 +1,9 @@
 package com.vipcodeerror.brandup.ui.main.adapter
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Environment
 import android.view.LayoutInflater
@@ -13,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.ui.main.view.activity.ImageOpenActivity
+import com.vipcodeerror.brandup.util.AppUtils
 import java.io.File
 
 class DownloadFileListAdapter(var context : Context, var fListData : MutableList<String>) : RecyclerView.Adapter<DownloadFileListAdapter.MyViewHolder>() {
-    val file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.toURI()
+    val file = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES + File.separator + "downloaded_img")?.toURI()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DownloadFileListAdapter.MyViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.download_list_adapter, parent, false)
@@ -31,6 +35,18 @@ class DownloadFileListAdapter(var context : Context, var fListData : MutableList
             var intent = Intent(context, ImageOpenActivity::class.java)
             intent.putExtra("filePath", file?.path + fListData[position])
             context.startActivity(intent)
+        }
+        holder.fileSelection.setOnLongClickListener {
+            var showDelete = androidx.appcompat.app.AlertDialog.Builder(context)
+            showDelete.setMessage("Do you want to delete this banner ?")
+            showDelete.setPositiveButton("OK") { dialog, which ->
+                AppUtils.deleteFile(context, fListData[position])
+                notifyItemRemoved(position) }
+
+            showDelete.setNeutralButton("NO") { dialog, which -> dialog.dismiss() }
+            showDelete.show()
+
+            true
         }
     }
 

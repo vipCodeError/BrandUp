@@ -65,20 +65,21 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:layout_gravity="end|center_vertical">
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginStart="8dp">
 
             <ImageView
                 android:id="@+id/search_icons"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/ic_search"
-                android:padding="4dp" />
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:padding="12dp" />
 
             <RelativeLayout
                 android:layout_width="60dp"

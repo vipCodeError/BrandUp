@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.BusinessDetailsModel
 import com.vipcodeerror.brandup.ui.main.view.activity.BottomFrameSelectorActivity
+import com.vipcodeerror.brandup.ui.main.view.activity.BrandLogoUpdate
 import com.vipcodeerror.brandup.ui.main.view.activity.BusinessCategory
 
 class MyBusinessListAdapter(var context: Context, var businessList : MutableList<BusinessDetailsModel>) : RecyclerView.Adapter<MyBusinessListAdapter.MyViewHolder>() {
@@ -27,7 +28,7 @@ class MyBusinessListAdapter(var context: Context, var businessList : MutableList
         holder.whichCatBelongTo.text = businessList[position].catName
         holder.businessLocation.text = businessList[position].bLocation
         holder.editBrand.setOnClickListener {
-            context.startActivity(Intent(context, BusinessCategory::class.java))
+            context.startActivity(Intent(context, BrandLogoUpdate::class.java).putExtra("b_id",businessList[position].id))
         }
 
         holder.bLayoutBuss.setOnClickListener {

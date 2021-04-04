@@ -20,5 +20,9 @@ data class BusinessDetailsModel (
     @SerializedName("cat_belong_to")
     var catId : String,
     @SerializedName("cat_name")
-    var catName : String
+    var catName : String,
+    @SerializedName("website")
+    var webName : String,
+    @SerializedName("email")
+    var email : String
 )

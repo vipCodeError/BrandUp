@@ -29,6 +29,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="8dp"
+        android:background="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -43,17 +51,17 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         <LinearLayout
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <TextView
                 android:text="Trending"
                 android:layout_margin="0dp"
-                android:fontFamily="@font/archia"
+                android:fontFamily="@font/ptsans_bold"
+                android:textStyle="bold"
                 android:textColor="#B4000000"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

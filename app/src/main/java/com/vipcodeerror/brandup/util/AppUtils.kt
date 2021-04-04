@@ -7,8 +7,8 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.vipcodeerror.brandup.BuildConfig
 import java.io.File
@@ -69,8 +69,8 @@ class AppUtils {
             context.startActivity(Intent.createChooser(sendIntent, "Share Brand Frame"))
         }
 
-        fun getFilesList(context : Context) : MutableList<String>{
-            val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.toURI())
+        fun getFilesList(context: Context) : MutableList<String>{
+            val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES + File.separator + "downloaded_img")?.toURI())
 
             var listImg = mutableListOf<String>()
 
@@ -80,6 +80,63 @@ class AppUtils {
             }
 
             return listImg
+        }
+
+        fun storeDownloadedImage(context: Context, view: View){
+            var bmpUri: Uri? = null
+            val folder = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES ).toString() +
+                    File.separator + "downloaded_img")
+            var success = true
+            if (!folder.exists()) {
+                success = folder.mkdirs()
+            }
+            if (success) {
+                val bitmap = Bitmap.createBitmap(
+                        view.getWidth(),
+                        view.getHeight(), Bitmap.Config.ARGB_8888
+                )
+                val canvas = Canvas(bitmap)
+                view.draw(canvas)
+                val intent = Intent()
+                intent.action = Intent.ACTION_VIEW
+
+                try {
+                    val file = File(
+                            context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + File.separator + "downloaded_img",
+                            "downloaded" + System.currentTimeMillis() + ".png"
+                    )
+                    val out = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, out)
+                    out.close()
+                    bmpUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        FileProvider.getUriForFile(
+                                context,
+                                BuildConfig.APPLICATION_ID + ".provider",
+                                file
+                        )
+                    } else {
+                        Uri.fromFile(file)
+                    }
+
+                    Toast.makeText(context, "Banner Downloaded...", Toast.LENGTH_SHORT).show()
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } else {
+
+            }
+        }
+
+        fun deleteFile(context: Context, fileName : String){
+            val file = File(
+                    context.getExternalFilesDir(Environment.DIRECTORY_PICTURES).toString() + File.separator + "downloaded_img",
+                    fileName
+            )
+            if (file.delete()) {
+                Toast.makeText(context, "File Deleted", Toast.LENGTH_SHORT).show()
+            } else {
+
+            }
         }
     }
 

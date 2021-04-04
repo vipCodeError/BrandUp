@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
@@ -64,10 +65,12 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowCustomEnabled(false)
+        supportActionBar!!.setCustomView(R.layout.custom_toolbar_bottom_f)
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+        var saveBtn = supportActionBar?.customView?.findViewById<TextView>(R.id.save)
 
         toolbar.title = "Select Your Pref Image"
 
@@ -77,6 +80,10 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
         frameSelectorRecycler = findViewById(R.id.frame_selector_recycler)
         lLayoutRoot = findViewById(R.id.r_l_12345)
         lurkingCatAnim = findViewById(R.id.lurking_cat_anim)
+
+        saveBtn?.setOnClickListener {
+            finish()
+        }
 
         requestForImageGeneration(mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(),
                 sharedPreferenceUtil.getValueString("pref_buss").toString(), sharedPreferenceUtil.getValueString("token").toString())
@@ -160,8 +167,7 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
 
         frameSelectorAdapter.clickOnFrameUrl = object : BottomBannerAdapter.ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
-                Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x400/$url").apply( RequestOptions()
-                        .fitCenter()
+                Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x100/$url").apply( RequestOptions()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .override(SIZE_ORIGINAL))
                         .into(bottomFrame);

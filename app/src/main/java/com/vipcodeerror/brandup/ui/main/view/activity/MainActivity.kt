@@ -16,6 +16,7 @@ import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedApiResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.adapter.PopularCategoryAdapter
+import com.vipcodeerror.brandup.ui.main.view.fragment.DailyDownloadedFragment
 import com.vipcodeerror.brandup.ui.main.view.fragment.DownloadFragment
 import com.vipcodeerror.brandup.ui.main.view.fragment.HomePageFragment
 import com.vipcodeerror.brandup.ui.main.view.fragment.SettingFragment
@@ -25,7 +26,7 @@ import com.vipcodeerror.brandup.util.Status
 
 
 class MainActivity : AppCompatActivity() {
-    lateinit var downloadedFragment : DownloadFragment
+    lateinit var downloadedFragment : DailyDownloadedFragment
     lateinit var settingsFragment : SettingFragment
     lateinit var homePageFragment : HomePageFragment
 
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        downloadedFragment = DownloadFragment()
+        downloadedFragment = DailyDownloadedFragment()
         settingsFragment = SettingFragment()
         homePageFragment = HomePageFragment()
 

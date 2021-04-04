@@ -36,6 +36,8 @@
             />
         <activity android:name=".ui.main.view.activity.BrandLogoEdit"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
+        <activity android:name=".ui.main.view.activity.BrandLogoUpdate"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"/>
 
         <activity android:name=".ui.main.view.activity.MyBusinessList"/>
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

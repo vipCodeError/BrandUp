@@ -34,10 +34,7 @@ import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
-import com.vipcodeerror.brandup.ui.main.adapter.BussDialogAdapter
-import com.vipcodeerror.brandup.ui.main.adapter.HomeCardAdapter
-import com.vipcodeerror.brandup.ui.main.adapter.TopTrendingSliderAdapter
-import com.vipcodeerror.brandup.ui.main.adapter.TrendingTitleAdapter
+import com.vipcodeerror.brandup.ui.main.adapter.*
 import com.vipcodeerror.brandup.ui.main.view.activity.NotificationActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.SearchActivity
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
@@ -140,7 +137,7 @@ class HomePageFragment : Fragment() {
 
         sliderAds(view)
         staticAds()
-        trendingTitle()
+        geTrendingData(sharedPreferenceUtil.getValueString("token").toString())
 
         getBusinnessForHomeData(
             mainViewModel,
@@ -211,57 +208,6 @@ class HomePageFragment : Fragment() {
     private fun staticAds(){
         Glide.with(this).load("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png").into(
             staticAdsImageView
-        )
-    }
-
-    private fun trendingTitle(){
-        var catListStr = mutableListOf<String>(
-            "Marketing and Advertising Agency",
-            "Clothes",
-            "Agriculture",
-            "Education",
-            "Jewelery",
-            "Art and Design",
-            "Mobile Store",
-            "Advocate",
-            "Auto Mobile",
-            "FMCG",
-            "Real Estate",
-            "Ceramic",
-            "Electrical",
-            "Building Traders",
-            "Furniture",
-            "Textile Industry",
-            "Insurance",
-            "Finance",
-            "Photographer",
-            "Tour and Travels",
-            "Information Technology",
-            "Graphic Designing",
-            "Dairy & Sweets",
-            "Consultant",
-            "Computer Hardware",
-            "Restaurant, Catering",
-            "Solar and Power Panel",
-            "Social Activist",
-            "Steel and Aluminium",
-            "Events",
-            "Clinic and Hospital",
-            "Aryuvedic",
-            "Agarbatti",
-            "Pharmaceutical",
-            "Hotel",
-            "Security Surveillance",
-            "Home Appliances",
-            "Interior",
-            "Beauty parlor and salon"
-        );
-        val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
-        trendingRecyclerView.adapter = trendingTitleAdapter
-        trendingRecyclerView.layoutManager = LinearLayoutManager(
-            requireActivity(),
-            LinearLayoutManager.HORIZONTAL,
-            false
         )
     }
 
@@ -688,13 +634,39 @@ class HomePageFragment : Fragment() {
         })
     }
 
+    private fun geTrendingData(token: String) {
+        mainViewModel.getTrendingData(token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        var tData = it.data
+                        val trendingTitleAdapter  = TrendingTitleAdapter(requireActivity(), tData.toMutableList())
+                        trendingRecyclerView.adapter = trendingTitleAdapter
+                        trendingRecyclerView.layoutManager = LinearLayoutManager(
+                                requireActivity(),
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                        )
+
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
     private fun showToolTip(view : View, ){
         val tooltip = Tooltip.Builder(requireActivity())
             .anchor(view, 0, 0, false)
             .text("Select Business here")
             .arrow(true)
             .floatingAnimation(Tooltip.Animation.DEFAULT)
-            .closePolicy(ClosePolicy.TOUCH_OUTSIDE_CONSUME)
+            .closePolicy(ClosePolicy.TOUCH_ANYWHERE_NO_CONSUME)
             .showDuration(6000)
             .fadeDuration(2000)
             .overlay(true)

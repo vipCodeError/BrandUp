@@ -127,7 +127,7 @@ public class MyBusinessList : AppCompatActivity(){
             .text("add your Business here")
             .arrow(true)
             .floatingAnimation(Tooltip.Animation.DEFAULT)
-            .closePolicy(ClosePolicy.TOUCH_OUTSIDE_CONSUME)
+            .closePolicy(ClosePolicy.TOUCH_ANYWHERE_NO_CONSUME)
             .showDuration(6000)
             .fadeDuration(2000)
             .overlay(true)

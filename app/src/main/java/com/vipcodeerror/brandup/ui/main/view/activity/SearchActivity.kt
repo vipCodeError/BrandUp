@@ -85,6 +85,10 @@ class SearchActivity : AppCompatActivity() {
         backBtn.setOnClickListener{
             onBackPressed()
         }
+
+        searchView.setOnClickListener{
+            searchView.isIconified = false
+        }
     }
 
     private fun setupViewModel() :MainViewModel {

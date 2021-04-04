@@ -1,9 +1,12 @@
 package com.vipcodeerror.brandup.ui.main.view.activity
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
@@ -108,7 +111,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         }
 
         downloadImgView.setOnClickListener {
-
+            AppUtils.storeDownloadedImage(this, frameLayout)
         }
 
         getBottomBannerData(mainViewModel, sharedPreferenceUtil.getValueString("pref_buss").toString(),
@@ -121,8 +124,6 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         sliderView.setSliderAdapter(sliderAdapter)
 //        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
-        sliderView.startAutoCycle();
-
         sliderAdapter.addItem(urlList.toMutableList())
 
     }
@@ -140,7 +141,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         )
         frameSelectorAdapter.clickOnFrameUrl = object : ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
-                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/$url").into(
+                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x512/images/$url").into(
                     backFrame
                 )
             }
@@ -148,17 +149,17 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
     }
 
     private fun trendingTitle(){
-        var catListStr = mutableListOf<String>(
-            "All", "Marketing and Advertising Agency",
-            "Clothes", "Agriculture", "Education", "Jewelery", "Art and Design", "Mobile Store"
-        );
-        val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
-        subCatTitleRecycler.adapter = trendingTitleAdapter
-        subCatTitleRecycler.layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
+//        var catListStr = mutableListOf<String>(
+//            "All", "Marketing and Advertising Agency",
+//            "Clothes", "Agriculture", "Education", "Jewelery", "Art and Design", "Mobile Store"
+//        );
+//        val trendingTitleAdapter  = TrendingTitleAdapter(catListStr)
+//        subCatTitleRecycler.adapter = trendingTitleAdapter
+//        subCatTitleRecycler.layoutManager = LinearLayoutManager(
+//            this,
+//            LinearLayoutManager.HORIZONTAL,
+//            false
+//        )
     }
 
     private fun setupViewModel() :MainViewModel {
@@ -222,20 +223,25 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         mVModel.getBottomBannerDatas(pref_id, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    it.data?.let {
-                        val catdata = it.data
-                        topFrame(catdata)
-                        Glide.with(this@FrameTemplateSelectorActivity)
-                            .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
-                            .into(logoImg)
-
-//                        Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x400/${catdata[0].urlBottomBanner}").apply( RequestOptions()
-//                            .fitCenter()
-//                            .format(DecodeFormat.PREFER_ARGB_8888)
-//                            .override(Target.SIZE_ORIGINAL))
-//                            .into(bottomFrame);
-
+                    if(it.data?.data?.size == 0){
+                        var showWarnings = AlertDialog.Builder(this@FrameTemplateSelectorActivity)
+                        showWarnings.setMessage("You did not select frame. Press Ok to select frame.")
+                        showWarnings.setPositiveButton("OK",object: DialogInterface.OnClickListener {
+                            override fun onClick(dialog: DialogInterface?, which: Int) {
+                                startActivity(Intent(this@FrameTemplateSelectorActivity, BottomFrameSelectorActivity::class.java))
+                            }
+                        })
+                        showWarnings.show()
+                    }else {
+                        it.data?.let {
+                            val catdata = it.data
+                            topFrame(catdata)
+                            Glide.with(this@FrameTemplateSelectorActivity)
+                                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
+                                    .into(logoImg)
+                        }
                     }
+
                 }
                 Status.LOADING -> {
 
