@@ -27,6 +27,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val getBottomBannerData = MutableLiveData<Resource<BottomBannerResponse>>()
     private val requestForImgGen = MutableLiveData<Resource<ApiResponse>>()
     private val getAllplanData = MutableLiveData<Resource<PlanDataResponse>>()
+    private val searchStr = MutableLiveData<Resource<SearchDataResponse>>()
+    private val getTrendingData = MutableLiveData<Resource<TrendingDataResponse>>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -234,5 +236,39 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return getAllplanData
+    }
+
+    fun searchStrData(str: String , token: String) : LiveData<Resource<SearchDataResponse>>{
+        searchStr.postValue(Resource.loading(null))
+
+        compositeDisposable.add(
+                mainRepository.searchStr(str, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            searchStr.postValue(Resource.success(data))
+                        }, {
+                            searchStr.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return searchStr
+    }
+
+    fun getTrendingData(token: String) : LiveData<Resource<TrendingDataResponse>>{
+        getTrendingData.postValue(Resource.loading(null))
+
+        compositeDisposable.add(
+                mainRepository.getTrendingData(token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getTrendingData.postValue(Resource.success(data))
+                        }, {
+                            getTrendingData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return getTrendingData
     }
 }

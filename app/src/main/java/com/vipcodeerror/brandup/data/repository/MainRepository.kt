@@ -63,4 +63,12 @@ class MainRepository (private val apiHelper: ApiHelper) {
     fun getAllPlan(token : String) : Single<PlanDataResponse>{
         return apiHelper.getAllPlanData(token)
     }
+
+    fun searchStr(str: String, token : String) : Single<SearchDataResponse>{
+        return apiHelper.searchString(str, token)
+    }
+
+    fun getTrendingData(token: String) : Single<TrendingDataResponse>{
+        return apiHelper.getTrendingData(token)
+    }
 }

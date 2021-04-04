@@ -21,17 +21,30 @@
             android:layout_centerVertical="true"
             android:fontFamily="@font/archia"
             android:textColor="#000"
+            android:layout_marginStart="16dp"
             android:text="Downloaded Banner"
-            android:textAlignment="center"
-            android:textSize="21sp" />
+            android:textAlignment="textStart"
+            android:textSize="17sp" />
     </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="#939393"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_download"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4" />
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

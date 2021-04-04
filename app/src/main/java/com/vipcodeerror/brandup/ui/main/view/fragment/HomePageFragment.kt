@@ -196,8 +196,8 @@ class HomePageFragment : Fragment() {
         val sliderAdapter = TopTrendingSliderAdapter(requireActivity())
         val sliderView: SliderView = view.findViewById(R.id.imageSlider)
         sliderView.setSliderAdapter(sliderAdapter)
-        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
         sliderView.startAutoCycle();
 
         var listUrls = mutableListOf<SliderItem>()

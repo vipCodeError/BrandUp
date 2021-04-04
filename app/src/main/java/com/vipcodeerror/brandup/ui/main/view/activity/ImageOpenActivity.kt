@@ -11,12 +11,15 @@ class ImageOpenActivity : AppCompatActivity() {
 
     private lateinit var imageThumbnail : ImageView
     private lateinit var imageShare : ImageView
+    private lateinit var backBtn : ImageView
+
     var fileStr = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.image_open_activity)
         imageThumbnail = findViewById(R.id.image_thumbnail)
         imageShare = findViewById(R.id.share)
+        backBtn = findViewById(R.id.back_btn)
 
         if(intent != null){
             fileStr = intent.getStringExtra("filePath").toString()
@@ -25,6 +28,10 @@ class ImageOpenActivity : AppCompatActivity() {
 
         imageShare.setOnClickListener {
             AppUtils.launchShareIntent(this, imageThumbnail)
+        }
+
+        backBtn.setOnClickListener {
+            onBackPressed()
         }
     }
 }

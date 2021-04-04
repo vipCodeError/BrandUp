@@ -37,4 +37,8 @@ interface ApiService {
     fun requestImageGenerator(user_id : String, pref_id: String, token: String) : Single<ApiResponse>
 
     fun getAllPlanData(token: String) : Single<PlanDataResponse>
+
+    fun searchString(str: String ,token: String) : Single<SearchDataResponse>
+
+    fun getTrendingData(token: String) : Single<TrendingDataResponse>
 }

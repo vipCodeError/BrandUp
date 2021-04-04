@@ -215,6 +215,19 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(PlanDataResponse::class.java)
     }
 
+    override fun searchString(str: String, token: String): Single<SearchDataResponse> {
+        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/search_strd")
+                .addBodyParameter("search_str",str)
+                .addHeaders("Authorization", "Bearer " + token)
+                .build().getObjectSingle(SearchDataResponse::class.java)
+    }
+
+    override fun getTrendingData(token: String): Single<TrendingDataResponse> {
+        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_trending_data")
+                .addHeaders("Authorization", "Bearer " + token)
+                .build().getObjectSingle(TrendingDataResponse::class.java)
+    }
+
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
