@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit
 
 class ApiServiceImpl : ApiService {
 
+    companion object {
+        const val BASE_URL = "http://brandup.mobank.in/"
+    }
     override fun userLogin(phone: String, device_name: String): Single<LogginApiResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
@@ -29,20 +32,20 @@ class ApiServiceImpl : ApiService {
         var bodyParam = HashMap<String, String>()
         bodyParam["phone"] = phone
         bodyParam["device_name"] = device_name
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/login").addBodyParameter(bodyParam)
+        return Rx2AndroidNetworking.post(BASE_URL + "api/login").addBodyParameter(bodyParam)
                 .setOkHttpClient(okHttpClient)
                 .build()
                 .getObjectSingle(LogginApiResponse::class.java)
     }
 
     override fun getCatData(token: String): Single<ApiCatDataResponse> {
-        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_cat")
+        return Rx2AndroidNetworking.get(BASE_URL + "api/get_cat")
                 .addHeaders("Authorization", "Bearer " + token)
                 .build().getObjectSingle(ApiCatDataResponse::class.java)
     }
 
     override fun postCatPref(userId: String, pref: String, token: String): Single<ApiResponse> {
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/buss_pref")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/buss_pref")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("user_id", userId)
                 .addBodyParameter("buss_pref", pref)
@@ -72,7 +75,7 @@ class ApiServiceImpl : ApiService {
         params["b_cat_id"] = catIdBelongTo
         params["b_web"] = webN
 
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/buss_det")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/buss_det")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter(params)
                 .setOkHttpClient(okHttpClient)
@@ -90,7 +93,7 @@ class ApiServiceImpl : ApiService {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
-        return Rx2AndroidNetworking.upload("http://brandup.shopyculture.com/api/upload_img")
+        return Rx2AndroidNetworking.upload(BASE_URL + "api/upload_img")
                 .addMultipartFile("image", logoUrl)
                 .addHeaders("Authorization", "Bearer " + tokens)
                 .setContentType("multipart/form-data")
@@ -115,7 +118,7 @@ class ApiServiceImpl : ApiService {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
-        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_selected_hdata")
+        return Rx2AndroidNetworking.get(BASE_URL + "api/get_selected_hdata")
                 .addHeaders("Authorization", "Bearer " + token)
                 .setOkHttpClient(okHttpClient)
                 .build().getObjectSingle(HomeSelectedApiResponse::class.java)
@@ -132,7 +135,7 @@ class ApiServiceImpl : ApiService {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_home_data")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_home_data")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("cat_id", catId)
                 .setOkHttpClient(okHttpClient)
@@ -150,7 +153,7 @@ class ApiServiceImpl : ApiService {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_home_subdata")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_home_subdata")
             .addHeaders("Authorization", "Bearer " + token)
             .addBodyParameter("cat_id", catId)
             .setOkHttpClient(okHttpClient)
@@ -168,7 +171,7 @@ class ApiServiceImpl : ApiService {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_buss_data")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_buss_data")
             .addHeaders("Authorization", "Bearer " + token)
             .addBodyParameter("user_id", userId)
             .setOkHttpClient(okHttpClient)
@@ -186,7 +189,7 @@ class ApiServiceImpl : ApiService {
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
 
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/set_buss_data")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/set_buss_data")
             .addHeaders("Authorization", "Bearer " + token)
             .addBodyParameter("user_id", userId)
             .addBodyParameter("pref_id",prefId)
@@ -195,14 +198,14 @@ class ApiServiceImpl : ApiService {
     }
 
     override fun getBottomBanner(prefId: String, token: String): Single<BottomBannerResponse> {
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_bottom_banner")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_bottom_banner")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("pref_id",prefId)
                 .build().getObjectSingle(BottomBannerResponse::class.java)
     }
 
     override fun requestImageGenerator(user_id: String, pref_id: String, token: String): Single<ApiResponse> {
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/execute_img_generator")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/execute_img_generator")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("user_id",user_id)
                 .addBodyParameter("pref_id",pref_id)
@@ -210,20 +213,20 @@ class ApiServiceImpl : ApiService {
     }
 
     override fun getAllPlanData(token: String): Single<PlanDataResponse> {
-        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_all_plan")
+        return Rx2AndroidNetworking.get(BASE_URL + "api/get_all_plan")
                 .addHeaders("Authorization", "Bearer " + token)
                 .build().getObjectSingle(PlanDataResponse::class.java)
     }
 
     override fun searchString(str: String, token: String): Single<SearchDataResponse> {
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/search_strd")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/search_strd")
                 .addBodyParameter("search_str",str)
                 .addHeaders("Authorization", "Bearer " + token)
                 .build().getObjectSingle(SearchDataResponse::class.java)
     }
 
     override fun getTrendingData(token: String): Single<TrendingDataResponse> {
-        return Rx2AndroidNetworking.get("http://brandup.shopyculture.com/api/get_trending_data")
+        return Rx2AndroidNetworking.get(BASE_URL + "api/get_trending_data")
                 .addHeaders("Authorization", "Bearer " + token)
                 .build().getObjectSingle(TrendingDataResponse::class.java)
     }
@@ -239,7 +242,7 @@ class ApiServiceImpl : ApiService {
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .build()
 
-        return Rx2AndroidNetworking.post("http://brandup.shopyculture.com/api/get_buss_data_for_home")
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_buss_data_for_home")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("user_id", userId)
                 .addBodyParameter("id", id)
