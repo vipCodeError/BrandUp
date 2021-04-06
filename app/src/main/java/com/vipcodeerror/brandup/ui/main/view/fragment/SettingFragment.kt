@@ -11,14 +11,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.api.ApiHelper
 import com.vipcodeerror.brandup.data.api.ApiServiceImpl
+import com.vipcodeerror.brandup.data.model.BannerDataResponse
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.view.activity.*
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
+import com.vipcodeerror.brandup.util.Resource
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
 import java.util.Observer
@@ -41,6 +44,7 @@ class SettingFragment : Fragment() {
     private lateinit var bPhoneNo : TextView
 
     private lateinit var mainViewModel: MainViewModel
+    private val getBrandDataStatic = MutableLiveData<Resource<BannerDataResponse>>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view = inflater.inflate(R.layout.fragment_settings, container, false)
@@ -63,7 +67,7 @@ class SettingFragment : Fragment() {
             startActivity(Intent(requireActivity(), PlanSelectorActivity::class.java))
         }
 
-        Glide.with(requireActivity()).load("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png").into(bannerImage)
+        // Glide.with(requireActivity()).load("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png").into(bannerImage)
 
         myBusinessTxt.setOnClickListener {
             startActivity(Intent(requireActivity(), MyBusinessList::class.java))
@@ -83,6 +87,7 @@ class SettingFragment : Fragment() {
                 sharedPreferenceUtil.getValueString("pref_buss").toString(),
                 sharedPreferenceUtil.getValueString("token").toString())
 
+        getBannerStaticData(getBrandDataStatic, "1", sharedPreferenceUtil.getValueString("token").toString())
         logoutTxt.setOnClickListener {
                 sharedPreferenceUtil.save("is_logged", false)
                 sharedPreferenceUtil.save("token", "")
@@ -124,6 +129,32 @@ class SettingFragment : Fragment() {
                 this,
                 ViewModelFactory(ApiHelper(ApiServiceImpl()))
         ).get(MainViewModel::class.java)
+    }
+
+
+    private fun getBannerStaticData(bannerLiveData : MutableLiveData<Resource<BannerDataResponse>>, slideOrStatic : String, token: String) {
+        mainViewModel.fetchBannerData(bannerLiveData, slideOrStatic, token).observe(this, androidx.lifecycle.Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        var tData = it.data
+                        if (tData.size > 1){
+                            Glide.with(requireActivity()).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x400/images/"+tData[1].url).into(bannerImage)
+                            bannerImage.setOnClickListener {
+                                Toast.makeText(requireActivity(), tData[0].redirectUrl, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
     }
 
 }

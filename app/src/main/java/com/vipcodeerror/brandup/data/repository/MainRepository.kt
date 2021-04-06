@@ -71,4 +71,8 @@ class MainRepository (private val apiHelper: ApiHelper) {
     fun getTrendingData(token: String) : Single<TrendingDataResponse>{
         return apiHelper.getTrendingData(token)
     }
+
+    fun getBannerData(slideOrStatic : String, token: String) : Single<BannerDataResponse>{
+        return apiHelper.getBannerData(slideOrStatic, token)
+    }
 }

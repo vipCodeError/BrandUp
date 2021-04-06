@@ -38,4 +38,6 @@ class ApiHelper(private val apiService: ApiService)  {
     fun searchString(str: String , token : String) = apiService.searchString(str, token)
 
     fun getTrendingData(token: String) = apiService.getTrendingData(token)
+
+    fun getBannerData(slideOrStatic : String,token: String) = apiService.getBannerData(slideOrStatic, token)
 }

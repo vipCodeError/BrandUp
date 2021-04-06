@@ -13,6 +13,7 @@ import android.view.animation.ScaleAnimation
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import androidx.core.widget.NestedScrollView
@@ -29,6 +30,7 @@ import com.smarteist.autoimageslider.SliderView
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.api.ApiHelper
 import com.vipcodeerror.brandup.data.api.ApiServiceImpl
+import com.vipcodeerror.brandup.data.model.BannerDataResponse
 import com.vipcodeerror.brandup.data.model.SliderItem
 import com.vipcodeerror.brandup.data.model.home_modal.ApiHomeDataResponse
 import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
@@ -83,6 +85,11 @@ class HomePageFragment : Fragment() {
     private lateinit var searchIcon : ImageView
     private lateinit var notificationIcon : ImageView
 
+    private lateinit var sliderAdapter : TopTrendingSliderAdapter
+
+    private val getBrandDataSlider = MutableLiveData<Resource<BannerDataResponse>>()
+    private val getBrandDataStatic = MutableLiveData<Resource<BannerDataResponse>>()
+
     var subCount = 0
     var rootCount = 0
 
@@ -124,7 +131,7 @@ class HomePageFragment : Fragment() {
         notificationIcon = view.findViewById(R.id.notification_icon)
 
         sharedPreferenceUtil = SharedPreferenceUtil(container!!.context)
-
+        sliderAdapter = TopTrendingSliderAdapter(requireActivity())
         shadowViewObject = view
 
         getHomeObserver(sharedPreferenceUtil.getValueString("token").toString())
@@ -138,6 +145,8 @@ class HomePageFragment : Fragment() {
         sliderAds(view)
         staticAds()
         geTrendingData(sharedPreferenceUtil.getValueString("token").toString())
+        getBannerData(getBrandDataSlider, "0", sharedPreferenceUtil.getValueString("token").toString())
+        getBannerStaticData(getBrandDataStatic, "1", sharedPreferenceUtil.getValueString("token").toString())
 
         getBusinnessForHomeData(
             mainViewModel,
@@ -190,18 +199,18 @@ class HomePageFragment : Fragment() {
     }
 
     private fun sliderAds(view: View){
-        val sliderAdapter = TopTrendingSliderAdapter(requireActivity())
+
         val sliderView: SliderView = view.findViewById(R.id.imageSlider)
         sliderView.setSliderAdapter(sliderAdapter)
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
         sliderView.startAutoCycle();
 
-        var listUrls = mutableListOf<SliderItem>()
-        listUrls.add(SliderItem("https://www.visme.co/wp-content/uploads/2020/08/Visme4-Free-Banner-Maker.jpg"))
-        listUrls.add(SliderItem("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png"))
-        listUrls.add(SliderItem("https://bannerboo.com/upload/iblock/9e9/export_banners_to_mp4_bannerboo.jpg"))
-        sliderAdapter.addItem(listUrls)
+//        var listUrls = mutableListOf<SliderItem>()
+//        listUrls.add(SliderItem("https://www.visme.co/wp-content/uploads/2020/08/Visme4-Free-Banner-Maker.jpg"))
+//        listUrls.add(SliderItem("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png"))
+//        listUrls.add(SliderItem("https://bannerboo.com/upload/iblock/9e9/export_banners_to_mp4_bannerboo.jpg"))
+
 
     }
 
@@ -647,6 +656,50 @@ class HomePageFragment : Fragment() {
                                 LinearLayoutManager.HORIZONTAL,
                                 false
                         )
+
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+    private fun getBannerData(bannerLiveData : MutableLiveData<Resource<BannerDataResponse>>,slideOrStatic : String, token: String) {
+        mainViewModel.fetchBannerData(bannerLiveData, slideOrStatic, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        var tData = it.data
+                        sliderAdapter.addItem(tData.toMutableList())
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+    private fun getBannerStaticData(bannerLiveData : MutableLiveData<Resource<BannerDataResponse>>, slideOrStatic : String, token: String) {
+        mainViewModel.fetchBannerData(bannerLiveData, slideOrStatic, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        var tData = it.data
+                        if (tData.size > 0){
+                            Glide.with(requireActivity()).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x400/images/"+tData[0].url).into(staticAdsImageView)
+                            staticAdsImageView.setOnClickListener {
+                                Toast.makeText(requireActivity(), tData[0].redirectUrl, Toast.LENGTH_SHORT).show()
+                            }
+                        }
 
                     }
                 }

@@ -271,4 +271,20 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
 
         return getTrendingData
     }
+
+    fun fetchBannerData(getBrandData : MutableLiveData<Resource<BannerDataResponse>>, slideOrStatic : String, token : String) : LiveData<Resource<BannerDataResponse>>{
+        getBrandData.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getBannerData(slideOrStatic, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getBrandData.postValue(Resource.success(data))
+                        }, {
+                            getBrandData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return getBrandData
+    }
 }

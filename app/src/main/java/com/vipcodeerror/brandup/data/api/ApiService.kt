@@ -41,4 +41,6 @@ interface ApiService {
     fun searchString(str: String ,token: String) : Single<SearchDataResponse>
 
     fun getTrendingData(token: String) : Single<TrendingDataResponse>
+
+    fun getBannerData(slideOrStatic : String, token:String) : Single<BannerDataResponse>
 }

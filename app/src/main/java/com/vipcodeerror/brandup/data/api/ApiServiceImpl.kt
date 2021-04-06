@@ -231,6 +231,13 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(TrendingDataResponse::class.java)
     }
 
+    override fun getBannerData(slideOrStatic : String, token: String): Single<BannerDataResponse> {
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_banner_data")
+                .addBodyParameter("sl_or_st",slideOrStatic)
+                .addHeaders("Authorization", "Bearer " + token)
+                .build().getObjectSingle(BannerDataResponse::class.java)
+    }
+
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
