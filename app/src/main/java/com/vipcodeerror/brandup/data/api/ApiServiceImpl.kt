@@ -238,6 +238,36 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(BannerDataResponse::class.java)
     }
 
+    override fun createOrderId(amt: String, token: String): Single<OrderIdResponse> {
+        return Rx2AndroidNetworking.post(BASE_URL + "api/create_order_id")
+            .addBodyParameter("amount",amt)
+            .addHeaders("Authorization", "Bearer " + token)
+            .build().getObjectSingle(OrderIdResponse::class.java)
+    }
+
+    override fun verifyTransaction(paymentSignature : String,
+                                   razorpayPaymentId : String,
+                                   razorpayOrderId : String, userId : String, token: String): Single<ApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        return Rx2AndroidNetworking.post(BASE_URL + "api/verify_transaction")
+            .addBodyParameter("razorpay_signature", paymentSignature)
+            .addBodyParameter("razorpay_payment_id", razorpayPaymentId)
+            .addBodyParameter("razorpay_order_id", razorpayOrderId)
+            .addBodyParameter("user_id", userId)
+            .addHeaders("Authorization", "Bearer " + token)
+            .setOkHttpClient(okHttpClient)
+            .build().getObjectSingle(ApiResponse::class.java)
+    }
+
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'

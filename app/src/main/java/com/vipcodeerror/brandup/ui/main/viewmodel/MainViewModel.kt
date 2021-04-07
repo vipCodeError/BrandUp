@@ -29,6 +29,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val getAllplanData = MutableLiveData<Resource<PlanDataResponse>>()
     private val searchStr = MutableLiveData<Resource<SearchDataResponse>>()
     private val getTrendingData = MutableLiveData<Resource<TrendingDataResponse>>()
+    private val createOrderId = MutableLiveData<Resource<OrderIdResponse>>()
+    private val verifyTransaction = MutableLiveData<Resource<ApiResponse>>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -286,5 +288,39 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return getBrandData
+    }
+
+    fun createOrderIdData(amt : String, token : String) : LiveData<Resource<OrderIdResponse>>{
+        createOrderId.postValue(Resource.loading(null))
+        compositeDisposable.add(
+            mainRepository.createOrderId(amt, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({data ->
+                    createOrderId.postValue(Resource.success(data))
+                }, {
+                    createOrderId.postValue(Resource.error("Something went wrong", null))
+                })
+        )
+
+        return createOrderId
+    }
+
+    fun verifyTransactionData(paymentSignature : String,
+                              razorpayPaymentId : String,
+                              razorpayOrderId : String, userId : String, token : String) : LiveData<Resource<ApiResponse>>{
+        verifyTransaction.postValue(Resource.loading(null))
+        compositeDisposable.add(
+            mainRepository.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({data ->
+                    verifyTransaction.postValue(Resource.success(data))
+                }, {
+                    verifyTransaction.postValue(Resource.error("Something went wrong", null))
+                })
+        )
+
+        return verifyTransaction
     }
 }

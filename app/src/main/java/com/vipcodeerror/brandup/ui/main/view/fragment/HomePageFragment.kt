@@ -700,7 +700,6 @@ class HomePageFragment : Fragment() {
                                 Toast.makeText(requireActivity(), tData[0].redirectUrl, Toast.LENGTH_SHORT).show()
                             }
                         }
-
                     }
                 }
                 Status.LOADING -> {

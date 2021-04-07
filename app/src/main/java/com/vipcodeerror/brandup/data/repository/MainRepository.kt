@@ -75,4 +75,14 @@ class MainRepository (private val apiHelper: ApiHelper) {
     fun getBannerData(slideOrStatic : String, token: String) : Single<BannerDataResponse>{
         return apiHelper.getBannerData(slideOrStatic, token)
     }
+
+    fun createOrderId(amt : String, token : String) : Single<OrderIdResponse>{
+        return apiHelper.crateOrderId(amt, token)
+    }
+
+    fun verifyTransaction(paymentSignature : String,
+                          razorpayPaymentId : String,
+                          razorpayOrderId : String,userId : String, token : String) : Single<ApiResponse>{
+        return apiHelper.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId , token)
+    }
 }

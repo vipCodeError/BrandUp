@@ -43,4 +43,10 @@ interface ApiService {
     fun getTrendingData(token: String) : Single<TrendingDataResponse>
 
     fun getBannerData(slideOrStatic : String, token:String) : Single<BannerDataResponse>
+
+    fun createOrderId(amt :String, token : String) : Single<OrderIdResponse>
+
+    fun verifyTransaction(paymentSignature : String,
+                          razorpayPaymentId : String,
+                          razorpayOrderId : String, userId : String, token: String) : Single<ApiResponse>
 }

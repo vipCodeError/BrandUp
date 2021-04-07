@@ -40,4 +40,10 @@ class ApiHelper(private val apiService: ApiService)  {
     fun getTrendingData(token: String) = apiService.getTrendingData(token)
 
     fun getBannerData(slideOrStatic : String,token: String) = apiService.getBannerData(slideOrStatic, token)
+
+    fun crateOrderId(amt : String, token : String) = apiService.createOrderId(amt, token)
+
+    fun verifyTransaction(paymentSignature : String,
+                          razorpayPaymentId : String,
+                          razorpayOrderId : String, userId : String, token : String) = apiService.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, token)
 }

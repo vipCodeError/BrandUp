@@ -1,6 +1,7 @@
 package com.vipcodeerror.brandup.ui.main.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.model.PlanDataModel
+import com.vipcodeerror.brandup.ui.main.view.activity.PaymentActivity
 
 class PlanSelectorAdapter(var context: Context, var pDataList : MutableList<PlanDataModel>) : RecyclerView.Adapter<PlanSelectorAdapter.MyViewHolder>() {
 
@@ -30,6 +33,9 @@ class PlanSelectorAdapter(var context: Context, var pDataList : MutableList<Plan
         holder.price.text = "Rs " + pDataList[position].planPrice
         holder.planTitle.text = pDataList[position].planName
         holder.cardViewPlan.setBackgroundResource(listOfColor[position])
+        holder.buyNowBtn.setOnClickListener{
+            context.startActivity(Intent(context, PaymentActivity::class.java))
+        }
     }
 
     override fun getItemCount(): Int {
@@ -44,6 +50,7 @@ class PlanSelectorAdapter(var context: Context, var pDataList : MutableList<Plan
         var price = itemView.findViewById<TextView>(R.id.ttl_price)
         var planTitle = itemView.findViewById<TextView>(R.id.plan_title)
         var cardViewPlan = itemView.findViewById<LinearLayout>(R.id.card_view_plan)
+        var buyNowBtn = itemView.findViewById<AppCompatButton>(R.id.buy_now)
     }
 
 }
