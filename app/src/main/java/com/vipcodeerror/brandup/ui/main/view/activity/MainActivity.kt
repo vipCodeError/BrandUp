@@ -1,8 +1,10 @@
 package com.vipcodeerror.brandup.ui.main.view.activity
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
@@ -85,6 +87,5 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.replace(R.id.frameLayout, homePageFragment)
         fragmentTransaction.commit()
     }
-
 
 }

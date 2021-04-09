@@ -1,6 +1,7 @@
 package com.vipcodeerror.brandup.ui.main.view.fragment
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.Intent.getIntent
 import android.graphics.Typeface
@@ -102,6 +103,7 @@ class HomePageFragment : Fragment() {
         var view = inflater.inflate(R.layout.home_page_fragment, container, false)
 
         mainViewModel = setupViewModel()
+        sharedPreferenceUtil = SharedPreferenceUtil(container!!.context)
 
         firstOneTitle = view.findViewById(R.id.first_one_txt)
         secondOneTitle = view.findViewById(R.id.second_one_txt)
@@ -130,9 +132,13 @@ class HomePageFragment : Fragment() {
         searchIcon = view.findViewById(R.id.search_icons)
         notificationIcon = view.findViewById(R.id.notification_icon)
 
-        sharedPreferenceUtil = SharedPreferenceUtil(container!!.context)
         sliderAdapter = TopTrendingSliderAdapter(requireActivity())
         shadowViewObject = view
+
+        if (sharedPreferenceUtil.getValueBoolean("show_message")){
+            showMessage()
+            sharedPreferenceUtil.save("show_message", false)
+        }
 
         getHomeObserver(sharedPreferenceUtil.getValueString("token").toString())
 
@@ -728,5 +734,12 @@ class HomePageFragment : Fragment() {
             .doOnHidden { }
             .doOnFailure { }
             .doOnShown { }.show(view, Tooltip.Gravity.BOTTOM, true)
+    }
+
+    fun showMessage(){
+        var alertDialog = AlertDialog.Builder(requireActivity())
+        alertDialog.setMessage("Thanks For Upgrading your Plan.")
+        alertDialog.setPositiveButton("OK") { dialog, which -> dialog?.dismiss() }
+        alertDialog.show();
     }
 }
