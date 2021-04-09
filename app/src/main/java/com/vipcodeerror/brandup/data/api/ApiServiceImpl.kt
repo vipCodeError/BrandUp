@@ -247,7 +247,7 @@ class ApiServiceImpl : ApiService {
 
     override fun verifyTransaction(paymentSignature : String,
                                    razorpayPaymentId : String,
-                                   razorpayOrderId : String, userId : String, token: String): Single<ApiResponse> {
+                                   razorpayOrderId : String, userId : String, planType : String, token: String): Single<ApiResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
 
@@ -263,9 +263,59 @@ class ApiServiceImpl : ApiService {
             .addBodyParameter("razorpay_payment_id", razorpayPaymentId)
             .addBodyParameter("razorpay_order_id", razorpayOrderId)
             .addBodyParameter("user_id", userId)
+            .addBodyParameter("plan_type", planType)
             .addHeaders("Authorization", "Bearer " + token)
             .setOkHttpClient(okHttpClient)
             .build().getObjectSingle(ApiResponse::class.java)
+    }
+
+    override fun postUpdateBussDetails(
+        userId: String,
+        bussName: String,
+        phone: String,
+        address: String,
+        email: String,
+        webN: String,
+        logoUrl: String,
+        location: String,
+        belongToWhichUser: String,
+        catIdBelongTo: String,
+        token: String
+    ): Single<ApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+            .connectTimeout(20, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(interceptor)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        var params = mutableMapOf<String, String>()
+        params["user_id"] = userId
+        params["b_details"] = bussName
+        params["b_phone"] = phone
+        params["b_addr"] = address
+        params["b_email"] = email
+        params["b_image_url"] = logoUrl
+        params["b_location"] = location
+        params["b_user_id"] = belongToWhichUser
+        params["b_cat_id"] = catIdBelongTo
+        params["b_web"] = webN
+
+        return Rx2AndroidNetworking.post(BASE_URL + "api/update_business")
+            .addHeaders("Authorization", "Bearer " + token)
+            .addBodyParameter(params)
+            .setOkHttpClient(okHttpClient)
+            .build().getObjectSingle(ApiResponse::class.java)
+    }
+
+    override fun getPlanById(planId: String, token: String): Single<PlanDataModel> {
+        return Rx2AndroidNetworking.post(BASE_URL + "api/get_plan_id")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("plan_id", planId)
+                .build().getObjectSingle(PlanDataModel::class.java)
     }
 
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {

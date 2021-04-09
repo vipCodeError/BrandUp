@@ -45,7 +45,7 @@ class OtpVerficationActivity : AppCompatActivity() {
 
         setupViewModel()
 
-        phoneNumText = findViewById(R.id.phone_num_txt);
+        phoneNumText = findViewById(R.id.phone_num_txt)
         countDownTxt = findViewById(R.id.otp_countdown)
         auth = FirebaseAuth.getInstance()
         callBackPhoneOtp()
@@ -155,13 +155,39 @@ class OtpVerficationActivity : AppCompatActivity() {
                         sharedPreferenceUtil.save("user_id", it.id.toString())
                         sharedPreferenceUtil.save("pref_buss", it.prefBusiness)
                         sharedPreferenceUtil.save("is_logged", true)
+                        sharedPreferenceUtil.save("plan_id", it.planId)
+                        sharedPreferenceUtil.save("plan_name", it.planName)
 
-                        if(it.isAlreadyExist == "0"){
-                            Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
+                        getPlanById(it.isAlreadyExist, it.planId, sharedPreferenceUtil.getValueString("token").toString())
+                    }
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+                    Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+    }
+
+    private fun getPlanById(isAlreadyExist : String, plan_id : String, token : String) {
+        mainViewModel.getPlanById(plan_id, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let {
+                        sharedPreferenceUtil.save("plan_name", it?.planName)
+                        sharedPreferenceUtil.save("download_limit", it?.downloadLimit)
+                        sharedPreferenceUtil.save("share_limit", it?.shareLimit)
+                        sharedPreferenceUtil.save("days_limit", it?.dayLimit)
+                        sharedPreferenceUtil.save("business_card_limit", it?.bCardLimit)
+
+                        if(isAlreadyExist == "0"){
+                            Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " +  sharedPreferenceUtil.getValueString("token").toString(), Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
                             finish()
                         }else {
-                            Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.token, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " +  sharedPreferenceUtil.getValueString("token").toString(), Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this@OtpVerficationActivity, MainActivity::class.java))
                             finish()
                         }
@@ -177,6 +203,7 @@ class OtpVerficationActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun setupViewModel() {
         mainViewModel = ViewModelProviders.of(

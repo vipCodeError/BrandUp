@@ -4,13 +4,11 @@ import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.Toolbar
@@ -53,7 +51,9 @@ class BrandLogoUpdate : AppCompatActivity(){
 
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
 
-    private lateinit var actualUri: String
+    private  var actualUri: String? = null
+
+    private var logoUrlTemp = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,11 +193,27 @@ class BrandLogoUpdate : AppCompatActivity(){
         })
 
         saveBtn.setOnClickListener(View.OnClickListener {
-            val file = File(actualUri)
-            val token = sharedPreferenceUtil.getValueString("token").toString()
-            uploadLogoUrl(file, token)
-            loadingHand.visibility = View.VISIBLE
 
+
+            val token = sharedPreferenceUtil.getValueString("token").toString()
+            if (actualUri == null){
+                var bName = businessNameTxt.text.toString()
+                var bEmail = emailTxt.text.toString()
+                var bPhone = phoneTxt.text.toString()
+                var bLoc = locationTxt.text.toString()
+                var bAddr = addrTxt.text.toString()
+                var bWeb = websiteNameTxt.text.toString()
+
+                val userId = sharedPreferenceUtil.getValueString("user_id").toString()
+                val catId = intent.getStringExtra("cat_id").toString()
+                postUpdateBusinessDetails(bId!!, bName, bPhone, bAddr, bEmail, bWeb, logoUrlTemp, bLoc, userId , catId, token)
+
+            }else {
+                val file = File(actualUri)
+                uploadLogoUrl(bId!!, file, token)
+            }
+
+            loadingHand.visibility = View.VISIBLE
         })
     }
 
@@ -209,25 +225,26 @@ class BrandLogoUpdate : AppCompatActivity(){
                 val resultUri: Uri = result.uri
                 actualUri = resultUri.path!!
                 logoEmbedImg.setImageURI(resultUri)
+                logoEmbedImg.setBackgroundResource(0)
+                logoEmbedImg.background = null
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }
         }
     }
 
-    private fun postBusinessDetails(bussName : String, phone: String, address : String, email: String, webN : String,
+    private fun postUpdateBusinessDetails(user_id: String, bussName : String, phone: String, address : String, email: String, webN : String,
                                     logoUrl: String, location: String,
                                     belongToWhichUser : String, catIdBelongTo: String, token: String){
 
-        mainViewModel.postBussDetailsData(bussName, phone, address,email, webN ,logoUrl, location,
+        mainViewModel.postUpdateBussDetailsData(user_id, bussName, phone, address,email, webN ,logoUrl, location,
                 belongToWhichUser, catIdBelongTo, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
                         var catdata = it.status
-                        setUserBussPref(phone,
-                                it.id.toString(), sharedPreferenceUtil.getValueString("token").toString())
-
+                        Toast.makeText(this@BrandLogoUpdate, "Your Business Details Updated !!!", Toast.LENGTH_SHORT).show()
+                        finish()
                     }
                 }
                 Status.LOADING -> {
@@ -240,7 +257,7 @@ class BrandLogoUpdate : AppCompatActivity(){
         })
     }
 
-    private fun uploadLogoUrl(logosUrl : File, token : String){
+    private fun uploadLogoUrl(user_id: String, logosUrl : File, token : String){
         mainViewModel.uploadImageData(logosUrl, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -254,7 +271,7 @@ class BrandLogoUpdate : AppCompatActivity(){
 
                         val userId = sharedPreferenceUtil.getValueString("user_id").toString()
                         val catId = intent.getStringExtra("cat_id").toString()
-                        postBusinessDetails(bName, bPhone, bAddr, bEmail, bWeb,  it.imageUrl , bLoc, userId , catId, token)
+                        postUpdateBusinessDetails(user_id, bName, bPhone, bAddr, bEmail, bWeb,  it.imageUrl , bLoc, userId , catId, token)
                     }
                 }
                 Status.LOADING -> {
@@ -305,6 +322,7 @@ class BrandLogoUpdate : AppCompatActivity(){
                         addrTxt.setText(data[0].bAddress)
                         businessNameTxt.setText(data[0].bName)
                         websiteNameTxt.setText(data[0].webName)
+                        logoUrlTemp = data[0].logoUrl
                         Glide.with(this@BrandLogoUpdate).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/" + data[0].logoUrl).into(logoEmbedImg)
                     }
                 }

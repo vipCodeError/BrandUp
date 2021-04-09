@@ -45,5 +45,13 @@ class ApiHelper(private val apiService: ApiService)  {
 
     fun verifyTransaction(paymentSignature : String,
                           razorpayPaymentId : String,
-                          razorpayOrderId : String, userId : String, token : String) = apiService.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, token)
+                          razorpayOrderId : String, userId : String, planType: String, token : String) = apiService.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, planType, token)
+
+    fun postUpdateBusinessDetails(userId: String, bussName : String, phone: String, address : String, email: String, webN : String,
+                            logoUrl: String, location: String,
+                            belongToWhichUser : String, catIdBelongTo: String, token: String) = apiService
+        .postUpdateBussDetails(userId, bussName, phone, address, email, webN, logoUrl, location,
+            belongToWhichUser, catIdBelongTo, token)
+
+    fun getPlanDataById(planId: String, token : String) = apiService.getPlanById(planId, token)
 }

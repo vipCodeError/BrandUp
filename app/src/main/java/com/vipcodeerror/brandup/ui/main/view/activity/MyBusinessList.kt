@@ -1,10 +1,13 @@
 package com.vipcodeerror.brandup.ui.main.view.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -34,6 +37,7 @@ public class MyBusinessList : AppCompatActivity(){
     private lateinit var mainViewModel: MainViewModel
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
     private lateinit var shimmerLayout : ShimmerLayout
+    var addCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +66,19 @@ public class MyBusinessList : AppCompatActivity(){
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
         addBussbtn?.setOnClickListener {
-            startActivity(Intent(this@MyBusinessList, BusinessCategory::class.java))
+            if (addCount == sharedPreferenceUtil.getValueString("business_card_limit")?.toInt()){
+                var alertDialog = AlertDialog.Builder(this@MyBusinessList)
+                alertDialog.setMessage("You cannot add more than "+ sharedPreferenceUtil.getValueString("business_card_limit").toString() + "Card . Upgrade your plan to add more Business Card.")
+                alertDialog.setPositiveButton("OK", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        startActivity(Intent(this@MyBusinessList, PlanSelectorActivity::class.java))
+                    }
+
+                })
+                alertDialog.show()
+            }else {
+                startActivity(Intent(this@MyBusinessList, BusinessCategory::class.java))
+            }
         }
 
         addBussbtn?.post {showToolTip(addBussbtn)}
@@ -91,7 +107,7 @@ public class MyBusinessList : AppCompatActivity(){
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
-
+                        addCount = it.data.size
                         myBusinessAdapter = MyBusinessListAdapter(
                             this@MyBusinessList,
                             it.data.toMutableList()

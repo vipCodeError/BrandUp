@@ -31,7 +31,8 @@
         <activity android:name=".ui.main.view.activity.NotificationActivity"/>
         <activity android:name=".ui.main.view.activity.BottomFrameSelectorActivity"/>
         <activity android:name=".ui.main.view.activity.PlanSelectorActivity"/>
-        <activity android:name=".ui.main.view.activity.PaymentActivity"/>
+        <activity android:name=".ui.main.view.activity.PaymentActivity"
+            android:theme="@style/Theme.Transparent"/>
         <activity android:name=".ui.main.view.activity.ImageOpenActivity"
             android:theme="@style/Theme.Transparent"
             />

@@ -42,6 +42,7 @@ class SettingFragment : Fragment() {
     private lateinit var bName : TextView
     private lateinit var bCatName : TextView
     private lateinit var bPhoneNo : TextView
+    private lateinit var bPlanType : TextView
 
     private lateinit var mainViewModel: MainViewModel
     private val getBrandDataStatic = MutableLiveData<Resource<BannerDataResponse>>()
@@ -54,6 +55,7 @@ class SettingFragment : Fragment() {
         bName = view.findViewById(R.id.buss_name)
         bCatName = view.findViewById(R.id.buss_cat)
         bPhoneNo = view.findViewById(R.id.phone_no)
+        bPlanType = view.findViewById(R.id.plan_type)
 
         bannerImage = view.findViewById(R.id.banner_ads_sett)
 
@@ -111,6 +113,7 @@ class SettingFragment : Fragment() {
                             bName.text = it.data[0].bName
                             bPhoneNo.text = it.data[0].bPhone
                             bCatName.text = it.data[0].catName
+                            bPlanType.text = "Plan : " + sharedPreferenceUtil.getValueString("plan_name").toString()
                         }
                     }
                 }
@@ -130,7 +133,6 @@ class SettingFragment : Fragment() {
                 ViewModelFactory(ApiHelper(ApiServiceImpl()))
         ).get(MainViewModel::class.java)
     }
-
 
     private fun getBannerStaticData(bannerLiveData : MutableLiveData<Resource<BannerDataResponse>>, slideOrStatic : String, token: String) {
         mainViewModel.fetchBannerData(bannerLiveData, slideOrStatic, token).observe(this, androidx.lifecycle.Observer {

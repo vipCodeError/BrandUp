@@ -32,10 +32,27 @@ class PlanSelectorAdapter(var context: Context, var pDataList : MutableList<Plan
         holder.dayLimit.text = pDataList[position].dayLimit
         holder.price.text = "Rs " + pDataList[position].planPrice
         holder.planTitle.text = pDataList[position].planName
-        holder.cardViewPlan.setBackgroundResource(listOfColor[position])
-        holder.buyNowBtn.setOnClickListener{
-            context.startActivity(Intent(context, PaymentActivity::class.java))
+        if (pDataList[position].planName.equals("FREE")){
+            holder.cardViewPlan.setBackgroundResource(listOfColor[0])
+        }else if(pDataList[position].planName.equals("Basic")){
+            holder.cardViewPlan.setBackgroundResource(listOfColor[1])
+        }else {
+            holder.cardViewPlan.setBackgroundResource(listOfColor[2])
         }
+
+        if (pDataList[position].planName == "FREE"){
+            holder.buyNowBtn.visibility = View.INVISIBLE
+        }else {
+            holder.buyNowBtn.setOnClickListener{
+                val intent = Intent(context, PaymentActivity::class.java)
+                intent.putExtra("amt", pDataList[position].planPrice)
+                intent.putExtra("plan_type", pDataList[position].id)
+                intent.putExtra("plan_name", pDataList[position].planName)
+                intent.putExtra("buss_limit", pDataList[position].bCardLimit)
+                context.startActivity(intent)
+            }
+        }
+
     }
 
     override fun getItemCount(): Int {

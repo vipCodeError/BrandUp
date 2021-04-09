@@ -206,6 +206,7 @@ class BrandLogoEdit : AppCompatActivity(){
                 val resultUri: Uri = result.uri
                 actualUri = resultUri.path!!
                 logoEmbedImg.setImageURI(resultUri)
+                logoEmbedImg.setBackgroundResource(0)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
             }

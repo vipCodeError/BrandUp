@@ -12,5 +12,9 @@ data class LogginApiResponse(
         @SerializedName("pref_business")
         val prefBusiness : String,
         @SerializedName("is_already_exits")
-        val isAlreadyExist : String
+        val isAlreadyExist : String,
+        @SerializedName("plan_id")
+        val planId: String,
+        @SerializedName("plan_name")
+        val planName : String
 )

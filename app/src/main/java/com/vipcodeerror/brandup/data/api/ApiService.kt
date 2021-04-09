@@ -48,5 +48,12 @@ interface ApiService {
 
     fun verifyTransaction(paymentSignature : String,
                           razorpayPaymentId : String,
-                          razorpayOrderId : String, userId : String, token: String) : Single<ApiResponse>
+                          razorpayOrderId : String, userId : String, planType: String, token: String) : Single<ApiResponse>
+
+
+    fun postUpdateBussDetails(userId : String, bussName : String, phone: String, address : String, email: String, webN : String,
+                        logoUrl: String, location: String,
+                        belongToWhichUser : String, catIdBelongTo: String, token: String)  : Single<ApiResponse>
+
+    fun getPlanById(planId : String, token: String) : Single<PlanDataModel>
 }

@@ -8,7 +8,6 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#FFFFFF"
@@ -16,7 +15,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/textView11"
@@ -34,7 +32,7 @@
     <RelativeLayout
         android:id="@+id/frameImgLay"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_margin="16dp"
         android:background="@drawable/frame_layout_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,195 +56,213 @@
             android:text="If life were predictable it would cease to be life, and be without flavor"
             android:textAlignment="center"
             android:textColor="#fff"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <!-- Logos -->
         <ImageView
             android:id="@+id/logo_embed_img"
-            android:layout_width="120dp"
-            android:layout_height="60dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_margin="8dp"
-            android:background="@drawable/maxresdefault" />
+            android:src="@drawable/maxresdefault" />
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/detail_info_layout"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:paddingBottom="8dp"
-        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameImgLay">
 
         <LinearLayout
-            android:id="@+id/logo_layout"
-            android:visibility="visible"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
+            android:id="@+id/detail_info_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp">
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="@font/archia"
-                android:text="Logo Upload"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/upload_logos"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/frame_layout_background"
-                android:padding="8dp"
-                android:src="@drawable/ic_computing_cloud" />
-
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/archia"
-                android:text="Business Name"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/bussiness_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
             <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/business_detail_lay"
-                android:orientation="vertical"
-                android:animateLayoutChanges="true"
+                android:id="@+id/logo_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                android:visibility="visible">
 
                 <TextView
-                    android:text="Business Details"
-                    android:fontFamily="@font/archia"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
+                    android:id="@+id/textView12"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:fontFamily="@font/archia"
+                    android:text="Logo Upload"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/upload_logos"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/frame_layout_background"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_computing_cloud" />
 
                 <TextView
-                    android:text="We will make footer design according your details"
-                    android:fontFamily="@font/archia"
-                    android:textStyle="bold"
-                    android:textSize="12sp"
+                    android:id="@+id/textView13"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/archia"
+                    android:text="Business Name"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:labelFor="@id/business_email"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="32dp">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/business_email"
-                        android:hint="Email"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/business_phone"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/business_phone"
-                        android:hint="Phone Number"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/bussiness_location"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/bussiness_location"
-                        android:hint="Location"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/business_addr"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/business_addr"
-                        android:hint="Address"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:labelFor="@id/business_website"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="32dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/business_website"
-                        android:hint="Website"
+                        android:id="@+id/bussiness_name"
+                        android:singleLine="true"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/business_detail_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/archia"
+                        android:text="Business Details"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/archia"
+                        android:text="We will make footer design according your details"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:labelFor="@id/business_email">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/business_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:hint="Email" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:labelFor="@id/business_phone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/business_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:hint="Phone Number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:labelFor="@id/bussiness_location">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/bussiness_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:hint="Location" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:labelFor="@id/business_addr">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/business_addr"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:hint="Address" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="32dp"
+                        android:labelFor="@id/business_website">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/business_website"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Website" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_hand_anim"

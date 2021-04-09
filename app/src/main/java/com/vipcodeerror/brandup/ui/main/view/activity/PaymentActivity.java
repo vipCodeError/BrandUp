@@ -1,5 +1,7 @@
 package com.vipcodeerror.brandup.ui.main.view.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -25,27 +27,42 @@ import com.vipcodeerror.brandup.util.Status;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class PaymentActivity extends AppCompatActivity implements PaymentResultWithDataListener {
 
     MainViewModel mainViewModel;
     SharedPreferenceUtil sharedPreferenceUtil;
-
+    String price = "";
+    String planType = "";
+    String planName = "";
+    String bCardLimit = "";
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mainViewModel = setupViewModel();
         sharedPreferenceUtil = new SharedPreferenceUtil(this);
 
-        createOrderID("1", sharedPreferenceUtil.getValueString("token"));
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Wait .... ");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setIndeterminate(true);
+
+        price = getIntent().getStringExtra("amt");
+        planType = getIntent().getStringExtra("plan_type");
+        planName = getIntent().getStringExtra("plan_name");
+        bCardLimit = getIntent().getStringExtra("buss_limit");
+
+        createOrderID(price, sharedPreferenceUtil.getValueString("token"));
     }
 
     @Override
     public void onPaymentSuccess(String s, PaymentData paymentData) {
         verifyTransaction(paymentData.getSignature(),
                 paymentData.getPaymentId(),
-                paymentData.getOrderId(), sharedPreferenceUtil.getValueString("user_id"),
+                paymentData.getOrderId(), sharedPreferenceUtil.getValueString("user_id"), planType,
                 sharedPreferenceUtil.getValueString("token"));
 
     }
@@ -64,15 +81,19 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultW
         new Thread(new Runnable() {
             @Override
             public void run() {
+                DecimalFormat df = new DecimalFormat();
+                df.setMaximumFractionDigits(2);
+
+                int amt = Integer.parseInt(price);
 
                 try {
                     JSONObject options = new JSONObject();
                     options.put("name", "Brand Up");
-                    options.put("description", "Brand Up");
+                    options.put("description", "Upgrade Plan to " + planType);
                     //You can omit the image option to fetch the image from dashboard
                     options.put("image", "https://s3.amazonaws.com/zp-mobile/images/rzp.png");
                     options.put("currency", "INR");
-                    options.put("amount", 1.00 * 100);
+                    options.put("amount", Float.parseFloat(df.format(amt)) * 100);
                     options.put("order_id", order_id);//from response of step 3.
 
                     JSONObject preFill = new JSONObject();
@@ -105,6 +126,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultW
                         OrderIdResponse orderIdModel = orderIdResponseResource.getData();
                         try {
                             if (orderIdModel != null){
+                                progressDialog.show();
                                 startRazorPayMent(orderIdModel.getOrderId());
 
                             }
@@ -125,14 +147,25 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultW
 
     private void verifyTransaction(String paymentSignature,
                                     String razorpayPaymentId,
-                                    String razorpayOrderId, String userId, String token) {
-        mainViewModel.verifyTransactionData(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, token).observe(this, new Observer<Resource<ApiResponse>>() {
+                                    String razorpayOrderId, String userId, String planType, String token) {
+        mainViewModel.verifyTransactionData(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, planType, token).observe(this, new Observer<Resource<ApiResponse>>() {
             @Override
             public void onChanged(Resource<ApiResponse> apiResponseResource) {
                 if (apiResponseResource.getStatus() == Status.SUCCESS){
                     if(apiResponseResource.getData() != null) {
+                        progressDialog.hide();
                         ApiResponse  apiResponse = apiResponseResource.getData();
                         Toast.makeText(PaymentActivity.this, apiResponse.getToken(), Toast.LENGTH_SHORT).show();
+                        sharedPreferenceUtil.save("plan_id", planType);
+                        sharedPreferenceUtil.save("plan_name", planName);
+                        sharedPreferenceUtil.save("business_card_limit", bCardLimit);
+                        sharedPreferenceUtil.save("show_message", true);
+                        // restart Acitivty
+                        Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                        startActivity(intent);
                     }
                 }else if(apiResponseResource.getStatus() == Status.ERROR){
 

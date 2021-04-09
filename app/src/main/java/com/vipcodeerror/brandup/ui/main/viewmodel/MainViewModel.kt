@@ -31,6 +31,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val getTrendingData = MutableLiveData<Resource<TrendingDataResponse>>()
     private val createOrderId = MutableLiveData<Resource<OrderIdResponse>>()
     private val verifyTransaction = MutableLiveData<Resource<ApiResponse>>()
+    private val updateBusinessDetails= MutableLiveData<Resource<ApiResponse>>()
+    private val getPlanDataById = MutableLiveData<Resource<PlanDataModel>>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -97,6 +99,25 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return postBussDetails
+    }
+
+    fun postUpdateBussDetailsData(user_id: String, bussName : String, phone: String, address : String, email: String, webN: String,
+                            logoUrl: String, location: String,
+                            belongToWhichUser : String, catIdBelongTo: String, token: String): LiveData<Resource<ApiResponse>>{
+        updateBusinessDetails.postValue(Resource.loading(null))
+        compositeDisposable.add(
+            mainRepository.postUpdateBussDetails(user_id, bussName, phone, address, email,webN, logoUrl, location,
+                belongToWhichUser, catIdBelongTo, token)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ loginData ->
+                    updateBusinessDetails.postValue(Resource.success(loginData))
+                }, {
+                    updateBusinessDetails.postValue(Resource.error("Something went wrong", null))
+                })
+        )
+
+        return updateBusinessDetails
     }
 
     fun uploadImageData(logoUrl : File, token: String) : LiveData<Resource<ImageApiResponse>>{
@@ -308,10 +329,10 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
 
     fun verifyTransactionData(paymentSignature : String,
                               razorpayPaymentId : String,
-                              razorpayOrderId : String, userId : String, token : String) : LiveData<Resource<ApiResponse>>{
+                              razorpayOrderId : String, userId : String, planType : String, token : String) : LiveData<Resource<ApiResponse>>{
         verifyTransaction.postValue(Resource.loading(null))
         compositeDisposable.add(
-            mainRepository.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, token)
+            mainRepository.verifyTransaction(paymentSignature, razorpayPaymentId, razorpayOrderId, userId, planType, token)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({data ->
@@ -322,5 +343,21 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return verifyTransaction
+    }
+
+    fun getPlanById(planId : String, token : String) : LiveData<Resource<PlanDataModel>>{
+        getPlanDataById.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getPlanById(planId, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getPlanDataById.postValue(Resource.success(data))
+                        }, {
+                            getPlanDataById.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return getPlanDataById
     }
 }

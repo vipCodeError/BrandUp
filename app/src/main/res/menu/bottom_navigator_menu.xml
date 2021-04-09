@@ -25,6 +25,6 @@
         android:id="@+id/account"
         android:enabled="true"
         android:icon="@drawable/account"
-        android:title="Brand Feed" />
+        android:title="Setting" />
 
 </menu>
