@@ -44,7 +44,7 @@ class FrameSliderAdapter(var context: Context) : SliderViewAdapter<FrameSliderAd
     }
 
     override fun onBindViewHolder(viewHolder: SliderAdapterVH, position: Int) {
-        Glide.with(context).load("https://d4f9k68hk754p.cloudfront.net/fit-in/1200x400/${mSliderItems[position].urlBottomBanner}").apply( RequestOptions()
+        Glide.with(context).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x512/${mSliderItems[position].urlBottomBanner}").apply( RequestOptions()
         .fitCenter()
         .format(DecodeFormat.PREFER_ARGB_8888)
         .override(SIZE_ORIGINAL))

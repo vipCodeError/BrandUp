@@ -298,7 +298,6 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/first_one_txt"
-                        android:text="My Business"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:layout_marginStart="16dp"
@@ -306,10 +305,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/first_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -346,10 +348,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/second_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:textSize="10sp"
+                        android:padding="6dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -386,10 +391,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/third_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -427,10 +435,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/fourth_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -468,10 +479,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/fifth_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -508,10 +522,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/sixth_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -549,10 +566,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/seventh_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"
@@ -590,10 +610,13 @@
                         android:layout_height="wrap_content"/>
 
                     <TextView
+                        android:id="@+id/eighth_one_view_all"
                         android:text="View All"
                         android:fontFamily="@font/archia"
                         android:textStyle="bold"
                         android:textSize="10sp"
+                        android:padding="6dp"
+                        android:background="@drawable/rounded_trending_recycler"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="16dp"
                         android:layout_width="wrap_content"

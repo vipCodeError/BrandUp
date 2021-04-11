@@ -205,10 +205,21 @@ class ApiServiceImpl : ApiService {
     }
 
     override fun requestImageGenerator(user_id: String, pref_id: String, token: String): Single<ApiResponse> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.HEADERS // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
         return Rx2AndroidNetworking.post(BASE_URL + "api/execute_img_generator")
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("user_id",user_id)
                 .addBodyParameter("pref_id",pref_id)
+                .setOkHttpClient(okHttpClient)
                 .build().getObjectSingle(ApiResponse::class.java)
     }
 

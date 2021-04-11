@@ -126,7 +126,7 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
                         val catdata = it.data
                         frameRecycler(catdata.toMutableList())
                         Glide.with(this@BottomFrameSelectorActivity)
-                                .load("https://d4f9k68hk754p.cloudfront.net/fit-in/800x800/images/48074.jpg")
+                                .load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x512/images/wite_Back.jpg")
                                 .into(
                                         backFrame
                                 )
@@ -167,7 +167,7 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
 
         frameSelectorAdapter.clickOnFrameUrl = object : BottomBannerAdapter.ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
-                Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x100/$url").apply( RequestOptions()
+                Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/$url").apply( RequestOptions()
                         .format(DecodeFormat.PREFER_ARGB_8888)
                         .override(SIZE_ORIGINAL))
                         .into(bottomFrame);

@@ -18,9 +18,10 @@
     <RelativeLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="341dp"
         android:layout_margin="8dp"
         android:layout_marginTop="8dp"
+        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -33,22 +34,30 @@
 
         <ImageView
             android:id="@+id/logo_img"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
             android:layout_width="90dp"
-            android:layout_height="50dp"/>
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" />
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/top_frame_recycler"
             android:layout_width="match_parent"
-            app:sliderStartAutoCycle="false"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             app:sliderIndicatorEnabled="false"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true" />
+            app:sliderStartAutoCycle="false" />
 
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/frame_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_margin="8dp"
+        android:fontFamily="@font/ptsans_bold"
+        app:layout_constraintTop_toBottomOf="@+id/frame_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sub_cat_recycler"
@@ -57,11 +66,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frame_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/frame_count" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

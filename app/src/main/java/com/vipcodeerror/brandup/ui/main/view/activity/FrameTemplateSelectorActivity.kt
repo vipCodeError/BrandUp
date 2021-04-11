@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -54,6 +55,8 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
     private lateinit var subId : String
     private lateinit var catId : String
 
+    private lateinit var currentPosTxt :TextView
+
     private lateinit var frameLayout : RelativeLayout
 
    // private lateinit var topFrameAdapter : TopFrameAdapter
@@ -89,6 +92,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         subCatTitleRecycler = findViewById(R.id.sub_cat_recycler)
         frameSelectorRecycler = findViewById(R.id.frame_selector_recycler)
         logoImg = findViewById(R.id.logo_img)
+        currentPosTxt = findViewById(R.id.frame_count)
 
         trendingTitle()
 
@@ -125,6 +129,10 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 //        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderAdapter.addItem(urlList.toMutableList())
+        currentPosTxt.text = (sliderView.currentPagePosition + 1).toString() + "/" + urlList.size
+        sliderView.setCurrentPageListener { position ->
+            currentPosTxt.text = (position + 1).toString() + "/" + urlList.size
+        }
 
     }
 

@@ -38,6 +38,7 @@ import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.adapter.*
+import com.vipcodeerror.brandup.ui.main.view.activity.FrameTemplateSelectorActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.NotificationActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.SearchActivity
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
@@ -75,6 +76,16 @@ class HomePageFragment : Fragment() {
     private lateinit var sixthOnLayout : LinearLayout
     private lateinit var seventhOnLayout : LinearLayout
     private lateinit var eighthOnLayout : LinearLayout
+
+    private lateinit var firstOnViewAll : TextView
+    private lateinit var secondOnViewAll : TextView
+    private lateinit var thirdOnViewAll : TextView
+    private lateinit var fourthOnViewAll : TextView
+    private lateinit var fifthOnViewAll : TextView
+    private lateinit var sixthOnViewAll : TextView
+    private lateinit var seventhOnViewAll : TextView
+    private lateinit var eighthOnViewAll : TextView
+
 
     private lateinit var businessTitleTxt : TextView
 
@@ -123,6 +134,15 @@ class HomePageFragment : Fragment() {
         seventhOnLayout = view.findViewById(R.id.seventh_one_layout)
         eighthOnLayout = view.findViewById(R.id.eighth_one_layout)
 
+        firstOnViewAll = view.findViewById(R.id.first_one_view_all)
+        secondOnViewAll = view.findViewById(R.id.second_one_view_all)
+        thirdOnViewAll= view.findViewById(R.id.third_one_view_all)
+        fourthOnViewAll = view.findViewById(R.id.fourth_one_view_all)
+        fifthOnViewAll = view.findViewById(R.id.fifth_one_view_all)
+        sixthOnViewAll = view.findViewById(R.id.sixth_one_view_all)
+        seventhOnViewAll = view.findViewById(R.id.seventh_one_view_all)
+        eighthOnViewAll = view.findViewById(R.id.eighth_one_view_all)
+
         businessTitleTxt = view.findViewById(R.id.bussiness_name)
         selectedBussinesLayout = view.findViewById(R.id.selected_buss_layout)
 
@@ -149,7 +169,6 @@ class HomePageFragment : Fragment() {
         staticAdsLayout.startAnimation(bubbleAnimation())
 
         sliderAds(view)
-        staticAds()
         geTrendingData(sharedPreferenceUtil.getValueString("token").toString())
         getBannerData(getBrandDataSlider, "0", sharedPreferenceUtil.getValueString("token").toString())
         getBannerStaticData(getBrandDataStatic, "1", sharedPreferenceUtil.getValueString("token").toString())
@@ -211,19 +230,6 @@ class HomePageFragment : Fragment() {
         sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION)
         sliderView.startAutoCycle();
-
-//        var listUrls = mutableListOf<SliderItem>()
-//        listUrls.add(SliderItem("https://www.visme.co/wp-content/uploads/2020/08/Visme4-Free-Banner-Maker.jpg"))
-//        listUrls.add(SliderItem("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png"))
-//        listUrls.add(SliderItem("https://bannerboo.com/upload/iblock/9e9/export_banners_to_mp4_bannerboo.jpg"))
-
-
-    }
-
-    private fun staticAds(){
-        Glide.with(this).load("https://www.shamsherkhan.com/wp-content/uploads/2020/04/og-bannersnack_v2.png").into(
-            staticAdsImageView
-        )
     }
 
     private fun universalDaynamicRecycler(
@@ -235,7 +241,7 @@ class HomePageFragment : Fragment() {
         subId: String,
         dataHome: MutableList<HomeModel>
     ){
-        // test
+
         var firstAdapterList = mutableListOf<HomeModel>()
         firstAdapterList.addAll(dataHome)
 
@@ -321,6 +327,8 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+
+                            registerViewAllClickListener(firstOnViewAll, "0", catId, catdata[0].subId)
                         } else if (rootCount == 1) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -334,6 +342,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(secondOnViewAll,"0", catId, catdata[0].subId)
                         } else if (rootCount == 2) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -347,6 +356,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(thirdOnViewAll,"0", catId, catdata[0].subId)
                         } else if (rootCount == 3) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -360,6 +370,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(fourthOnViewAll,"0", catId, catdata[0].subId)
                         } else if (rootCount == 4) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -373,6 +384,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(fifthOnViewAll, "0", catId, catdata[0].subId)
                         } else if (rootCount == 5) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -386,6 +398,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(sixthOnViewAll,"0", catId, catdata[0].subId)
                         } else if (rootCount == 6) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -399,6 +412,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(seventhOnViewAll, "0", catId, catdata[0].subId)
                         } else if (rootCount == 7) {
                             var catdata = it.data
                             val cName = catdata[0].catName
@@ -412,6 +426,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(eighthOnViewAll, "0", catId, catdata[0].subId)
                         }
                         rootCount++
                     }
@@ -450,6 +465,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(firstOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 1) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -463,6 +479,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(secondOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 2) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -476,6 +493,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(thirdOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 3) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -489,6 +507,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(fourthOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 4) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -502,6 +521,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(fifthOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 5) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -515,6 +535,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(sixthOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 6) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -528,6 +549,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(seventhOnViewAll, "1", subId, catdata[0].subId)
                         } else if (subCount == 7) {
                             var catdata = it.data
                             val cName = catdata[0].subCatName
@@ -541,6 +563,7 @@ class HomePageFragment : Fragment() {
                                 catdata[0].subId,
                                 catdata.toMutableList()
                             )
+                            registerViewAllClickListener(eighthOnViewAll, "1", subId, catdata[0].subId)
                         }
 
                         subCount++
@@ -736,10 +759,21 @@ class HomePageFragment : Fragment() {
             .doOnShown { }.show(view, Tooltip.Gravity.BOTTOM, true)
     }
 
-    fun showMessage(){
+    private fun showMessage(){
         var alertDialog = AlertDialog.Builder(requireActivity())
         alertDialog.setMessage("Thanks For Upgrading your Plan.")
         alertDialog.setPositiveButton("OK") { dialog, which -> dialog?.dismiss() }
         alertDialog.show();
+    }
+
+    private fun registerViewAllClickListener(viewAllBtn : View, isSubShown: String, catId: String, subId: String){
+        viewAllBtn.setOnClickListener{
+            val intent = Intent(context, FrameTemplateSelectorActivity::class.java)
+            intent.putExtra("is_sub_shown", isSubShown)
+            intent.putExtra("cat_id", catId)
+            intent.putExtra("sub_id", subId)
+            startActivity(intent)
+        }
+
     }
 }
