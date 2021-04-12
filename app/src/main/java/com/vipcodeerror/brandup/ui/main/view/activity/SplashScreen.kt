@@ -22,7 +22,7 @@ class SplashScreen : AppCompatActivity() {
 
         GlobalScope.launch(Dispatchers.Main){
             delay(TimeUnit.SECONDS.toMillis(3))
-            if(sharedPreferenceUtil.getValueBoolean("is_logged") == true){
+            if(sharedPreferenceUtil.getValueBoolean("is_logged")){
                 startActivity(Intent(this@SplashScreen, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK))
                 finish()
             }else {

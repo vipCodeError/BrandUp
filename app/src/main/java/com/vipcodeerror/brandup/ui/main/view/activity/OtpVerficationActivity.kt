@@ -156,7 +156,7 @@ class OtpVerficationActivity : AppCompatActivity() {
                         sharedPreferenceUtil.save("pref_buss", it.prefBusiness)
                         sharedPreferenceUtil.save("is_logged", true)
                         sharedPreferenceUtil.save("plan_id", it.planId)
-                        sharedPreferenceUtil.save("plan_name", it.planName)
+                        // sharedPreferenceUtil.save("plan_name", it.planName)
 
                         getPlanById(it.isAlreadyExist, it.planId, sharedPreferenceUtil.getValueString("token").toString())
                     }
@@ -184,11 +184,11 @@ class OtpVerficationActivity : AppCompatActivity() {
 
                         if(isAlreadyExist == "0"){
                             Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " +  sharedPreferenceUtil.getValueString("token").toString(), Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
+                            startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                             finish()
                         }else {
                             Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " +  sharedPreferenceUtil.getValueString("token").toString(), Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this@OtpVerficationActivity, MainActivity::class.java))
+                            startActivity(Intent(this@OtpVerficationActivity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
                             finish()
                         }
 

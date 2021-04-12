@@ -136,6 +136,7 @@ class SettingFragment : Fragment() {
                 sharedPreferenceUtil.save("token", "")
                 sharedPreferenceUtil.save("user_id", "")
                 sharedPreferenceUtil.save("pref_buss", "")
+
                 var intent = Intent(requireActivity(), LoginActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
