@@ -33,6 +33,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val verifyTransaction = MutableLiveData<Resource<ApiResponse>>()
     private val updateBusinessDetails= MutableLiveData<Resource<ApiResponse>>()
     private val getPlanDataById = MutableLiveData<Resource<PlanDataModel>>()
+    private val getHdBrandImage = MutableLiveData<Resource<HdImageModel>>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -359,5 +360,21 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return getPlanDataById
+    }
+
+    fun getHdImage(backImg: String, frameImg: String, logoImg:String, token: String) : LiveData<Resource<HdImageModel>>{
+        getHdBrandImage.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getHdBrandImage(backImg, frameImg, logoImg, token)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            getHdBrandImage.postValue(Resource.success(data))
+                        }, {
+                            getHdBrandImage.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return getHdBrandImage;
     }
 }

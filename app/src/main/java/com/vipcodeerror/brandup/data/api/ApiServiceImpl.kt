@@ -16,8 +16,10 @@ import java.util.concurrent.TimeUnit
 class ApiServiceImpl : ApiService {
 
     companion object {
-        const val BASE_URL = "http://brandup.mobank.in/"
+       // const val BASE_URL = "http://a4aa5fffd448.ngrok.io/"
+         const val BASE_URL = "http://brandup.mobank.in/"
     }
+
     override fun userLogin(phone: String, device_name: String): Single<LogginApiResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
@@ -200,7 +202,7 @@ class ApiServiceImpl : ApiService {
     override fun getBottomBanner(prefId: String, token: String): Single<BottomBannerResponse> {
         return Rx2AndroidNetworking.post(BASE_URL + "api/get_bottom_banner")
                 .addHeaders("Authorization", "Bearer " + token)
-                .addBodyParameter("pref_id",prefId)
+                .addBodyParameter("pref_id", prefId)
                 .build().getObjectSingle(BottomBannerResponse::class.java)
     }
 
@@ -327,6 +329,26 @@ class ApiServiceImpl : ApiService {
                 .addHeaders("Authorization", "Bearer " + token)
                 .addBodyParameter("plan_id", planId)
                 .build().getObjectSingle(PlanDataModel::class.java)
+    }
+
+    override fun getHdBrandImage(backImg: String, frameImg: String, logoImg:String, token : String): Single<HdImageModel> {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'
+
+        val okHttpClient = OkHttpClient().newBuilder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .addInterceptor(interceptor)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+        return Rx2AndroidNetworking.post(BASE_URL + "api/merge_image")
+                .addHeaders("Authorization", "Bearer " + token)
+                .addBodyParameter("original_img", backImg)
+                .addBodyParameter("frame_img", frameImg)
+                .addBodyParameter("logo_img", logoImg)
+                .setOkHttpClient(okHttpClient)
+                .build().getObjectSingle(HdImageModel::class.java)
     }
 
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {

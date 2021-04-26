@@ -66,9 +66,7 @@ class OtpVerficationActivity : AppCompatActivity() {
                 }else {
                     Toast.makeText(this@OtpVerficationActivity, "Wait while OTP comes", Toast.LENGTH_SHORT).show()
                 }
-
             }
-
         }
 
         phoneNumText.text = phoneNumber.toString()
@@ -153,7 +151,10 @@ class OtpVerficationActivity : AppCompatActivity() {
                     it.data?.let {
                         sharedPreferenceUtil.save("token", it.token)
                         sharedPreferenceUtil.save("user_id", it.id.toString())
-                        sharedPreferenceUtil.save("pref_buss", it.prefBusiness)
+                        if (it.prefBusiness != null){
+                            sharedPreferenceUtil.save("pref_buss", it.prefBusiness)
+                        }
+
                         sharedPreferenceUtil.save("is_logged", true)
                         sharedPreferenceUtil.save("plan_id", it.planId)
                         // sharedPreferenceUtil.save("plan_name", it.planName)

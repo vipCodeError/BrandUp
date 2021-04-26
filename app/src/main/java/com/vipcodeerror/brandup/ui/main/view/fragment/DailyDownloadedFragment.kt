@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.AdapterListUpdateCallback
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vipcodeerror.brandup.R
@@ -28,7 +29,7 @@ class DailyDownloadedFragment : Fragment() {
         var fList = AppUtils.getFilesList(requireActivity())
         downloadAdapter = DownloadFileListAdapter(requireActivity(), fList)
         recyclerViewDownload.adapter = downloadAdapter
-        recyclerViewDownload.layoutManager = LinearLayoutManager(requireActivity())
+        recyclerViewDownload.layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)
         return view
     }
 }

@@ -7,6 +7,6 @@ data class HomeSelectedApiResponse(
         var success : Boolean,
         @SerializedName("data")
         var data : List<HomeSelectedModel>,
-        @SerializedName("message")
+        @SerializedName("status")
         var message : String
 )

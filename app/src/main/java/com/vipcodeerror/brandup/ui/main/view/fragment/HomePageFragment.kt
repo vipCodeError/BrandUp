@@ -38,6 +38,7 @@ import com.vipcodeerror.brandup.data.model.home_modal.HomeModel
 import com.vipcodeerror.brandup.data.model.home_modal.HomeSelectedModel
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
 import com.vipcodeerror.brandup.ui.main.adapter.*
+import com.vipcodeerror.brandup.ui.main.view.activity.BusinessCategory
 import com.vipcodeerror.brandup.ui.main.view.activity.FrameTemplateSelectorActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.NotificationActivity
 import com.vipcodeerror.brandup.ui.main.view.activity.SearchActivity
@@ -181,12 +182,15 @@ class HomePageFragment : Fragment() {
         )
 
         selectedBussinesLayout.setOnClickListener {
-            getBusinnessData(
-                mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(),
-                sharedPreferenceUtil.getValueString(
-                    "token"
-                ).toString(),
-            )
+
+                getBusinnessData(
+                        mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(),
+                        sharedPreferenceUtil.getValueString(
+                                "token"
+                        ).toString(),
+                )
+
+
         }
 
         searchIcon.setOnClickListener {
@@ -584,33 +588,40 @@ class HomePageFragment : Fragment() {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
+                        if (it.data.isEmpty()){
+                            startActivity(Intent(requireActivity(), BusinessCategory::class.java))
+                            Toast.makeText(requireActivity(), "Create your Business card First", Toast.LENGTH_SHORT).show()
 
-                        val bussListDialog = AlertDialog.Builder(requireActivity())
-                        val layoutBDialog = LayoutInflater.from(requireActivity()).inflate(
-                            R.layout.buss_dialog_list,
-                            null,
-                            false
-                        )
-                        val bussDialogAdapter = BussDialogAdapter(it.data.toMutableList())
-                        val bussRecyclerView =
-                            layoutBDialog.findViewById<RecyclerView>(R.id.buss_list_recycler)
-                        bussRecyclerView.adapter = bussDialogAdapter
-                        bussRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
-                        bussListDialog.setView(layoutBDialog)
-                        bussDialogAdapter.onClickListener =
-                            object : BussDialogAdapter.OnClickListItem {
-                                override fun setBId(bId: String) {
-                                    setUserBussPref(
-                                        sharedPreferenceUtil.getValueString("user_id").toString(),
-                                        bId,
-                                        sharedPreferenceUtil.getValueString(
-                                            "token"
-                                        ).toString()
-                                    )
-                                }
+                        }else {
+                            val bussListDialog = AlertDialog.Builder(requireActivity())
+                            val layoutBDialog = LayoutInflater.from(requireActivity()).inflate(
+                                    R.layout.buss_dialog_list,
+                                    null,
+                                    false
+                            )
+                            val bussDialogAdapter = BussDialogAdapter(it.data.toMutableList())
+                            val bussRecyclerView =
+                                    layoutBDialog.findViewById<RecyclerView>(R.id.buss_list_recycler)
+                            bussRecyclerView.adapter = bussDialogAdapter
+                            bussRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
+                            bussListDialog.setView(layoutBDialog)
+                            bussDialogAdapter.onClickListener =
+                                    object : BussDialogAdapter.OnClickListItem {
+                                        override fun setBId(bId: String) {
+                                            setUserBussPref(
+                                                    sharedPreferenceUtil.getValueString("user_id").toString(),
+                                                    bId,
+                                                    sharedPreferenceUtil.getValueString(
+                                                            "token"
+                                                    ).toString()
+                                            )
+                                        }
 
-                            }
-                        bussListDialog.show()
+                                    }
+                            bussListDialog.show()
+                        }
+
+
                     }
                 }
                 Status.LOADING -> {

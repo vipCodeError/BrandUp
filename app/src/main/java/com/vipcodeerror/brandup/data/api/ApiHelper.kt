@@ -54,4 +54,6 @@ class ApiHelper(private val apiService: ApiService)  {
             belongToWhichUser, catIdBelongTo, token)
 
     fun getPlanDataById(planId: String, token : String) = apiService.getPlanById(planId, token)
+
+    fun getHdBrandImage(backImg: String, frameImg: String, logoImg: String, token: String) = apiService.getHdBrandImage(backImg, frameImg, logoImg, token)
 }

@@ -2,11 +2,11 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
@@ -59,6 +61,11 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 
     private lateinit var frameLayout : RelativeLayout
 
+    private lateinit var backImgUrl : String
+    private lateinit var frameImgUrl : String
+
+    private var isDownloadable : Boolean? = false
+
    // private lateinit var topFrameAdapter : TopFrameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +84,6 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         val downloadImgView = supportActionBar!!.customView.findViewById<ImageView>(R.id.download)
         val shareImgView = supportActionBar!!.customView.findViewById<ImageView>(R.id.share)
         frameLayout = findViewById(R.id.frame_layout)
-
 
         toolbar.setNavigationOnClickListener {
             onBackPressed()
@@ -111,11 +117,14 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         }
 
         shareImgView.setOnClickListener {
-            AppUtils.launchShareIntent(this, frameLayout)
+            Toast.makeText(this@FrameTemplateSelectorActivity, "Wait ...", Toast.LENGTH_SHORT).show()
+            getHdImageData(mainViewModel, backImgUrl, frameImgUrl,sharedPreferenceUtil.getValueString("logoUrl").toString(), sharedPreferenceUtil.getValueString("token").toString())
         }
 
         downloadImgView.setOnClickListener {
-            AppUtils.storeDownloadedImage(this, frameLayout)
+            Toast.makeText(this@FrameTemplateSelectorActivity, "Wait ...", Toast.LENGTH_SHORT).show()
+            isDownloadable = true;
+            getHdImageData(mainViewModel, backImgUrl, frameImgUrl, sharedPreferenceUtil.getValueString("logoUrl").toString(), sharedPreferenceUtil.getValueString("token").toString())
         }
 
         getBottomBannerData(mainViewModel, sharedPreferenceUtil.getValueString("pref_buss").toString(),
@@ -126,17 +135,21 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         val sliderAdapter = FrameSliderAdapter(this)
         val sliderView: SliderView = findViewById(R.id.top_frame_recycler)
         sliderView.setSliderAdapter(sliderAdapter)
-//        sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
+//      sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderAdapter.addItem(urlList.toMutableList())
         currentPosTxt.text = (sliderView.currentPagePosition + 1).toString() + "/" + urlList.size
+        frameImgUrl = urlList[0].urlBottomBanner
         sliderView.setCurrentPageListener { position ->
+            frameImgUrl = urlList[position].urlBottomBanner
             currentPosTxt.text = (position + 1).toString() + "/" + urlList.size
         }
 
     }
 
     private fun frameRecycler(hData: MutableList<HomeModel>){
+
+        backImgUrl = hData[0].urlImage
 
         frameSelectorAdapter = FrameSelectorAdapter(this, hData)
 
@@ -149,6 +162,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         )
         frameSelectorAdapter.clickOnFrameUrl = object : ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
+                backImgUrl = url
                 Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x512/images/$url").into(
                     backFrame
                 )
@@ -237,6 +251,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
                         showWarnings.setPositiveButton("OK",object: DialogInterface.OnClickListener {
                             override fun onClick(dialog: DialogInterface?, which: Int) {
                                 startActivity(Intent(this@FrameTemplateSelectorActivity, BottomFrameSelectorActivity::class.java))
+                                finish()
                             }
                         })
                         showWarnings.show()
@@ -245,11 +260,50 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
                             val catdata = it.data
                             topFrame(catdata)
                             Glide.with(this@FrameTemplateSelectorActivity)
-                                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
+                                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
                                     .into(logoImg)
                         }
                     }
 
+                }
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+            }
+        })
+    }
+
+    private fun getHdImageData(mVModel: MainViewModel, backImg: String, frameImg: String, logoImg:String, token: String){
+        mVModel.getHdImage(backImg, frameImg, logoImg, token).observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    Glide.with(this)
+                            .asBitmap()
+                            .load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/" +it.data?.url)
+                            .into(object : CustomTarget<Bitmap>(){
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                    if (isDownloadable == true){
+                                        AppUtils.storeDownloadedImage(this@FrameTemplateSelectorActivity, resource)
+                                        isDownloadable = false
+                                    }else {
+                                        Toast.makeText(this@FrameTemplateSelectorActivity, "Wait ...", Toast.LENGTH_SHORT).show()
+                                        AppUtils.launchShareIntentWithUri(this@FrameTemplateSelectorActivity, resource)
+
+                                    }
+
+                                    //imageView.setImageBitmap(resource)
+                                }
+
+                                override fun onLoadCleared(placeholder: Drawable?) {
+                                    // this is called when imageView is cleared on lifecycle call or for
+                                    // some other reason.
+                                    // if you are referencing the bitmap somewhere else too other than this imageView
+                                    // clear it here as you can no longer have the bitmap
+                                }
+                            })
                 }
                 Status.LOADING -> {
 

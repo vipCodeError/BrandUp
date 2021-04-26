@@ -8,6 +8,6 @@ data class ApiHomeDataResponse(
         var success : Boolean,
         @SerializedName("data")
         var data : List<HomeModel>,
-        @SerializedName("message")
+        @SerializedName("status")
         var message : String
 )

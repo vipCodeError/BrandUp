@@ -56,4 +56,6 @@ interface ApiService {
                         belongToWhichUser : String, catIdBelongTo: String, token: String)  : Single<ApiResponse>
 
     fun getPlanById(planId : String, token: String) : Single<PlanDataModel>
+
+    fun getHdBrandImage(backImg: String, frameImg: String, logoImg:String, token: String) : Single<HdImageModel>
 }

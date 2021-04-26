@@ -96,4 +96,8 @@ class MainRepository (private val apiHelper: ApiHelper) {
     fun getPlanById(planId : String, token: String) : Single<PlanDataModel> {
         return apiHelper.getPlanDataById(planId, token)
     }
+
+    fun getHdBrandImage(backImg: String, frameImg: String, logoImg:String, token: String) : Single<HdImageModel>{
+        return apiHelper.getHdBrandImage(backImg, frameImg, logoImg, token)
+    }
 }

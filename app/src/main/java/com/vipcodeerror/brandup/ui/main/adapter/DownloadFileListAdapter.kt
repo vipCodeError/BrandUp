@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.vipcodeerror.brandup.R
@@ -30,7 +31,7 @@ class DownloadFileListAdapter(var context : Context, var fListData : MutableList
     override fun onBindViewHolder(holder: DownloadFileListAdapter.MyViewHolder, position: Int) {
 
         Glide.with(context).load(file?.path + fListData[position]).into(holder.fileImg)
-        holder.fileText.text = fListData[position]
+        //holder.fileText.text = fListData[position]
         holder.fileSelection.setOnClickListener {
             var intent = Intent(context, ImageOpenActivity::class.java)
             intent.putExtra("filePath", file?.path + fListData[position])
@@ -57,7 +58,7 @@ class DownloadFileListAdapter(var context : Context, var fListData : MutableList
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var fileImg = itemView.findViewById<ImageView>(R.id.file_img)
         var fileText = itemView.findViewById<TextView>(R.id.file_text)
-        var fileSelection = itemView.findViewById<LinearLayout>(R.id.file_l123)
+        var fileSelection = itemView.findViewById<CardView>(R.id.file_l123)
     }
 
 }
