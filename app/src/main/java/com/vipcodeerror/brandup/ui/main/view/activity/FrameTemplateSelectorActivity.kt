@@ -66,7 +66,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 
     private var isDownloadable : Boolean? = false
 
-   // private lateinit var topFrameAdapter : TopFrameAdapter
+    // private lateinit var topFrameAdapter : TopFrameAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,11 +127,30 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
             getHdImageData(mainViewModel, backImgUrl, frameImgUrl, sharedPreferenceUtil.getValueString("logoUrl").toString(), sharedPreferenceUtil.getValueString("token").toString())
         }
 
-        getBottomBannerData(mainViewModel, sharedPreferenceUtil.getValueString("pref_buss").toString(),
-            sharedPreferenceUtil.getValueString("token").toString())
+//        getBottomBannerData(mainViewModel, sharedPreferenceUtil.getValueString("pref_buss").toString(),
+//            sharedPreferenceUtil.getValueString("token").toString())
+
+        var urlList = sharedPreferenceUtil.getValueString("selected_frame").toString()
+        if (urlList != null && urlList == ""){
+            val showWarnings = AlertDialog.Builder(this@FrameTemplateSelectorActivity)
+            showWarnings.setMessage("You did not select frame. Press Ok to select frame.")
+            showWarnings.setPositiveButton("OK",object: DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface?, which: Int) {
+                    startActivity(Intent(this@FrameTemplateSelectorActivity, BottomFrameSelectorActivity::class.java))
+                    finish()
+                }
+            })
+            showWarnings.show()
+        }else {
+            topFrame(urlList.split(",").toList())
+            Glide.with(this@FrameTemplateSelectorActivity)
+                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
+                    .into(logoImg)
+        }
+
     }
 
-    private fun topFrame(urlList: List<BottomBannerModel>){
+    private fun topFrame(urlList: List<String>){
         val sliderAdapter = FrameSliderAdapter(this)
         val sliderView: SliderView = findViewById(R.id.top_frame_recycler)
         sliderView.setSliderAdapter(sliderAdapter)
@@ -139,9 +158,9 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderAdapter.addItem(urlList.toMutableList())
         currentPosTxt.text = (sliderView.currentPagePosition + 1).toString() + "/" + urlList.size
-        frameImgUrl = urlList[0].urlBottomBanner
+        frameImgUrl = urlList[0]
         sliderView.setCurrentPageListener { position ->
-            frameImgUrl = urlList[position].urlBottomBanner
+            frameImgUrl = urlList[position]
             currentPosTxt.text = (position + 1).toString() + "/" + urlList.size
         }
 
@@ -246,22 +265,11 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
             when (it.status) {
                 Status.SUCCESS -> {
                     if(it.data?.data?.size == 0){
-                        var showWarnings = AlertDialog.Builder(this@FrameTemplateSelectorActivity)
-                        showWarnings.setMessage("You did not select frame. Press Ok to select frame.")
-                        showWarnings.setPositiveButton("OK",object: DialogInterface.OnClickListener {
-                            override fun onClick(dialog: DialogInterface?, which: Int) {
-                                startActivity(Intent(this@FrameTemplateSelectorActivity, BottomFrameSelectorActivity::class.java))
-                                finish()
-                            }
-                        })
-                        showWarnings.show()
+
                     }else {
                         it.data?.let {
                             val catdata = it.data
-                            topFrame(catdata)
-                            Glide.with(this@FrameTemplateSelectorActivity)
-                                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
-                                    .into(logoImg)
+                            //topFrame(catdata)
                         }
                     }
 

@@ -1,10 +1,13 @@
 package com.vipcodeerror.brandup.ui.main.view.activity
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.MutableLiveData
@@ -51,10 +54,13 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
     private lateinit var lurkingCatAnim : LottieAnimationView
 
     private lateinit var frameSelectorAdapter: BottomBannerAdapter
+    private lateinit var selectedFrameUrlList : MutableList<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bottom_frame_selector)
+
+        selectedFrameUrlList = mutableListOf<String>()
 
         mainViewModel = setupViewModel()
         sharedPreferenceUtil = SharedPreferenceUtil(this)
@@ -64,7 +70,7 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setDisplayShowCustomEnabled(false)
+        supportActionBar!!.setDisplayShowCustomEnabled(true)
         supportActionBar!!.setCustomView(R.layout.custom_toolbar_bottom_f)
 
         toolbar.setNavigationOnClickListener {
@@ -82,11 +88,13 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
         lurkingCatAnim = findViewById(R.id.lurking_cat_anim)
 
         saveBtn?.setOnClickListener {
+            sharedPreferenceUtil.save("selected_frame", selectedFrameUrlList.joinToString())
             finish()
         }
 
         requestForImageGeneration(mainViewModel, sharedPreferenceUtil.getValueString("user_id").toString(),
                 sharedPreferenceUtil.getValueString("pref_buss").toString(), sharedPreferenceUtil.getValueString("token").toString())
+
     }
 
     private fun setupViewModel() :MainViewModel {
@@ -134,7 +142,7 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
                                 .load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+ sharedPreferenceUtil.getValueString("logoUrl").toString())
                                 .into(logoFrame)
 
-                        Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/900x400/${catdata[0].urlBottomBanner}").apply( RequestOptions()
+                        Glide.with(this@BottomFrameSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/${catdata[0].urlBottomBanner}").apply( RequestOptions()
                             .fitCenter()
                             .format(DecodeFormat.PREFER_ARGB_8888)
                             .override(SIZE_ORIGINAL))
@@ -142,6 +150,7 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
 
                         lurkingCatAnim.visibility = View.GONE
                         lLayoutRoot.visibility = View.VISIBLE
+                        showMessage()
                     }
                 }
                 Status.LOADING -> {
@@ -173,5 +182,29 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
                         .into(bottomFrame);
             }
         }
+
+        frameSelectorAdapter.clickOnRadioFrameUrl = object : BottomBannerAdapter.ClickOnFrameUrlRadio {
+            override fun setUrlImage(url: String) {
+                selectedFrameUrlList.add(url)
+            }
+        }
+
+        frameSelectorAdapter.removeOnFrameUrlRadioAtPosition = object : BottomBannerAdapter.RemoveOnFrameUrlRadioAtPosition{
+            override fun setRemovedPos(pos: Int) {
+                selectedFrameUrlList.removeAt(pos)
+            }
+
+        }
+    }
+
+    fun showMessage(){
+        val showWarnings = AlertDialog.Builder(this@BottomFrameSelectorActivity)
+        showWarnings.setMessage("Select maximum 6 Frame.")
+        showWarnings.setPositiveButton("OK",object: DialogInterface.OnClickListener {
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                dialog?.dismiss()
+            }
+        })
+        showWarnings.show()
     }
 }

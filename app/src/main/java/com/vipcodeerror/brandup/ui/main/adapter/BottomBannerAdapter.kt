@@ -19,7 +19,19 @@ class BottomBannerAdapter (var context: Context, var imgUrlList: MutableList<Bot
         fun setUrlImage(url : String)
     }
 
-    public lateinit var clickOnFrameUrl: ClickOnFrameUrl
+    interface ClickOnFrameUrlRadio {
+        fun setUrlImage(url : String)
+    }
+
+    interface RemoveOnFrameUrlRadioAtPosition {
+        fun setRemovedPos(pos : Int)
+    }
+
+    lateinit var clickOnFrameUrl: ClickOnFrameUrl
+
+    lateinit var clickOnRadioFrameUrl : ClickOnFrameUrlRadio
+
+    lateinit var removeOnFrameUrlRadioAtPosition: RemoveOnFrameUrlRadioAtPosition
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BottomBannerAdapter.MyViewHolder {
         var view = LayoutInflater.from(parent.context).inflate(R.layout.frame_bottom_activity_adapter_lay, parent, false)
@@ -36,7 +48,9 @@ class BottomBannerAdapter (var context: Context, var imgUrlList: MutableList<Bot
         holder.radioSelect.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked){
-
+                clickOnRadioFrameUrl.setUrlImage(imgUrlList[position].urlBottomBanner)
+            }else {
+                removeOnFrameUrlRadioAtPosition.setRemovedPos(position)
             }
         }
     }
