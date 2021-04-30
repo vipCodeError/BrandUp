@@ -7,8 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--   Business Details     -->
+        <!--   Business Details  -->
         <LinearLayout
+            android:id="@+id/b_lay_det"
             android:background="@drawable/rounded_selection_home"
             android:orientation="vertical"
             android:layout_margin="8dp"

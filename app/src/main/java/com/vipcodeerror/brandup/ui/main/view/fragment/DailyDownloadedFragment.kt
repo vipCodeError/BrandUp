@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.AdapterListUpdateCallback
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,12 +22,19 @@ class DailyDownloadedFragment : Fragment() {
     override fun onResume() {
         super.onResume()
     }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view =  inflater.inflate(R.layout.fragment_downloaded, container, false)
 
+        var messageTxt = view.findViewById<TextView>(R.id.message)
         recyclerViewDownload = view.findViewById(R.id.recycler_download)
 
         var fList = AppUtils.getFilesList(requireActivity())
+        if (fList.size == 0){
+            messageTxt.visibility = View.VISIBLE
+        }else {
+            messageTxt.visibility = View.GONE
+        }
         downloadAdapter = DownloadFileListAdapter(requireActivity(), fList)
         recyclerViewDownload.adapter = downloadAdapter
         recyclerViewDownload.layoutManager = GridLayoutManager(requireActivity(), 2, GridLayoutManager.VERTICAL, false)

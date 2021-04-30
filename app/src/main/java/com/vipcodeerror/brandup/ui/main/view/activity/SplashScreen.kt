@@ -3,6 +3,7 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import kotlinx.coroutines.Dispatchers
@@ -19,6 +20,7 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen);
         sharedPreferenceUtil = SharedPreferenceUtil(this)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         GlobalScope.launch(Dispatchers.Main){
             delay(TimeUnit.SECONDS.toMillis(3))

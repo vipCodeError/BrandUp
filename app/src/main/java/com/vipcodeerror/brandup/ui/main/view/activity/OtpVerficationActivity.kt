@@ -166,7 +166,7 @@ class OtpVerficationActivity : AppCompatActivity() {
 
                 }
                 Status.ERROR -> {
-                    Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
+                   // Toast.makeText(this@OtpVerficationActivity, "Token ID is :: " + it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })

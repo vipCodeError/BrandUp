@@ -47,6 +47,7 @@ class SettingFragment : Fragment() {
     private lateinit var bCatName : TextView
     private lateinit var bPhoneNo : TextView
     private lateinit var bPlanType : TextView
+    private lateinit var bDetLay : LinearLayout
 
     private lateinit var mainViewModel: MainViewModel
     private val getBrandDataStatic = MutableLiveData<Resource<BannerDataResponse>>()
@@ -73,6 +74,7 @@ class SettingFragment : Fragment() {
         upgradePlan = view.findViewById(R.id.edit_b_layout)
         logoutTxt = view.findViewById(R.id.logout_txt)
         shareLayout = view.findViewById(R.id.share)
+        bDetLay = view.findViewById(R.id.b_lay_det)
 
         upgradePlan.setOnClickListener {
             startActivity(Intent(requireActivity(), PlanSelectorActivity::class.java))
@@ -86,7 +88,7 @@ class SettingFragment : Fragment() {
 
         preferredTxt.setOnClickListener {
             startActivity(Intent(requireActivity(), PreferredLanguageActivity::class.java))
-            requireActivity().finish()
+            //requireActivity().finish()
         }
 
         helpAndSupportTxt.setOnClickListener {
@@ -165,6 +167,8 @@ class SettingFragment : Fragment() {
                                 bPlanType.text =
                                     "Plan : " + sharedPreferenceUtil.getValueString("plan_name")
                                         .toString()
+                            }else {
+                                bDetLay.visibility = View.INVISIBLE
                             }
                         }
                     }

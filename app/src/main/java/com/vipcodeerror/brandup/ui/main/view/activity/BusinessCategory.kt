@@ -64,7 +64,7 @@ class BusinessCategory : AppCompatActivity() {
                         businessRecyclerView.layoutManager =  GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false)
                         businessRecyclerView.adapter = popularCategoryAdapter
                        // sharedPreferenceUtil.save("token", it.token)
-                        Toast.makeText(this@BusinessCategory, "Token ID is :: " + it.data, Toast.LENGTH_SHORT).show()
+                       // Toast.makeText(this@BusinessCategory, "Token ID is :: " + it.data, Toast.LENGTH_SHORT).show()
 //                        startActivity(Intent(this@OtpVerficationActivity, PreferredLanguageActivity::class.java))
 //                        finish()
                     }

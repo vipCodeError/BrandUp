@@ -106,6 +106,11 @@ class HomePageFragment : Fragment() {
     var subCount = 0
     var rootCount = 0
 
+    override fun onResume() {
+        super.onResume()
+        subCount =0
+        rootCount =0
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -318,122 +323,125 @@ class HomePageFragment : Fragment() {
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
-                        if (rootCount == 0) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            firstOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.first_one_recyclerview,
-                                firstOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
+                        if (it.data.size != 0){
+                            if (rootCount == 0) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                firstOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.first_one_recyclerview,
+                                        firstOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
 
-                            registerViewAllClickListener(firstOnViewAll, "0", catId, catdata[0].subId)
-                        } else if (rootCount == 1) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            secondOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.second_one_recyclerview,
-                                secondOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(secondOnViewAll,"0", catId, catdata[0].subId)
-                        } else if (rootCount == 2) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            thirdOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.third_one_recyclerview,
-                                thirdOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(thirdOnViewAll,"0", catId, catdata[0].subId)
-                        } else if (rootCount == 3) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            fourthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.fourth_one_recyclerview,
-                                fourthOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(fourthOnViewAll,"0", catId, catdata[0].subId)
-                        } else if (rootCount == 4) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            fifthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.fifth_one_recyclerview,
-                                fifthOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(fifthOnViewAll, "0", catId, catdata[0].subId)
-                        } else if (rootCount == 5) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            sixthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.sixth_one_recyclerview,
-                                sixthOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(sixthOnViewAll,"0", catId, catdata[0].subId)
-                        } else if (rootCount == 6) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            seventhOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.seventh_one_recyclerview,
-                                seventhOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(seventhOnViewAll, "0", catId, catdata[0].subId)
-                        } else if (rootCount == 7) {
-                            var catdata = it.data
-                            val cName = catdata[0].catName
-                            eighthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.eighth_one_recyclerview,
-                                eighthOnLayout,
-                                "0",
-                                catId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(eighthOnViewAll, "0", catId, catdata[0].subId)
+                                registerViewAllClickListener(firstOnViewAll, "0", catId, catdata[0].subId)
+                            } else if (rootCount == 1) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                secondOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.second_one_recyclerview,
+                                        secondOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(secondOnViewAll,"0", catId, catdata[0].subId)
+                            } else if (rootCount == 2) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                thirdOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.third_one_recyclerview,
+                                        thirdOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(thirdOnViewAll,"0", catId, catdata[0].subId)
+                            } else if (rootCount == 3) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                fourthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.fourth_one_recyclerview,
+                                        fourthOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(fourthOnViewAll,"0", catId, catdata[0].subId)
+                            } else if (rootCount == 4) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                fifthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.fifth_one_recyclerview,
+                                        fifthOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(fifthOnViewAll, "0", catId, catdata[0].subId)
+                            } else if (rootCount == 5) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                sixthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.sixth_one_recyclerview,
+                                        sixthOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(sixthOnViewAll,"0", catId, catdata[0].subId)
+                            } else if (rootCount == 6) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                seventhOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.seventh_one_recyclerview,
+                                        seventhOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(seventhOnViewAll, "0", catId, catdata[0].subId)
+                            } else if (rootCount == 7) {
+                                var catdata = it.data
+                                val cName = catdata[0].catName
+                                eighthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.eighth_one_recyclerview,
+                                        eighthOnLayout,
+                                        "0",
+                                        catId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(eighthOnViewAll, "0", catId, catdata[0].subId)
+                            }
+                            rootCount++
                         }
-                        rootCount++
-                    }
+                        }
+
                 }
                 Status.LOADING -> {
 
@@ -456,122 +464,125 @@ class HomePageFragment : Fragment() {
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
-                        if (subCount == 0) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            firstOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.first_one_recyclerview,
-                                firstOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(firstOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 1) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            secondOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.second_one_recyclerview,
-                                secondOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(secondOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 2) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            thirdOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.third_one_recyclerview,
-                                thirdOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(thirdOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 3) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            fourthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.fourth_one_recyclerview,
-                                fourthOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(fourthOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 4) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            fifthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.fifth_one_recyclerview,
-                                fifthOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(fifthOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 5) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            sixthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.sixth_one_recyclerview,
-                                sixthOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(sixthOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 6) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            seventhOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.seventh_one_recyclerview,
-                                seventhOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(seventhOnViewAll, "1", subId, catdata[0].subId)
-                        } else if (subCount == 7) {
-                            var catdata = it.data
-                            val cName = catdata[0].subCatName
-                            eighthOneTitle.text = cName
-                            universalDaynamicRecycler(
-                                shadowViewObject,
-                                R.id.eighth_one_recyclerview,
-                                eighthOnLayout,
-                                "1",
-                                subId,
-                                catdata[0].subId,
-                                catdata.toMutableList()
-                            )
-                            registerViewAllClickListener(eighthOnViewAll, "1", subId, catdata[0].subId)
+                        if(it.data.size != 0){
+                            if (subCount == 0) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                firstOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.first_one_recyclerview,
+                                        firstOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(firstOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 1) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                secondOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.second_one_recyclerview,
+                                        secondOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(secondOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 2) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                thirdOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.third_one_recyclerview,
+                                        thirdOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(thirdOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 3) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                fourthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.fourth_one_recyclerview,
+                                        fourthOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(fourthOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 4) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                fifthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.fifth_one_recyclerview,
+                                        fifthOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(fifthOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 5) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                sixthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.sixth_one_recyclerview,
+                                        sixthOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(sixthOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 6) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                seventhOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.seventh_one_recyclerview,
+                                        seventhOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(seventhOnViewAll, "1", subId, catdata[0].subId)
+                            } else if (subCount == 7) {
+                                var catdata = it.data
+                                val cName = catdata[0].subCatName
+                                eighthOneTitle.text = cName
+                                universalDaynamicRecycler(
+                                        shadowViewObject,
+                                        R.id.eighth_one_recyclerview,
+                                        eighthOnLayout,
+                                        "1",
+                                        subId,
+                                        catdata[0].subId,
+                                        catdata.toMutableList()
+                                )
+                                registerViewAllClickListener(eighthOnViewAll, "1", subId, catdata[0].subId)
+                            }
+
+                            subCount++
+                        }
                         }
 
-                        subCount++
-                    }
                 }
                 Status.LOADING -> {
 
@@ -668,6 +679,7 @@ class HomePageFragment : Fragment() {
                 Status.SUCCESS -> {
                     it.data?.let {
                         sharedPreferenceUtil.save("pref_buss", pref_id)
+                        sharedPreferenceUtil.save("selected_frame", "")
                         val intent = requireActivity().intent
                         requireActivity().finish()
                         startActivity(intent)

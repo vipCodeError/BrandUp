@@ -107,7 +107,7 @@
                     android:fontFamily="@font/archia"
                     android:paddingStart="4dp"
                     android:paddingEnd="4dp"
-                    android:text="3"
+                    android:text="0"
                     android:textColor="#fff"
                     android:textSize="12sp" />
             </RelativeLayout>
@@ -117,6 +117,7 @@
 
     <xyz.peridy.shimmerlayout.ShimmerLayout
         android:id="@+id/shimmer_layout"
+        android:visibility="visible"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -140,7 +141,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_margin="16dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/rounded_simmer" />
 
 
@@ -264,7 +265,10 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/trending_title_recycler"
-                android:layout_margin="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"/>
 
@@ -273,8 +277,10 @@
                 android:id="@+id/static_ads_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
                 app:cardCornerRadius="4dp">
 
                 <ImageView
@@ -320,7 +326,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/first_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -363,7 +372,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/second_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -406,7 +418,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/third_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -450,7 +465,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fourth_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -494,7 +512,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fifth_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -537,7 +558,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/sixth_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -581,7 +605,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/seventh_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -625,7 +652,10 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/eighth_one_recyclerview"
-                    android:layout_margin="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </LinearLayout>

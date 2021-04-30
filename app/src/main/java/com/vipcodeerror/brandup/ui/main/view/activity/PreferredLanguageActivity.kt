@@ -40,7 +40,7 @@ class PreferredLanguageActivity : AppCompatActivity() {
         }
 
         lanNextBtn.setOnClickListener(View.OnClickListener {
-            startActivity(Intent(this@PreferredLanguageActivity, BusinessCategory::class.java))
+            //startActivity(Intent(this@PreferredLanguageActivity, BusinessCategory::class.java))
         })
     }
 }

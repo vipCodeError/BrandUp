@@ -131,9 +131,10 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 //            sharedPreferenceUtil.getValueString("token").toString())
 
         var urlList = sharedPreferenceUtil.getValueString("selected_frame").toString()
-        if (urlList != null && urlList == ""){
+        if (urlList == null || urlList == ""){
             val showWarnings = AlertDialog.Builder(this@FrameTemplateSelectorActivity)
             showWarnings.setMessage("You did not select frame. Press Ok to select frame.")
+            showWarnings.setCancelable(false)
             showWarnings.setPositiveButton("OK",object: DialogInterface.OnClickListener {
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     startActivity(Intent(this@FrameTemplateSelectorActivity, BottomFrameSelectorActivity::class.java))
