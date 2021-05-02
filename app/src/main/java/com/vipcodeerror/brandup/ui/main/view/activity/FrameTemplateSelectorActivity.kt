@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.mazenrashed.dotsindicator.DotsIndicator
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
@@ -57,7 +58,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
     private lateinit var subId : String
     private lateinit var catId : String
 
-    private lateinit var currentPosTxt :TextView
+    private lateinit var currentDotIndicator : DotsIndicator
 
     private lateinit var frameLayout : RelativeLayout
 
@@ -98,7 +99,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         subCatTitleRecycler = findViewById(R.id.sub_cat_recycler)
         frameSelectorRecycler = findViewById(R.id.frame_selector_recycler)
         logoImg = findViewById(R.id.logo_img)
-        currentPosTxt = findViewById(R.id.frame_count)
+        currentDotIndicator = findViewById(R.id.frame_count)
 
         trendingTitle()
 
@@ -158,11 +159,14 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
 //      sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM);
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderAdapter.addItem(urlList.toMutableList())
-        currentPosTxt.text = (sliderView.currentPagePosition + 1).toString() + "/" + urlList.size
+        //currentPosTxt.text = (sliderView.currentPagePosition + 1).toString() + "/" + urlList.size
+        currentDotIndicator.initDots(urlList.size)
         frameImgUrl = urlList[0]
+        currentDotIndicator.setDotSelection(0)
         sliderView.setCurrentPageListener { position ->
             frameImgUrl = urlList[position]
-            currentPosTxt.text = (position + 1).toString() + "/" + urlList.size
+            currentDotIndicator.setDotSelection(position)
+           // currentPosTxt.text = (position + 1).toString() + "/" + urlList.size
         }
 
     }
@@ -183,7 +187,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         frameSelectorAdapter.clickOnFrameUrl = object : ClickOnFrameUrl {
             override fun setUrlImage(url: String) {
                 backImgUrl = url
-                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x512/images/$url").into(
+                Glide.with(this@FrameTemplateSelectorActivity).load("https://d4f9k68hk754p.cloudfront.net/fit-in/712x712/images/$url").into(
                     backFrame
                 )
             }

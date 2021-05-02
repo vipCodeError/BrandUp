@@ -107,4 +107,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
 
+    //dot indicator
+    implementation 'com.github.mazenrashed:DotsIndicatorWithoutViewpager:1.0.0'
+
 }

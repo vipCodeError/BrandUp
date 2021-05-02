@@ -16,11 +16,11 @@
 
     <RelativeLayout
         android:id="@+id/frame_layout"
-        android:layout_width="match_parent"
-        android:layout_height="341dp"
-        android:layout_marginStart="32dp"
+        android:layout_width="340dp"
+        android:layout_height="340dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="0dp"
         android:elevation="15dp"
         android:clipToPadding="false"
         android:clipChildren="false"
@@ -53,14 +53,36 @@
 
     </RelativeLayout>
 
-    <TextView
+    <com.mazenrashed.dotsindicator.DotsIndicator
         android:id="@+id/frame_count"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_margin="8dp"
-        android:fontFamily="@font/ptsans_bold"
-        app:layout_constraintTop_toBottomOf="@+id/frame_layout" />
+        android:padding="4dp"
+        app:dot_height="7dp"
+        app:dot_width="7dp"
+        app:dots_count="4"
+        android:layout_marginTop="8dp"
+        app:first_dot_height="7dp"
+        app:first_dot_width="7dp"
+        app:first_selected_dot_resource="@drawable/selected_circle"
+        app:first_unselected_dot_resource="@drawable/unselected_circle"
+        app:selected_dot_resource="@drawable/selected_circle"
+        app:unselected_dot_resource="@drawable/unselected_circle"
+        app:margins_between_dots="17dp"
+        app:selected_dot_scale_factor="1.4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frame_layout"
+        />
+
+<!--    <TextView-->
+<!--        android:id="@+id/frame_count"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:textAlignment="center"-->
+<!--        android:layout_margin="8dp"-->
+<!--        android:fontFamily="@font/ptsans_bold"-->
+<!--        />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sub_cat_recycler"

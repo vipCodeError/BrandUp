@@ -24,6 +24,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
 import com.smarteist.autoimageslider.SliderAnimations
@@ -92,7 +93,8 @@ class HomePageFragment : Fragment() {
 
     private lateinit var selectedBussinesLayout : LinearLayout
 
-    private lateinit var shimmerLayout : ShimmerLayout
+   // private lateinit var shimmerLayout : ShimmerLayout
+    private lateinit var lurkingCatAnim : LottieAnimationView
     private lateinit var nestedLayout : NestedScrollView
 
     private lateinit var searchIcon : ImageView
@@ -152,11 +154,13 @@ class HomePageFragment : Fragment() {
         businessTitleTxt = view.findViewById(R.id.bussiness_name)
         selectedBussinesLayout = view.findViewById(R.id.selected_buss_layout)
 
-        shimmerLayout = view.findViewById(R.id.shimmer_layout)
+        //shimmerLayout = view.findViewById(R.id.shimmer_layout)
         nestedLayout = view.findViewById(R.id.root_nested_scroll_view)
 
         searchIcon = view.findViewById(R.id.search_icons)
         notificationIcon = view.findViewById(R.id.notification_icon)
+
+        lurkingCatAnim = view.findViewById(R.id.lottie_anim)
 
         sliderAdapter = TopTrendingSliderAdapter(requireActivity())
         shadowViewObject = view
@@ -319,7 +323,8 @@ class HomePageFragment : Fragment() {
             when (it.status) {
 
                 Status.SUCCESS -> {
-                    shimmerLayout.visibility = View.GONE
+                    lurkingCatAnim.visibility = View.GONE
+                   // shimmerLayout.visibility = View.GONE
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 
@@ -459,8 +464,9 @@ class HomePageFragment : Fragment() {
         mVModel.getHomeSubDataUniversal(homeData, subId, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
+                    lurkingCatAnim.visibility = View.GONE
                     //selectedBussinesLayout.post { showToolTip(selectedBussinesLayout) }
-                    shimmerLayout.visibility = View.GONE
+                   // shimmerLayout.visibility = View.GONE
                     nestedLayout.visibility = View.VISIBLE
                     it.data?.let {
 

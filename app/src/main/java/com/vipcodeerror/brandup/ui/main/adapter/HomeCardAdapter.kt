@@ -19,7 +19,7 @@ class HomeCardAdapter(var context: Context, var isSubShown : String,var catId : 
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        Glide.with(context).load("https://d4f9k68hk754p.cloudfront.net/fit-in/300x400/images/"+hData[position].urlImage).into(holder.imageUrlView)
+        Glide.with(context).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x512/images/"+hData[position].urlImage).into(holder.imageUrlView)
         holder.imageUrlView.setOnClickListener(View.OnClickListener {
             val intent = Intent(context, FrameTemplateSelectorActivity::class.java)
             intent.putExtra("is_sub_shown", isSubShown)
