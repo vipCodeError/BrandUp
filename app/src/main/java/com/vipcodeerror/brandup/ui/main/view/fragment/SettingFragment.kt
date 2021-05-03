@@ -32,7 +32,7 @@ import com.vipcodeerror.brandup.util.Status
 class SettingFragment : Fragment() {
 
 
-    private lateinit var bannerImage : ImageView
+    //private lateinit var bannerImage : ImageView
 
     private lateinit var logoutTxt: TextView
     private lateinit var sharedPreferenceUtil : SharedPreferenceUtil
@@ -42,6 +42,7 @@ class SettingFragment : Fragment() {
     private lateinit var helpAndSupportTxt : LinearLayout
     private lateinit var upgradePlan : LinearLayout
     private lateinit var shareLayout : LinearLayout
+    private lateinit var privacyPolicy : LinearLayout
 
     private lateinit var bName : TextView
     private lateinit var bCatName : TextView
@@ -66,7 +67,8 @@ class SettingFragment : Fragment() {
         bPhoneNo = view.findViewById(R.id.phone_no)
         bPlanType = view.findViewById(R.id.plan_type)
 
-        bannerImage = view.findViewById(R.id.banner_ads_sett)
+      //  bannerImage = view.findViewById(R.id.banner_ads_sett)
+      //  bannerImage = view.findViewById(R.id.banner_ads_sett)
 
         myBusinessTxt = view.findViewById(R.id.my_b_layout)
         preferredTxt = view.findViewById(R.id.pref_lan_layout)
@@ -74,6 +76,7 @@ class SettingFragment : Fragment() {
         upgradePlan = view.findViewById(R.id.edit_b_layout)
         logoutTxt = view.findViewById(R.id.logout_txt)
         shareLayout = view.findViewById(R.id.share)
+        privacyPolicy = view.findViewById(R.id.privacy_and_policy)
         bDetLay = view.findViewById(R.id.b_lay_det)
 
         upgradePlan.setOnClickListener {
@@ -92,7 +95,11 @@ class SettingFragment : Fragment() {
         }
 
         helpAndSupportTxt.setOnClickListener {
+            startActivity(Intent(requireActivity(), SupportActivity::class.java))
+        }
 
+        privacyPolicy.setOnClickListener {
+            startActivity(Intent(requireActivity(), PrivacyPolicyActivity::class.java))
         }
 
         shareLayout.setOnClickListener {
@@ -128,11 +135,12 @@ class SettingFragment : Fragment() {
             sharedPreferenceUtil.getValueString("token").toString()
         )
 
-        getBannerStaticData(
-            getBrandDataStatic,
-            "1",
-            sharedPreferenceUtil.getValueString("token").toString()
-        )
+//        getBannerStaticData(
+//            getBrandDataStatic,
+//            "1",
+//            sharedPreferenceUtil.getValueString("token").toString()
+//        )
+
         logoutTxt.setOnClickListener {
                 sharedPreferenceUtil.save("is_logged", false)
                 sharedPreferenceUtil.save("token", "")
@@ -202,18 +210,18 @@ class SettingFragment : Fragment() {
                         it.data?.let {
                             var tData = it.data
                             if (tData.size > 1) {
-                                Glide.with(requireActivity())
-                                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x400/images/" + tData[1].url)
-                                    .into(
-                                        bannerImage
-                                    )
-                                bannerImage.setOnClickListener {
-                                    Toast.makeText(
-                                        requireActivity(),
-                                        tData[0].redirectUrl,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
+//                                Glide.with(requireActivity())
+//                                    .load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x400/images/" + tData[1].url)
+//                                    .into(
+//                                        bannerImage
+//                                    )
+//                                bannerImage.setOnClickListener {
+//                                    Toast.makeText(
+//                                        requireActivity(),
+//                                        tData[0].redirectUrl,
+//                                        Toast.LENGTH_SHORT
+//                                    ).show()
+//                                }
                             }
 
                         }

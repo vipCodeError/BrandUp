@@ -7,7 +7,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -97,14 +99,17 @@ class BrandLogoUpdate : AppCompatActivity(){
 
         val logoLayout = findViewById<LinearLayout>(R.id.logo_layout)
         val businessDetailLayout = findViewById<LinearLayout>(R.id.business_detail_lay)
-        val frameImgLayout = findViewById<RelativeLayout>(R.id.frameImgLay)
-        val nextBtn = findViewById<ImageButton>(R.id.log_next_btn)
+        var frameImgLayout = findViewById<RelativeLayout>(R.id.frameImgLay)
+        val nextBtn = findViewById<TextView>(R.id.log_next_btn)
         val detailInfoLayout = findViewById<LinearLayout>(R.id.detail_info_layout)
         val uploadButton = findViewById<ImageButton>(R.id.upload_logos)
         logoEmbedImg = findViewById(R.id.logo_embed_img)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        frameImgLayout.layoutParams.width = (getScreenWidth() * 0.8).toInt()
+        frameImgLayout.layoutParams.height  = (getScreenWidth() * 0.8).toInt()
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -341,5 +346,13 @@ class BrandLogoUpdate : AppCompatActivity(){
                 this,
                 ViewModelFactory(ApiHelper(ApiServiceImpl()))
         ).get(MainViewModel::class.java)
+    }
+
+    private fun getScreenWidth() : Int{
+        val displayMetrics = DisplayMetrics()
+        val windowsManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
+        windowsManager.defaultDisplay.getMetrics(displayMetrics)
+        var width = displayMetrics.widthPixels
+        return width;
     }
 }

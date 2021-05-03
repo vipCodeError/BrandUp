@@ -44,6 +44,11 @@ class PopularCategoryAdapter(var context : Context, var poplularCatList: List<Ca
         return poplularCatList.size
     }
 
+    fun setDataItem(catList: List<CatModel>){
+        poplularCatList = catList
+        notifyDataSetChanged()
+    }
+
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val popularCatLayout = itemView.findViewById<LinearLayout>(R.id.popular_cat_layout)
         val popularCatTitle = itemView.findViewById<TextView>(R.id.popular_cat_title)

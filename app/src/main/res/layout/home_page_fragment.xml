@@ -180,23 +180,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"/>
 
-            <!-- static ads -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/static_ads_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="4dp">
+<!--            &lt;!&ndash; static ads &ndash;&gt;-->
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/static_ads_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                app:cardCornerRadius="4dp">-->
 
-                <ImageView
-                    android:id="@+id/static_ads"
-                    android:scaleType="centerCrop"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"/>
-            </androidx.cardview.widget.CardView>
+<!--                <ImageView-->
+<!--                    android:id="@+id/static_ads"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="150dp"/>-->
+<!--            </androidx.cardview.widget.CardView>-->
 
             <!--     first       -->
             <LinearLayout

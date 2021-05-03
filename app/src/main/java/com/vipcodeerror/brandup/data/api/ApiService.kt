@@ -58,4 +58,8 @@ interface ApiService {
     fun getPlanById(planId : String, token: String) : Single<PlanDataModel>
 
     fun getHdBrandImage(backImg: String, frameImg: String, logoImg:String, token: String) : Single<HdImageModel>
+
+    fun getSupportData() : Single<SupportDataResponse>
+
+    fun getPrivacyData() : Single<PrivacyDataResponse>
 }

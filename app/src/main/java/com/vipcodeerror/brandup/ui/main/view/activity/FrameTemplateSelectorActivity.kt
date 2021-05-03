@@ -118,12 +118,12 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         }
 
         shareImgView.setOnClickListener {
-            Toast.makeText(this@FrameTemplateSelectorActivity, "Wait ...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FrameTemplateSelectorActivity, "Sharing ...", Toast.LENGTH_SHORT).show()
             getHdImageData(mainViewModel, backImgUrl, frameImgUrl,sharedPreferenceUtil.getValueString("logoUrl").toString(), sharedPreferenceUtil.getValueString("token").toString())
         }
 
         downloadImgView.setOnClickListener {
-            Toast.makeText(this@FrameTemplateSelectorActivity, "Wait ...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FrameTemplateSelectorActivity, "Downloading ...", Toast.LENGTH_SHORT).show()
             isDownloadable = true;
             getHdImageData(mainViewModel, backImgUrl, frameImgUrl, sharedPreferenceUtil.getValueString("logoUrl").toString(), sharedPreferenceUtil.getValueString("token").toString())
         }
@@ -180,7 +180,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
         frameSelectorRecycler.adapter = frameSelectorAdapter
         frameSelectorRecycler.layoutManager = GridLayoutManager(
             this,
-            3,
+            2,
             LinearLayoutManager.VERTICAL,
             false
         )
@@ -302,7 +302,7 @@ class FrameTemplateSelectorActivity : AppCompatActivity(){
                                         AppUtils.storeDownloadedImage(this@FrameTemplateSelectorActivity, resource)
                                         isDownloadable = false
                                     }else {
-                                        Toast.makeText(this@FrameTemplateSelectorActivity, "Wait ...", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this@FrameTemplateSelectorActivity, "Downloading ...", Toast.LENGTH_SHORT).show()
                                         AppUtils.launchShareIntentWithUri(this@FrameTemplateSelectorActivity, resource)
 
                                     }

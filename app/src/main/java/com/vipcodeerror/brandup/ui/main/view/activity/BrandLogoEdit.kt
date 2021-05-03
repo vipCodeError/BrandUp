@@ -3,13 +3,16 @@ package com.vipcodeerror.brandup.ui.main.view.activity
 import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -19,7 +22,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.textfield.TextInputEditText
 import com.karumi.dexter.Dexter
@@ -31,13 +33,11 @@ import com.vipcodeerror.brandup.R
 import com.vipcodeerror.brandup.data.api.ApiHelper
 import com.vipcodeerror.brandup.data.api.ApiServiceImpl
 import com.vipcodeerror.brandup.ui.base.ViewModelFactory
-import com.vipcodeerror.brandup.ui.main.adapter.PopularCategoryAdapter
 import com.vipcodeerror.brandup.ui.main.viewmodel.MainViewModel
 import com.vipcodeerror.brandup.util.SharedPreferenceUtil
 import com.vipcodeerror.brandup.util.Status
 import com.vipcodeerror.brandup.util.ValueAnimatorUtil
 import java.io.File
-import java.net.URI
 
 
 class BrandLogoEdit : AppCompatActivity(){
@@ -91,17 +91,19 @@ class BrandLogoEdit : AppCompatActivity(){
             )
             .withListener(dialogMultiplePermissionsListener).check()
 
-
         val logoLayout = findViewById<LinearLayout>(R.id.logo_layout)
         val businessDetailLayout = findViewById<LinearLayout>(R.id.business_detail_lay)
-        val frameImgLayout = findViewById<RelativeLayout>(R.id.frameImgLay)
-        val nextBtn = findViewById<ImageButton>(R.id.log_next_btn)
+        var frameImgLayout = findViewById<RelativeLayout>(R.id.frameImgLay)
+        val nextBtn = findViewById<TextView>(R.id.log_next_btn)
         val detailInfoLayout = findViewById<LinearLayout>(R.id.detail_info_layout)
         val uploadButton = findViewById<ImageButton>(R.id.upload_logos)
         logoEmbedImg = findViewById(R.id.logo_embed_img)
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        frameImgLayout.layoutParams.width = (getScreenWidth() * 0.8).toInt()
+        frameImgLayout.layoutParams.height  = (getScreenWidth() * 0.8).toInt()
 
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -149,7 +151,6 @@ class BrandLogoEdit : AppCompatActivity(){
                 }
 
                 ValueAnimatorUtil.valueAnimatorScaleUtil(0.8f, 1f, frameImgLayout)
-
 
 
             } else {
@@ -205,7 +206,10 @@ class BrandLogoEdit : AppCompatActivity(){
             if (resultCode == RESULT_OK) {
                 val resultUri: Uri = result.uri
                 actualUri = resultUri.path!!
-                logoEmbedImg.setImageURI(resultUri)
+                val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, resultUri)
+                logoEmbedImg.setImageBitmap(eraseColor(bitmap))
+
+                // logoEmbedImg.setImageURI(resultUri)
                 logoEmbedImg.setBackgroundResource(0)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -213,18 +217,25 @@ class BrandLogoEdit : AppCompatActivity(){
         }
     }
 
-    private fun postBusinessDetails(bussName : String, phone: String, address : String, email: String, webN : String,
-                                    logoUrl: String, location: String,
-                                    belongToWhichUser : String, catIdBelongTo: String, token: String){
+    private fun postBusinessDetails(
+        bussName: String, phone: String, address: String, email: String, webN: String,
+        logoUrl: String, location: String,
+        belongToWhichUser: String, catIdBelongTo: String, token: String
+    ){
 
-        mainViewModel.postBussDetailsData(bussName, phone, address,email, webN ,logoUrl, location,
-                belongToWhichUser, catIdBelongTo, token).observe(this, Observer {
+        mainViewModel.postBussDetailsData(
+            bussName, phone, address, email, webN, logoUrl, location,
+            belongToWhichUser, catIdBelongTo, token
+        ).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
                         var catdata = it.status
-                        setUserBussPref(phone,
-                            it.id.toString(), sharedPreferenceUtil.getValueString("token").toString())
+                        setUserBussPref(
+                            phone,
+                            it.id.toString(),
+                            sharedPreferenceUtil.getValueString("token").toString()
+                        )
 
                     }
                 }
@@ -238,7 +249,7 @@ class BrandLogoEdit : AppCompatActivity(){
         })
     }
 
-    private fun uploadLogoUrl(logosUrl : File, token : String){
+    private fun uploadLogoUrl(logosUrl: File, token: String){
         mainViewModel.uploadImageData(logosUrl, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -252,7 +263,18 @@ class BrandLogoEdit : AppCompatActivity(){
 
                         val userId = sharedPreferenceUtil.getValueString("user_id").toString()
                         val catId = intent.getStringExtra("cat_id").toString()
-                        postBusinessDetails(bName, bPhone, bAddr, bEmail, bWeb,  it.imageUrl , bLoc, userId , catId, token)
+                        postBusinessDetails(
+                            bName,
+                            bPhone,
+                            bAddr,
+                            bEmail,
+                            bWeb,
+                            it.imageUrl,
+                            bLoc,
+                            userId,
+                            catId,
+                            token
+                        )
                     }
                 }
                 Status.LOADING -> {
@@ -265,13 +287,17 @@ class BrandLogoEdit : AppCompatActivity(){
         })
     }
 
-    private fun setUserBussPref(userId:String, pref_id: String, token: String){
-        mainViewModel.postUserBussPref(userId, pref_id, token).observe(this, Observer{
+    private fun setUserBussPref(userId: String, pref_id: String, token: String){
+        mainViewModel.postUserBussPref(userId, pref_id, token).observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let {
                         loadingHand.visibility = View.GONE
-                        startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                        startActivity(
+                            Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(
+                                Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        )
                         finish();
                     }
                 }
@@ -279,7 +305,11 @@ class BrandLogoEdit : AppCompatActivity(){
 
                 }
                 Status.ERROR -> {
-                    startActivity(Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP))
+                    startActivity(
+                        Intent(this@BrandLogoEdit, MainActivity::class.java).addFlags(
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
                     finish();
                 }
             }
@@ -288,8 +318,32 @@ class BrandLogoEdit : AppCompatActivity(){
 
     private fun setupViewModel() {
         mainViewModel = ViewModelProviders.of(
-                this,
-                ViewModelFactory(ApiHelper(ApiServiceImpl()))
+            this,
+            ViewModelFactory(ApiHelper(ApiServiceImpl()))
         ).get(MainViewModel::class.java)
+    }
+
+    private fun getScreenWidth() : Int{
+        val displayMetrics = DisplayMetrics()
+        val windowsManager = this.getSystemService(WINDOW_SERVICE) as WindowManager
+        windowsManager.defaultDisplay.getMetrics(displayMetrics)
+        var width = displayMetrics.widthPixels
+        return width;
+    }
+
+    fun eraseColor(src: Bitmap): Bitmap? {
+        val width = src.width
+        val height = src.height
+        val b = src.copy(Bitmap.Config.ARGB_8888, true)
+        b.setHasAlpha(true)
+        val pixels = IntArray(width * height)
+        src.getPixels(pixels, 0, width, 0, 0, width, height)
+        for (i in 0 until width * height) {
+            if (pixels[i] == -16777216) {
+                pixels[i] = 0
+            }
+        }
+        b.setPixels(pixels, 0, width, 0, 0, width, height)
+        return b
     }
 }

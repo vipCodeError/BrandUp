@@ -16,7 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
@@ -32,8 +31,9 @@
     <!--  Frame Layout  -->
     <RelativeLayout
         android:id="@+id/frameImgLay"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:background="@drawable/frame_layout_background"
         app:layout_constraintEnd_toEndOf="parent"
@@ -84,7 +84,7 @@
         <LinearLayout
             android:id="@+id/detail_info_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:orientation="horizontal"
             android:paddingBottom="8dp">
@@ -255,9 +255,24 @@
                             android:id="@+id/business_website"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:singleLine="true"
                             android:hint="Website" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/save_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginEnd="32dp"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        android:visibility="gone"
+                        android:text="Save"
+                        android:textColor="#fff"
+                        android:background="@drawable/rounded_next_btn"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 
@@ -279,29 +294,20 @@
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/loadin_hand" />
 
-    <ImageButton
+    <TextView
         android:id="@+id/log_next_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:text="Next"
+        android:textColor="#fff"
+        android:textSize="19sp"
+        android:letterSpacing="0.1"
+        android:textAlignment="center"
         android:background="@drawable/rounded_next_btn"
-        android:foreground="@drawable/next_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/save_btn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:visibility="gone"
-        android:text="Save"
-        android:textColor="#fff"
-        android:background="@drawable/rounded_next_btn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

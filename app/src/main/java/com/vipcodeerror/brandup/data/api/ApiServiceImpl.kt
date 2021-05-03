@@ -351,6 +351,16 @@ class ApiServiceImpl : ApiService {
                 .build().getObjectSingle(HdImageModel::class.java)
     }
 
+    override fun getSupportData(): Single<SupportDataResponse> {
+        return Rx2AndroidNetworking.get(BASE_URL + "api/get_support_data")
+                .build().getObjectSingle(SupportDataResponse::class.java)
+    }
+
+    override fun getPrivacyData(): Single<PrivacyDataResponse> {
+        return Rx2AndroidNetworking.get(BASE_URL + "api/get_privacy_data")
+                .build().getObjectSingle(PrivacyDataResponse::class.java)
+    }
+
     override fun getBussinessDetForHome(userId: String, id:String, token: String): Single<BussinessDataResponse> {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY // it should be none other wise large file cannot be upload'

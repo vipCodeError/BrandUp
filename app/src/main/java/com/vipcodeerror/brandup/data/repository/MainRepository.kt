@@ -100,4 +100,12 @@ class MainRepository (private val apiHelper: ApiHelper) {
     fun getHdBrandImage(backImg: String, frameImg: String, logoImg:String, token: String) : Single<HdImageModel>{
         return apiHelper.getHdBrandImage(backImg, frameImg, logoImg, token)
     }
+
+    fun getSupportData() : Single<SupportDataResponse>{
+        return apiHelper.getSupportData()
+    }
+
+    fun getPrivacyData() : Single<PrivacyDataResponse> {
+        return apiHelper.getPrivacyPolicyData()
+    }
 }

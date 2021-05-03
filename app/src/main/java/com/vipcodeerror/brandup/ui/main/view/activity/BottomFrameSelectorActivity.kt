@@ -193,8 +193,8 @@ class BottomFrameSelectorActivity : AppCompatActivity() {
             override fun setRemovedPos(pos: Int) {
                 selectedFrameUrlList.removeAt(pos)
             }
-
         }
+
     }
 
     fun showMessage(){

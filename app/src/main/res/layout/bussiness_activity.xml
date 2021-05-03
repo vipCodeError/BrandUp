@@ -10,16 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/toolbar_back_color"
-        app:titleTextColor="#fff"
+        app:titleTextColor="#353535"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     
 
+
     <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:background="#919BDC"
+        android:background="#ECECEC"
         app:queryHint="Search your business category"
         android:layout_margin="16dp"
         android:layout_height="45dp"/>

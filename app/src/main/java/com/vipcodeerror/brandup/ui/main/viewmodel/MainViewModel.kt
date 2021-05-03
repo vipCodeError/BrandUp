@@ -34,6 +34,8 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
     private val updateBusinessDetails= MutableLiveData<Resource<ApiResponse>>()
     private val getPlanDataById = MutableLiveData<Resource<PlanDataModel>>()
     private val getHdBrandImage = MutableLiveData<Resource<HdImageModel>>()
+    private val supportData = MutableLiveData<Resource<SupportDataResponse>>()
+    private val privacyData = MutableLiveData<Resource<PrivacyDataResponse>>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -376,5 +378,36 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel(){
         )
 
         return getHdBrandImage;
+    }
+
+    fun getSupportData() : LiveData<Resource<SupportDataResponse>> {
+        supportData.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getSupportData()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            supportData.postValue(Resource.success(data))
+                        }, {
+                            supportData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+
+        return supportData;
+    }
+
+    fun getPrivacyData() : LiveData<Resource<PrivacyDataResponse>> {
+        privacyData.postValue(Resource.loading(null))
+        compositeDisposable.add(
+                mainRepository.getPrivacyData()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({data ->
+                            privacyData.postValue(Resource.success(data))
+                        }, {
+                            privacyData.postValue(Resource.error("Something went wrong", null))
+                        })
+        )
+        return privacyData;
     }
 }

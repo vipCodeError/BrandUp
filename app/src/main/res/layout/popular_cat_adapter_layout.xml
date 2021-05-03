@@ -24,10 +24,10 @@
         android:text="Marketing and Advetising agency"
         android:fontFamily="@font/ptsans_regular"
         android:textStyle="bold"
-        android:singleLine="true"
+        android:singleLine="false"
         android:textAlignment="center"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

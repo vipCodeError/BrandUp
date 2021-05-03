@@ -21,6 +21,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SENDTO" />
+                <data android:scheme="mailto" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
 
@@ -34,6 +39,11 @@
         <activity android:name=".ui.main.view.activity.NotificationActivity"/>
         <activity android:name=".ui.main.view.activity.BottomFrameSelectorActivity"/>
         <activity android:name=".ui.main.view.activity.PlanSelectorActivity"/>
+        <activity android:name=".ui.main.view.activity.PrivacyPolicyActivity"/>
+        <activity android:name=".ui.main.view.activity.SupportActivity">
+
+        </activity>
+
         <activity android:name=".ui.main.view.activity.PaymentActivity"
             android:theme="@style/Theme.Transparent"/>
         <activity android:name=".ui.main.view.activity.ImageOpenActivity"

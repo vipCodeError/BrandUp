@@ -54,7 +54,7 @@ import xyz.peridy.shimmerlayout.ShimmerLayout
 
 class HomePageFragment : Fragment() {
 
-    lateinit var staticAdsImageView : ImageView
+    // lateinit var staticAdsImageView : ImageView
     lateinit var staticAdsLayout : CardView
     lateinit var trendingRecyclerView : RecyclerView
     private lateinit var mainViewModel: MainViewModel
@@ -172,16 +172,16 @@ class HomePageFragment : Fragment() {
 
         getHomeObserver(sharedPreferenceUtil.getValueString("token").toString())
 
-        staticAdsImageView = view.findViewById(R.id.static_ads)
-        staticAdsLayout = view.findViewById(R.id.static_ads_layout)
+        // staticAdsImageView = view.findViewById(R.id.static_ads)
+        //staticAdsLayout = view.findViewById(R.id.static_ads_layout)
         trendingRecyclerView = view.findViewById(R.id.trending_title_recycler)
 
-        staticAdsLayout.startAnimation(bubbleAnimation())
+        // staticAdsLayout.startAnimation(bubbleAnimation())
 
         sliderAds(view)
         geTrendingData(sharedPreferenceUtil.getValueString("token").toString())
         getBannerData(getBrandDataSlider, "0", sharedPreferenceUtil.getValueString("token").toString())
-        getBannerStaticData(getBrandDataStatic, "1", sharedPreferenceUtil.getValueString("token").toString())
+        //getBannerStaticData(getBrandDataStatic, "1", sharedPreferenceUtil.getValueString("token").toString())
 
         getBusinnessForHomeData(
             mainViewModel,
@@ -753,10 +753,10 @@ class HomePageFragment : Fragment() {
                     it.data?.let {
                         var tData = it.data
                         if (tData.size > 0){
-                            Glide.with(requireActivity()).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x400/images/"+tData[0].url).into(staticAdsImageView)
-                            staticAdsImageView.setOnClickListener {
-                                Toast.makeText(requireActivity(), tData[0].redirectUrl, Toast.LENGTH_SHORT).show()
-                            }
+                            //Glide.with(requireActivity()).load("https://d4f9k68hk754p.cloudfront.net/fit-in/512x400/images/"+tData[0].url).into(staticAdsImageView)
+//                            staticAdsImageView.setOnClickListener {
+//                                Toast.makeText(requireActivity(), tData[0].redirectUrl, Toast.LENGTH_SHORT).show()
+//                            }
                         }
                     }
                 }
